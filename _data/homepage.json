@@ -1,41 +1,42 @@
 {
   "hero": {
-    "title": "CREO\nESPERIENZE\nDIGITALI\nCOINVOLGENTI",
-    "location": "Caserta, IT",
-    "cta_text": "SCOPRI\nI MIEI\nLAVORI",
-    "profile_image": "/img/53d156ca-c2e1-4812-851c-f8c9080730e9"
+    "title_left": "VISUAL",
+    "title_right": "DESIGN",
+    "name_text": "GUARNIERI ANTONELLO",
+    "tagline": "CASERTA MADE, SOUTH GUILTY.",
+    "video_url": "hero-video.mp4",
+    "center_image": "https://picsum.photos/400/250?random=1"
   },
   "about": {
-    "title": "IL MIO\nFOCUS",
-    "subtitle": "Trasformo idee complesse in esperienze digitali intuitive",
-    "description1": "Designer digitale con sede a Caserta, specializzato nella creazione di identità visive e interfacce che comunicano con chiarezza ed eleganza. Il mio approccio unisce pensiero strategico e attenzione al dettaglio per sviluppare soluzioni che non solo sembrano belle, ma funzionano perfettamente.",
-    "description2": "Collaboro con brand ambiziosi e startup innovative per costruire esperienze digitali che lasciano il segno. Dal concept alla realizzazione, ogni progetto è un'opportunità per spingere i confini del design contemporaneo."
+    "label": "(about)",
+    "main_text": "Design consulting firm on art focusing direction & branding in the field of graphic, web design. lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "column1": "Il testo può risalire fino all'antica Roma. Molte delle parole e delle frasi contenute nell'odierna copia del Lorem Ipsum si trovano in un libro di etica del 45 a.C., scritto dal filosofo romano Cicerone.",
+    "column2": "Il testo può risalire fino all'antica Roma. Molte delle parole e delle frasi contenute nell'odierna copia del Lorem Ipsum si trovano in un libro di etica del 45 a.C., scritto dal filosofo romano Cicerone."
   },
-  "services": [
-    {
-      "number": "01",
-      "title": "BRAND IDENTITY",
-      "description": "Sviluppo identità visive complete che raccontano la storia unica del tuo brand attraverso ogni touchpoint."
-    },
-    {
-      "number": "02",
-      "title": "UI/UX DESIGN",
-      "description": "Progetto interfacce intuitive che mettono l'utente al centro, bilanciando estetica e funzionalità."
-    },
-    {
-      "number": "03",
-      "title": "WEB DESIGN",
-      "description": "Creo siti web che combinano visual impact e performance, ottimizzati per ogni dispositivo."
-    },
-    {
-      "number": "04",
-      "title": "MOTION DESIGN",
-      "description": "Aggiungo vita ai progetti digitali con animazioni fluide che migliorano l'esperienza utente."
-    }
-  ],
-  "contact": {
-    "title": "INIZIAMO\nQUALCOSA\nDI GRANDE",
-    "subtitle": "Hai un progetto in mente? Parliamone.",
-    "email": "antonelloguarnieri6@gmail.com"
+  "services": {
+    "title": "Services",
+    "description": "Design consulting firm on art focusing direction & branding in the field of graphic, web design. lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "list": [
+      {
+        "name": "UX/UI DESIGNER",
+        "description": "Progettazione di interfacce utente intuitive e user experience coinvolgenti. Ricerca utenti, wireframing, prototipazione e testing per creare prodotti digitali che mettono l'utente al centro.",
+        "image": "https://picsum.photos/id/1/600/400"
+      },
+      {
+        "name": "BRAND & VISUAL DESIGN",
+        "description": "Sviluppo di identità visive distintive e sistemi di branding completi. Loghi, palette colori, tipografie e guidelines per comunicare efficacemente i valori del tuo brand.",
+        "image": "https://picsum.photos/id/20/600/400"
+      },
+      {
+        "name": "WEB & AI DEVELOPMENT",
+        "description": "Creazione di siti web moderni e applicazioni innovative integrate con intelligenza artificiale. Sviluppo frontend/backend e implementazione di soluzioni AI personalizzate.",
+        "image": "https://picsum.photos/id/50/600/400"
+      },
+      {
+        "name": "PROJECT MANAGEMENT",
+        "description": "Gestione completa di progetti creativi e digitali. Coordinamento team, pianificazione tempistiche, controllo qualità e comunicazione con il cliente per risultati eccellenti.",
+        "image": "https://picsum.photos/id/80/600/400"
+      }
+    ]
   }
 }
