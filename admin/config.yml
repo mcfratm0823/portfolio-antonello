@@ -36,6 +36,59 @@ collections:
       - {label: "Link esterno", name: "external_link", widget: "string", required: false}
       - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
 
+  - name: "pages"
+    label: "Pagine"
+    files:
+      - label: "Homepage"
+        name: "home"
+        file: "_data/homepage.json"
+        fields:
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Titolo principale", name: "title", widget: "text", default: "CREO\nESPERIENZE\nDIGITALI\nCOINVOLGENTI"}
+              - {label: "Località", name: "location", widget: "string", default: "Caserta, IT"}
+              - {label: "CTA Text", name: "cta_text", widget: "text", default: "SCOPRI\nI MIEI\nLAVORI"}
+              - {label: "Foto profilo", name: "profile_image", widget: "image"}
+          
+          - label: "About Section"
+            name: "about"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "text", default: "IL MIO\nFOCUS"}
+              - {label: "Sottotitolo", name: "subtitle", widget: "string"}
+              - {label: "Descrizione 1", name: "description1", widget: "text"}
+              - {label: "Descrizione 2", name: "description2", widget: "text"}
+          
+          - label: "Servizi"
+            name: "services"
+            widget: "list"
+            fields:
+              - {label: "Numero", name: "number", widget: "string"}
+              - {label: "Titolo", name: "title", widget: "string"}
+              - {label: "Descrizione", name: "description", widget: "text"}
+          
+          - label: "Contact Section"
+            name: "contact"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "text", default: "INIZIAMO\nQUALCOSA\nDI GRANDE"}
+              - {label: "Sottotitolo", name: "subtitle", widget: "string"}
+              - {label: "Email", name: "email", widget: "string"}
+
+      - label: "Portfolio Page"
+        name: "portfolio"
+        file: "_data/portfolio-page.json"
+        fields:
+          - {label: "Titolo principale", name: "main_title", widget: "text", default: "PROGETTI"}
+          - label: "Filtri"
+            name: "filters"
+            widget: "list"
+            fields:
+              - {label: "Nome", name: "name", widget: "string"}
+              - {label: "Valore", name: "value", widget: "string"}
+
   - name: "settings"
     label: "Impostazioni"
     files:

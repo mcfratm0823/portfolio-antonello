@@ -1,0 +1,41 @@
+{
+  "hero": {
+    "title": "CREO\nESPERIENZE\nDIGITALI\nCOINVOLGENTI",
+    "location": "Caserta, IT",
+    "cta_text": "SCOPRI\nI MIEI\nLAVORI",
+    "profile_image": "/img/53d156ca-c2e1-4812-851c-f8c9080730e9"
+  },
+  "about": {
+    "title": "IL MIO\nFOCUS",
+    "subtitle": "Trasformo idee complesse in esperienze digitali intuitive",
+    "description1": "Designer digitale con sede a Caserta, specializzato nella creazione di identità visive e interfacce che comunicano con chiarezza ed eleganza. Il mio approccio unisce pensiero strategico e attenzione al dettaglio per sviluppare soluzioni che non solo sembrano belle, ma funzionano perfettamente.",
+    "description2": "Collaboro con brand ambiziosi e startup innovative per costruire esperienze digitali che lasciano il segno. Dal concept alla realizzazione, ogni progetto è un'opportunità per spingere i confini del design contemporaneo."
+  },
+  "services": [
+    {
+      "number": "01",
+      "title": "BRAND IDENTITY",
+      "description": "Sviluppo identità visive complete che raccontano la storia unica del tuo brand attraverso ogni touchpoint."
+    },
+    {
+      "number": "02",
+      "title": "UI/UX DESIGN",
+      "description": "Progetto interfacce intuitive che mettono l'utente al centro, bilanciando estetica e funzionalità."
+    },
+    {
+      "number": "03",
+      "title": "WEB DESIGN",
+      "description": "Creo siti web che combinano visual impact e performance, ottimizzati per ogni dispositivo."
+    },
+    {
+      "number": "04",
+      "title": "MOTION DESIGN",
+      "description": "Aggiungo vita ai progetti digitali con animazioni fluide che migliorano l'esperienza utente."
+    }
+  ],
+  "contact": {
+    "title": "INIZIAMO\nQUALCOSA\nDI GRANDE",
+    "subtitle": "Hai un progetto in mente? Parliamone.",
+    "email": "antonelloguarnieri6@gmail.com"
+  }
+}
