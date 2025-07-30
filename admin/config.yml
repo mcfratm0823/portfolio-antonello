@@ -1,0 +1,53 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+# Publish mode
+publish_mode: editorial_workflow
+
+# Media files storage
+media_folder: "img/uploads" # Media files will be stored here
+public_folder: "/img/uploads" # Public path for media files
+
+# Collections - define the content types
+collections:
+  - name: "projects" # Used in routes
+    label: "Progetti" # Used in the UI
+    folder: "_projects" # Where the documents are stored
+    create: true # Allow users to create new documents
+    slug: "{{slug}}" # Filename template
+    fields: # The fields for each document
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Data", name: "date", widget: "datetime"}
+      - {label: "Categoria", name: "category", widget: "select", options: ["Digital", "Brand", "Web", "Print"]}
+      - {label: "Immagine di copertina", name: "thumbnail", widget: "image"}
+      - {label: "Descrizione breve", name: "description", widget: "text"}
+      - {label: "Contenuto", name: "body", widget: "markdown"}
+      - label: "Galleria"
+        name: "gallery"
+        widget: "list"
+        field: {label: "Immagine", name: "image", widget: "image"}
+      - {label: "Cliente", name: "client", widget: "string", required: false}
+      - {label: "Anno", name: "year", widget: "string"}
+      - {label: "Servizi", name: "services", widget: "list", default: ["Design", "Development"]}
+      - {label: "Link esterno", name: "external_link", widget: "string", required: false}
+      - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
+
+  - name: "settings"
+    label: "Impostazioni"
+    files:
+      - label: "Informazioni generali"
+        name: "general"
+        file: "_data/settings.json"
+        fields:
+          - {label: "Titolo del sito", name: "site_title", widget: "string"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Telefono", name: "phone", widget: "string"}
+          - {label: "Indirizzo", name: "address", widget: "text"}
+          - label: "Social Media"
+            name: "social"
+            widget: "object"
+            fields:
+              - {label: "Instagram", name: "instagram", widget: "string", required: false}
+              - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
+              - {label: "Behance", name: "behance", widget: "string", required: false}

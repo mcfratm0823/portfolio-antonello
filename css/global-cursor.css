@@ -1,0 +1,40 @@
+/* Global Custom Cursor Styles */
+
+/* Hide native cursor everywhere */
+* {
+    cursor: none !important;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    pointer-events: none;
+    z-index: 999999;
+    mix-blend-mode: difference;
+    will-change: transform;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    transform: translateZ(0);
+}
+
+/* Performance optimization during scroll */
+body.is-scrolling * {
+    transition: none !important;
+    animation-play-state: paused !important;
+}
+
+/* Mobile: hide custom cursor and restore native */
+@media (max-width: 768px) {
+    .custom-cursor {
+        display: none !important;
+    }
+    
+    * {
+        cursor: auto !important;
+    }
+}
