@@ -76,6 +76,35 @@ collections:
                   - {label: "Nome", name: "name", widget: "string"}
                   - {label: "Descrizione", name: "description", widget: "text"}
                   - {label: "Immagine", name: "image", widget: "image"}
+          
+          - label: "Portfolio Section"
+            name: "portfolio"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "string"}
+              - label: "Progetti in Homepage"
+                name: "projects"
+                widget: "list"
+                max: 4
+                fields:
+                  - {label: "Nome", name: "name", widget: "string"}
+                  - {label: "Categoria", name: "category", widget: "string"}
+                  - {label: "Immagine Box", name: "box_image", widget: "image"}
+                  - {label: "Immagine Background", name: "bg_image", widget: "image"}
+          
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "text"}
+              - {label: "Titolo Form", name: "form_title", widget: "string"}
+              - {label: "Placeholder Nome", name: "name_placeholder", widget: "string"}
+              - {label: "Placeholder Cognome", name: "surname_placeholder", widget: "string"}
+              - {label: "Placeholder Messaggio", name: "message_placeholder", widget: "string"}
+              - {label: "Testo Bottone", name: "button_text", widget: "string"}
+              - {label: "Email Link", name: "email_link", widget: "string"}
+              - {label: "Email Footer", name: "bottom_email", widget: "string"}
+              - {label: "Telefono Footer", name: "bottom_phone", widget: "string"}
 
       - label: "Portfolio Page"
         name: "portfolio"

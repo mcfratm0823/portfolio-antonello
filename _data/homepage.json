@@ -38,5 +38,45 @@
         "image": "https://picsum.photos/id/80/600/400"
       }
     ]
+  },
+  "portfolio": {
+    "title": "Selected Work",
+    "projects": [
+      {
+        "name": "Progetto uno",
+        "category": "TECH STARTUP 2024",
+        "box_image": "https://picsum.photos/800/600?random=1",
+        "bg_image": "https://picsum.photos/1920/1080?random=2"
+      },
+      {
+        "name": "Progetto due",
+        "category": "E-COMMERCE PLATFORM",
+        "box_image": "https://picsum.photos/800/600?random=3",
+        "bg_image": "https://picsum.photos/1920/1080?random=4"
+      },
+      {
+        "name": "Progetto tre",
+        "category": "PRODUCT LAUNCH",
+        "box_image": "https://picsum.photos/800/600?random=5",
+        "bg_image": "https://picsum.photos/1920/1080?random=6"
+      },
+      {
+        "name": "Progetto quattro",
+        "category": "ARCHITECTURAL PROJECT",
+        "box_image": "https://picsum.photos/800/600?random=7",
+        "bg_image": "https://picsum.photos/1920/1080?random=8"
+      }
+    ]
+  },
+  "footer": {
+    "title": "FUCK YOU.\nOOPS,THANK YOU",
+    "form_title": "CONTATTAMI",
+    "name_placeholder": "NOME",
+    "surname_placeholder": "COGNOME",
+    "message_placeholder": "Scrivi qui la tua richiesta",
+    "button_text": "CONTATTAMI",
+    "email_link": "antonelloguarnieri6@gmail.com",
+    "bottom_email": "lorem@ipsum.com",
+    "bottom_phone": "+39 123 456 7890"
   }
 }
