@@ -1,39 +1,39 @@
 {
   "hero": {
-    "title_left": "VISUALs",
-    "title_right": "DESIGNs",
+    "title_left": "VISUAL",
+    "title_right": "DESIGN",
     "name_text": "GUARNIERI ANTONELLOs",
-    "tagline": "CASERTA MADE, SOUTH GUILTY.s",
+    "tagline": "CASERTA MADE, SOUTH GUILTY.",
     "center_media_type": "image",
     "center_media": "https://picsum.photos/400/250?random=1"
   },
   "about": {
-    "label": "(about)",
+    "label": "(antonello)",
     "main_text": "Design consulting firm on art focusing direction & branding in the field of graphic, web design. lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "column1": "Il testo può risalire fino all'antica Roma. Molte delle parole e delle frasi contenute nell'odierna copia del Lorem Ipsum si trovano in un libro di etica del 45 a.C., scritto dal filosofo romano Cicerone.",
     "column2": "Il testo può risalire fino all'antica Roma. Molte delle parole e delle frasi contenute nell'odierna copia del Lorem Ipsum si trovano in un libro di etica del 45 a.C., scritto dal filosofo romano Cicerone."
   },
   "services": {
-    "title": "Services",
+    "title": "bellissimo",
     "description": "Design consulting firm on art focusing direction & branding in the field of graphic, web design. lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "list": [
       {
-        "name": "UX/UI DESIGNER",
+        "name": "UX/UI ",
         "description": "Progettazione di interfacce utente intuitive e user experience coinvolgenti. Ricerca utenti, wireframing, prototipazione e testing per creare prodotti digitali che mettono l'utente al centro.",
         "image": "https://picsum.photos/id/1/600/400"
       },
       {
-        "name": "BRAND & VISUAL DESIGN",
+        "name": "BRAND ",
         "description": "Sviluppo di identità visive distintive e sistemi di branding completi. Loghi, palette colori, tipografie e guidelines per comunicare efficacemente i valori del tuo brand.",
         "image": "https://picsum.photos/id/20/600/400"
       },
       {
-        "name": "WEB & AI DEVELOPMENT",
+        "name": "WEB & AI ",
         "description": "Creazione di siti web moderni e applicazioni innovative integrate con intelligenza artificiale. Sviluppo frontend/backend e implementazione di soluzioni AI personalizzate.",
         "image": "https://picsum.photos/id/50/600/400"
       },
       {
-        "name": "PROJECT MANAGEMENT",
+        "name": "PROJECT ",
         "description": "Gestione completa di progetti creativi e digitali. Coordinamento team, pianificazione tempistiche, controllo qualità e comunicazione con il cliente per risultati eccellenti.",
         "image": "https://picsum.photos/id/80/600/400"
       }
