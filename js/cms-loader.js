@@ -3,7 +3,7 @@ async function loadCMSData() {
     try {
         // Carica i dati della homepage con cache busting
         const timestamp = new Date().getTime();
-        const response = await fetch(`./_data/homepage.json?t=${timestamp}`);
+        const response = await fetch(`./data/homepage.json?t=${timestamp}`);
         const data = await response.json();
         
         // Aggiorna Hero Section

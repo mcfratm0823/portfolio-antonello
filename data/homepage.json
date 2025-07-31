@@ -1,0 +1,82 @@
+{
+  "hero": {
+    "title_left": "VISUAL",
+    "title_right": "DESIGN",
+    "name_text": "GUARNIERI ANTONELLOs",
+    "tagline": "CASERTA MADE, SOUTH GUILTY.",
+    "center_media_type": "image",
+    "center_media": "https://picsum.photos/400/250?random=1"
+  },
+  "about": {
+    "label": "(antonello)",
+    "main_text": "Design consulting firm on art focusing direction & branding in the field of graphic, web design. lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "column1": "Il testo può risalire fino all'antica Roma. Molte delle parole e delle frasi contenute nell'odierna copia del Lorem Ipsum si trovano in un libro di etica del 45 a.C., scritto dal filosofo romano Cicerone.",
+    "column2": "Il testo può risalire fino all'antica Roma. Molte delle parole e delle frasi contenute nell'odierna copia del Lorem Ipsum si trovano in un libro di etica del 45 a.C., scritto dal filosofo romano Cicerone."
+  },
+  "services": {
+    "title": "bellissimo",
+    "description": "Design consulting firm on art focusing direction & branding in the field of graphic, web design. lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "list": [
+      {
+        "name": "UX/UI ",
+        "description": "Progettazione di interfacce utente intuitive e user experience coinvolgenti. Ricerca utenti, wireframing, prototipazione e testing per creare prodotti digitali che mettono l'utente al centro.",
+        "image": "https://picsum.photos/id/1/600/400"
+      },
+      {
+        "name": "BRAND ",
+        "description": "Sviluppo di identità visive distintive e sistemi di branding completi. Loghi, palette colori, tipografie e guidelines per comunicare efficacemente i valori del tuo brand.",
+        "image": "https://picsum.photos/id/20/600/400"
+      },
+      {
+        "name": "WEB & AI ",
+        "description": "Creazione di siti web moderni e applicazioni innovative integrate con intelligenza artificiale. Sviluppo frontend/backend e implementazione di soluzioni AI personalizzate.",
+        "image": "https://picsum.photos/id/50/600/400"
+      },
+      {
+        "name": "PROJECT ",
+        "description": "Gestione completa di progetti creativi e digitali. Coordinamento team, pianificazione tempistiche, controllo qualità e comunicazione con il cliente per risultati eccellenti.",
+        "image": "https://picsum.photos/id/80/600/400"
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Selected Work",
+    "projects": [
+      {
+        "name": "Progetto uno",
+        "category": "TECH STARTUP 2024",
+        "box_image": "https://picsum.photos/800/600?random=1",
+        "bg_image": "https://picsum.photos/1920/1080?random=2"
+      },
+      {
+        "name": "Progetto due",
+        "category": "E-COMMERCE PLATFORM",
+        "box_image": "https://picsum.photos/800/600?random=3",
+        "bg_image": "https://picsum.photos/1920/1080?random=4"
+      },
+      {
+        "name": "Progetto tre",
+        "category": "PRODUCT LAUNCH",
+        "box_image": "https://picsum.photos/800/600?random=5",
+        "bg_image": "https://picsum.photos/1920/1080?random=6"
+      },
+      {
+        "name": "Progetto quattro",
+        "category": "ARCHITECTURAL PROJECT",
+        "box_image": "https://picsum.photos/800/600?random=7",
+        "bg_image": "https://picsum.photos/1920/1080?random=8"
+      }
+    ]
+  },
+  "footer": {
+    "bottom_email": "lorem@ipsum.com",
+    "surname_placeholder": "COGNOME",
+    "title": "FUCK YOU.\nOOPS,THANK YOU",
+    "button_text": "CONTATTAMI",
+    "bottom_phone": "+39 123 456 7890",
+    "message_placeholder": "Scrivi qui la tua richiesta",
+    "email_link": "antonelloguarnieri6@gmail.com",
+    "form_title": "CONTATTAMI",
+    "name_placeholder": "NOME"
+  }
+}
