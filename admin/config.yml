@@ -51,8 +51,8 @@ collections:
               - {label: "Titolo Destra (DESIGN)", name: "title_right", widget: "string"}
               - {label: "Nome", name: "name_text", widget: "string"}
               - {label: "Tagline", name: "tagline", widget: "string"}
-              - {label: "Video URL", name: "video_url", widget: "string"}
-              - {label: "Immagine Centrale", name: "center_image", widget: "image"}
+              - {label: "Tipo Media Centrale", name: "center_media_type", widget: "select", options: ["image", "video"], default: "image"}
+              - {label: "Media Centrale (Immagine o Video)", name: "center_media", widget: "file", hint: "Carica un'immagine o un video"}
           
           - label: "About Section"
             name: "about"

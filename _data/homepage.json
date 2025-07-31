@@ -4,8 +4,8 @@
     "title_right": "DESIGN",
     "name_text": "GUARNIERI ANTONELLO",
     "tagline": "CASERTA MADE, SOUTH GUILTY.",
-    "video_url": "hero-video.mp4",
-    "center_image": "https://picsum.photos/400/250?random=1"
+    "center_media_type": "image",
+    "center_media": "https://picsum.photos/400/250?random=1"
   },
   "about": {
     "label": "(about)",
