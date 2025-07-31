@@ -5,8 +5,8 @@ backend:
 # This line tells the CMS where the admin folder is
 site_url: https://resilient-nougat-34eb70.netlify.app
 
-# Publish mode
-publish_mode: editorial_workflow
+# Publish mode - simple mode publishes directly
+# publish_mode: editorial_workflow
 
 # Media files storage
 media_folder: "img/uploads" # Media files will be stored here
