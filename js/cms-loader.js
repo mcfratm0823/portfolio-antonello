@@ -2,7 +2,7 @@
 async function loadCMSData() {
     try {
         // Carica i dati della homepage
-        const response = await fetch('/_data/homepage.json');
+        const response = await fetch('./_data/homepage.json');
         const data = await response.json();
         
         // Aggiorna Hero Section
