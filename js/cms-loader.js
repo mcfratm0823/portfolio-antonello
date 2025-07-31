@@ -8,6 +8,7 @@ async function loadCMSData() {
         
         // Aggiorna Hero Section
         if (data.hero) {
+            console.log('Tagline originale:', data.hero.tagline);
             updateElement('#antonello-title h1', data.hero.title_left);
             updateElement('#guarnieri-title h1', data.hero.title_right);
             updateElement('#left-text p', data.hero.name_text);
@@ -108,6 +109,7 @@ function updateElement(selector, value, attribute = 'textContent') {
                 .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')  // **text** → <b>text</b>
                 .replace(/\*(.+?)\*/g, '<em>$1</em>')    // *text* → <em>text</em>
                 .replace(/\n/g, '<br>');                 // newlines → <br>
+            console.log('HTML processato:', html);
             element.innerHTML = html;
         } else {
             element[attribute] = value;
