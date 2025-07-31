@@ -103,7 +103,12 @@ function updateElement(selector, value, attribute = 'textContent') {
     const element = document.querySelector(selector);
     if (element && value) {
         if (attribute === 'textContent') {
-            element.innerHTML = value.replace(/\n/g, '<br>');
+            // Processa markdown semplice: **bold** e *italic*
+            let html = value
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **text** → <strong>text</strong>
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')              // *text* → <em>text</em>
+                .replace(/\n/g, '<br>');                           // newlines → <br>
+            element.innerHTML = html;
         } else {
             element[attribute] = value;
         }

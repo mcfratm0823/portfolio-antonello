@@ -50,7 +50,7 @@ collections:
               - {label: "Titolo Sinistra (VISUAL)", name: "title_left", widget: "string"}
               - {label: "Titolo Destra (DESIGN)", name: "title_right", widget: "string"}
               - {label: "Nome", name: "name_text", widget: "string"}
-              - {label: "Tagline", name: "tagline", widget: "string"}
+              - {label: "Tagline", name: "tagline", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
               - {label: "Tipo Media Centrale", name: "center_media_type", widget: "select", options: ["image", "video"], default: "image"}
               - {label: "Media Centrale (Immagine o Video)", name: "center_media", widget: "file", hint: "Carica un'immagine o un video"}
           
@@ -59,9 +59,9 @@ collections:
             widget: "object"
             fields:
               - {label: "Label", name: "label", widget: "string"}
-              - {label: "Testo Principale", name: "main_text", widget: "text"}
-              - {label: "Colonna 1", name: "column1", widget: "text"}
-              - {label: "Colonna 2", name: "column2", widget: "text"}
+              - {label: "Testo Principale", name: "main_text", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Colonna 1", name: "column1", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Colonna 2", name: "column2", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
           
           - label: "Services Section"
             name: "services"
