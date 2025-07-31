@@ -1,8 +1,9 @@
 // Carica i dati dal CMS e aggiorna la homepage
 async function loadCMSData() {
     try {
-        // Carica i dati della homepage
-        const response = await fetch('./_data/homepage.json');
+        // Carica i dati della homepage con cache busting
+        const timestamp = new Date().getTime();
+        const response = await fetch(`./_data/homepage.json?t=${timestamp}`);
         const data = await response.json();
         
         // Aggiorna Hero Section
