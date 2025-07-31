@@ -105,9 +105,9 @@ function updateElement(selector, value, attribute = 'textContent') {
         if (attribute === 'textContent') {
             // Processa markdown semplice: **bold** e *italic*
             let html = value
-                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')  // **text** → <strong>text</strong>
-                .replace(/\*(.+?)\*/g, '<em>$1</em>')              // *text* → <em>text</em>
-                .replace(/\n/g, '<br>');                           // newlines → <br>
+                .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')  // **text** → <b>text</b>
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')    // *text* → <em>text</em>
+                .replace(/\n/g, '<br>');                 // newlines → <br>
             element.innerHTML = html;
         } else {
             element[attribute] = value;
