@@ -1,9 +1,9 @@
 {
   "hero": {
-    "title_left": "VISUAL",
-    "title_right": "DESIGN",
-    "name_text": "GUARNIERI ANTONELLO",
-    "tagline": "CASERTA MADE, SOUTH GUILTY.",
+    "title_left": "VISUALs",
+    "title_right": "DESIGNs",
+    "name_text": "GUARNIERI ANTONELLOs",
+    "tagline": "CASERTA MADE, SOUTH GUILTY.s",
     "center_media_type": "image",
     "center_media": "https://picsum.photos/400/250?random=1"
   },
@@ -69,14 +69,14 @@
     ]
   },
   "footer": {
-    "title": "FUCK YOU.\nOOPS,THANK YOU",
-    "form_title": "CONTATTAMI",
-    "name_placeholder": "NOME",
-    "surname_placeholder": "COGNOME",
-    "message_placeholder": "Scrivi qui la tua richiesta",
-    "button_text": "CONTATTAMI",
-    "email_link": "antonelloguarnieri6@gmail.com",
     "bottom_email": "lorem@ipsum.com",
-    "bottom_phone": "+39 123 456 7890"
+    "surname_placeholder": "COGNOME",
+    "title": "FUCK YOU.\nOOPS,THANK YOU",
+    "button_text": "CONTATTAMI",
+    "bottom_phone": "+39 123 456 7890",
+    "message_placeholder": "Scrivi qui la tua richiesta",
+    "email_link": "antonelloguarnieri6@gmail.com",
+    "form_title": "CONTATTAMI",
+    "name_placeholder": "NOME"
   }
 }
