@@ -886,7 +886,7 @@ class Navbar {
         // Genera HTML in base al tipo di integrazione
         if (this.formData.form_integration.type === 'netlify') {
             return `
-                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: inline;">
+                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" style="display: inline;">
                     <input type="hidden" name="form-name" value="contact-menu">
                     <input type="hidden" name="bot-field">
                     <input type="hidden" name="nome" id="hidden-nome">
@@ -925,6 +925,15 @@ class Navbar {
         const cognomeInput = document.getElementById('cognome');
         const messaggioInput = document.getElementById('messaggio');
         const requestCta = document.getElementById('request-cta');
+        
+        // Controlla se c'è un parametro success nell'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            // Mostra messaggio di successo
+            this.showSuccessMessage();
+            // Rimuovi il parametro dall'URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
         
         if (nomeInput && cognomeInput && messaggioInput && requestCta) {
             // Se stiamo usando un form reale, aggiorna i campi nascosti
@@ -981,6 +990,33 @@ class Navbar {
                 checkFormCompletion();
             }
         }
+    }
+    
+    showSuccessMessage() {
+        // Crea e mostra un messaggio di successo
+        const successDiv = document.createElement('div');
+        successDiv.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            color: #fff;
+            padding: 2rem 3rem;
+            border-radius: 0;
+            z-index: 10000;
+            font-family: Neue;
+            font-size: 1rem;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        `;
+        successDiv.textContent = this.formData.success_message;
+        document.body.appendChild(successDiv);
+        
+        // Rimuovi il messaggio dopo 3 secondi
+        setTimeout(() => {
+            successDiv.remove();
+        }, 3000);
     }
 }
 

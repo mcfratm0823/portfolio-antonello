@@ -82,6 +82,12 @@
     </script>
 </head>
 <body>
+    <!-- Form nascosto per Netlify Forms -->
+    <form name="contact-menu" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="nome" />
+        <input type="text" name="cognome" />
+        <textarea name="messaggio"></textarea>
+    </form>
 
     <!-- Preloader -->
     <div id="preloader">
