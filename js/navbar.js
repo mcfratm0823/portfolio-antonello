@@ -886,7 +886,7 @@ class Navbar {
         // Genera HTML in base al tipo di integrazione
         if (this.formData.form_integration.type === 'netlify') {
             return `
-                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/index.html?success=true" style="display: inline;">
+                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success" style="display: inline;">
                     <input type="hidden" name="form-name" value="contact-menu">
                     <input type="hidden" name="bot-field">
                     <input type="hidden" name="nome" id="hidden-nome">
