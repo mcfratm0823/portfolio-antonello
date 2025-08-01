@@ -1,0 +1,28 @@
+{
+  "logo": {
+    "text": "0823®",
+    "link": "index.html"
+  },
+  "menu_trigger": {
+    "text": "IV.V.MMXXIII",
+    "show_arrow": true
+  },
+  "menu_overlay": {
+    "close_text": "CHIUDI",
+    "footer_description": "CREO ESPERIENZE DIGITALI CHIARE E UTILI, UNENDO DESIGN CURATO,\nSVILUPPO CON AI E GESTIONE ATTENTA DEI PROGETTI PER\nTRASFORMARE OGNI IDEA IN RISULTATI CONCRETI.",
+    "footer_website": "ANTONELLOGUARNIERI.NET",
+    "footer_email": "ANTONELLOGUARNIERI6@GMAIL.COM",
+    "main_menu": [
+      {
+        "name": "INDEX.HTML",
+        "link": "index.html",
+        "order": 1
+      },
+      {
+        "name": "LAVORI",
+        "link": "portfolio.html",
+        "order": 2
+      }
+    ]
+  }
+}

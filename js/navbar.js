@@ -19,6 +19,22 @@ class Navbar {
         const pathDepth = window.location.pathname.split('/').filter(p => p).length - 1;
         this.assetPath = pathDepth > 0 ? '../'.repeat(pathDepth) : './';
         
+        // Store navigation data
+        this.navigationData = {
+            logo: { text: "0823®", link: "index.html" },
+            menu_trigger: { text: "IV.V.MMXXIII", show_arrow: true },
+            menu_overlay: {
+                close_text: "CHIUDI",
+                footer_description: "CREO ESPERIENZE DIGITALI CHIARE E UTILI, UNENDO DESIGN CURATO,\nSVILUPPO CON AI E GESTIONE ATTENTA DEI PROGETTI PER\nTRASFORMARE OGNI IDEA IN RISULTATI CONCRETI.",
+                footer_website: "ANTONELLOGUARNIERI.NET",
+                footer_email: "ANTONELLOGUARNIERI6@GMAIL.COM",
+                main_menu: [
+                    { name: "INDEX.HTML", link: "index.html", order: 1 },
+                    { name: "LAVORI", link: "portfolio.html", order: 2 }
+                ]
+            }
+        };
+        
         // Throttled mouse tracking for better performance
         let mouseThrottleTimer = null;
         document.addEventListener('mousemove', (e) => {
@@ -38,10 +54,10 @@ class Navbar {
         this.navbarHTML = `
             <nav id="navbar">
                 <div class="navbar-logo">
-                    <span>0823®</span>
+                    <span>${this.navigationData.logo.text}</span>
                 </div>
                 <div class="navbar-menu" id="menu-trigger">
-                    <span>IV.V.MMXXIII <img src="${this.assetPath}img/arrow.svg" alt="" class="navbar-arrow"></span>
+                    <span>${this.navigationData.menu_trigger.text}${this.navigationData.menu_trigger.show_arrow ? ` <img src="${this.assetPath}img/arrow.svg" alt="" class="navbar-arrow">` : ''}</span>
                 </div>
             </nav>
         `;
@@ -622,6 +638,37 @@ class Navbar {
         `;
     }
 
+    updateNavigationData(data) {
+        if (data) {
+            this.navigationData = data;
+            this.updateNavbarHTML();
+        }
+    }
+    
+    updateNavbarHTML() {
+        // Update navbar HTML with new data
+        this.navbarHTML = `
+            <nav id="navbar">
+                <div class="navbar-logo">
+                    <span>${this.navigationData.logo.text}</span>
+                </div>
+                <div class="navbar-menu" id="menu-trigger">
+                    <span>${this.navigationData.menu_trigger.text}${this.navigationData.menu_trigger.show_arrow ? ` <img src="${this.assetPath}img/arrow.svg" alt="" class="navbar-arrow">` : ''}</span>
+                </div>
+            </nav>
+        `;
+        
+        // Update existing navbar if present
+        const existingNavbar = document.getElementById('navbar');
+        if (existingNavbar) {
+            existingNavbar.querySelector('.navbar-logo span').textContent = this.navigationData.logo.text;
+            const menuTriggerSpan = existingNavbar.querySelector('.navbar-menu span');
+            if (menuTriggerSpan) {
+                menuTriggerSpan.innerHTML = `${this.navigationData.menu_trigger.text}${this.navigationData.menu_trigger.show_arrow ? ` <img src="${this.assetPath}img/arrow.svg" alt="" class="navbar-arrow">` : ''}`;
+            }
+        }
+    }
+
     init() {
         // Prevent double initialization
         if (this.initialized) {
@@ -702,12 +749,29 @@ class Navbar {
     }
     
     createMenuOverlay() {
+        // Process markdown in footer description
+        let footerDescription = this.navigationData.menu_overlay.footer_description;
+        if (footerDescription) {
+            footerDescription = footerDescription
+                .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+        }
+        
+        // Sort menu items by order
+        const sortedMenu = [...this.navigationData.menu_overlay.main_menu].sort((a, b) => a.order - b.order);
+        
+        // Generate menu items HTML
+        const menuItemsHTML = sortedMenu.map(item => 
+            `<a href="${this.assetPath}${item.link}" class="menu-title">${item.name}</a>`
+        ).join('\n');
+        
         const menuHTML = `
             <div id="menu-overlay" class="menu-overlay">
                 
                 <!-- Close Button -->
                 <div id="close-menu">
-                    <span>CHIUDI</span>
+                    <span>${this.navigationData.menu_overlay.close_text}</span>
                 </div>
                 
                 <!-- Main Menu Container -->
@@ -726,7 +790,7 @@ class Navbar {
                                 <textarea id="messaggio" placeholder="Scrivi qui la tua richiesta" rows="3"></textarea>
                             </div>
                             <div class="menu-item">
-                                <a href="mailto:antonelloguarnieri6@gmail.com" target="_blank">
+                                <a href="mailto:${this.navigationData.menu_overlay.footer_email}" target="_blank">
                                     <div id="request-cta">
                                         <div id="request-text">CONTATTAMI</div>
                                     </div>
@@ -738,11 +802,11 @@ class Navbar {
                         <div id="left-info">
                             <div id="bottom-text-container">
                                 <div id="description">
-                                    <p>CREO ESPERIENZE DIGITALI CHIARE E UTILI, UNENDO DESIGN CURATO,<br>SVILUPPO CON AI E GESTIONE ATTENTA DEI PROGETTI PER<br>TRASFORMARE OGNI IDEA IN RISULTATI CONCRETI.</p>
+                                    <p>${footerDescription}</p>
                                 </div>
                                 <div id="right-info">
-                                    <p>ANTONELLOGUARNIERI.NET</p>
-                                    <p>ANTONELLOGUARNIERI6@GMAIL.COM</p>
+                                    <p>${this.navigationData.menu_overlay.footer_website}</p>
+                                    <p>${this.navigationData.menu_overlay.footer_email}</p>
                                 </div>
                             </div>
                         </div>
@@ -751,8 +815,7 @@ class Navbar {
                     <!-- Right Side - Navigation -->
                     <div id="right-side">
                         <div id="right-menu">
-                            <a href="${this.assetPath}index.html" class="menu-title">INDEX.HTML</a>
-                            <a href="${this.assetPath}portfolio.html" class="menu-title">LAVORI</a>
+                            ${menuItemsHTML}
                         </div>
                     </div>
                 </div>
@@ -828,6 +891,13 @@ function initializeNavbar() {
     } else {
     }
 }
+
+// Global function to update navigation data from CMS
+window.updateNavigationData = function(data) {
+    if (navbarInstance) {
+        navbarInstance.updateNavigationData(data);
+    }
+};
 
 // Export for ES6 modules
 export { Navbar, initializeNavbar };

@@ -136,3 +136,38 @@ collections:
               - {label: "Instagram", name: "instagram", widget: "string", required: false}
               - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
               - {label: "Behance", name: "behance", widget: "string", required: false}
+      
+      - label: "Navigazione"
+        name: "navigation"
+        file: "data/navigation.json"
+        fields:
+          - label: "Logo"
+            name: "logo"
+            widget: "object"
+            fields:
+              - {label: "Testo Logo", name: "text", widget: "string", default: "0823®"}
+              - {label: "Link Home", name: "link", widget: "hidden", default: "index.html"}
+          
+          - label: "Menu Trigger"
+            name: "menu_trigger"
+            widget: "object"
+            fields:
+              - {label: "Testo", name: "text", widget: "string", default: "IV.V.MMXXIII"}
+              - {label: "Mostra Freccia", name: "show_arrow", widget: "boolean", default: true}
+          
+          - label: "Menu Overlay"
+            name: "menu_overlay"
+            widget: "object"
+            fields:
+              - {label: "Testo Chiudi", name: "close_text", widget: "string", default: "CHIUDI"}
+              - {label: "Descrizione Footer", name: "footer_description", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Website Footer", name: "footer_website", widget: "string", default: "ANTONELLOGUARNIERI.NET"}
+              - {label: "Email Footer", name: "footer_email", widget: "string", default: "ANTONELLOGUARNIERI6@GMAIL.COM"}
+              
+              - label: "Voci Menu Principale"
+                name: "main_menu"
+                widget: "list"
+                fields:
+                  - {label: "Nome", name: "name", widget: "string"}
+                  - {label: "Link", name: "link", widget: "string", hint: "Es: index.html, portfolio.html, ecc."}
+                  - {label: "Ordine", name: "order", widget: "number", value_type: "int", min: 1}

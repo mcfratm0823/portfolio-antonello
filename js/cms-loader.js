@@ -3,8 +3,18 @@ async function loadCMSData() {
     try {
         // Carica i dati della homepage con cache busting
         const timestamp = new Date().getTime();
-        const response = await fetch(`./data/homepage.json?t=${timestamp}`);
-        const data = await response.json();
+        const [homepageResponse, navigationResponse] = await Promise.all([
+            fetch(`./data/homepage.json?t=${timestamp}`),
+            fetch(`./data/navigation.json?t=${timestamp}`)
+        ]);
+        
+        const data = await homepageResponse.json();
+        const navData = await navigationResponse.json();
+        
+        // Aggiorna i dati di navigazione se disponibili
+        if (window.updateNavigationData && navData) {
+            window.updateNavigationData(navData);
+        }
         
         // Aggiorna Hero Section
         if (data.hero) {
