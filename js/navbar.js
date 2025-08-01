@@ -35,6 +35,22 @@ class Navbar {
             }
         };
         
+        // Store form data
+        this.formData = {
+            form_title: "CONTATTAMI",
+            name_placeholder: "NOME",
+            surname_placeholder: "COGNOME",
+            message_placeholder: "Scrivi qui la tua richiesta",
+            button_text: "CONTATTAMI",
+            recipient_email: "antonelloguarnieri6@gmail.com",
+            success_message: "Grazie! Il tuo messaggio è stato inviato.",
+            error_message: "Ops! Qualcosa è andato storto. Riprova.",
+            form_integration: {
+                type: "netlify",
+                custom_endpoint: ""
+            }
+        };
+        
         // Throttled mouse tracking for better performance
         let mouseThrottleTimer = null;
         document.addEventListener('mousemove', (e) => {
@@ -645,6 +661,31 @@ class Navbar {
         }
     }
     
+    updateFormData(data) {
+        if (data) {
+            this.formData = data;
+            // Se il menu overlay è già aperto, aggiorna i campi del form
+            this.updateFormFields();
+        }
+    }
+    
+    updateFormFields() {
+        // Aggiorna i placeholder e i testi del form se esistono
+        const nomeInput = document.getElementById('nome');
+        const cognomeInput = document.getElementById('cognome');
+        const messaggioInput = document.getElementById('messaggio');
+        const formTitle = document.querySelector('#left-menu .menu-item:first-child');
+        const requestText = document.getElementById('request-text');
+        const emailLink = document.querySelector('#left-menu a[href^="mailto"]');
+        
+        if (nomeInput) nomeInput.placeholder = this.formData.name_placeholder;
+        if (cognomeInput) cognomeInput.placeholder = this.formData.surname_placeholder;
+        if (messaggioInput) messaggioInput.placeholder = this.formData.message_placeholder;
+        if (formTitle) formTitle.textContent = this.formData.form_title;
+        if (requestText) requestText.textContent = this.formData.button_text;
+        if (emailLink) emailLink.href = `mailto:${this.formData.recipient_email}`;
+    }
+    
     updateNavbarHTML() {
         // Update navbar HTML with new data
         this.navbarHTML = `
@@ -779,22 +820,18 @@ class Navbar {
                     <!-- Left Side - Menu Items -->
                     <div id="left-side">
                         <div id="left-menu">
-                            <div class="menu-item">CONTATTAMI</div>
+                            <div class="menu-item">${this.formData.form_title}</div>
                             <div class="menu-item">
-                                <input type="text" id="nome" placeholder="NOME" />
+                                <input type="text" id="nome" placeholder="${this.formData.name_placeholder}" />
                             </div>
                             <div class="menu-item">
-                                <input type="text" id="cognome" placeholder="COGNOME" />
+                                <input type="text" id="cognome" placeholder="${this.formData.surname_placeholder}" />
                             </div>
                             <div class="menu-item">
-                                <textarea id="messaggio" placeholder="Scrivi qui la tua richiesta" rows="3"></textarea>
+                                <textarea id="messaggio" placeholder="${this.formData.message_placeholder}" rows="3"></textarea>
                             </div>
                             <div class="menu-item">
-                                <a href="mailto:${this.navigationData.menu_overlay.footer_email}" target="_blank">
-                                    <div id="request-cta">
-                                        <div id="request-text">CONTATTAMI</div>
-                                    </div>
-                                </a>
+                                ${this.getFormActionHTML()}
                             </div>
                         </div>
                         
@@ -845,6 +882,44 @@ class Navbar {
         }
     }
     
+    getFormActionHTML() {
+        // Genera HTML in base al tipo di integrazione
+        if (this.formData.form_integration.type === 'netlify') {
+            return `
+                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: inline;">
+                    <input type="hidden" name="form-name" value="contact-menu">
+                    <input type="hidden" name="bot-field">
+                    <input type="hidden" name="nome" id="hidden-nome">
+                    <input type="hidden" name="cognome" id="hidden-cognome">
+                    <input type="hidden" name="messaggio" id="hidden-messaggio">
+                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer;">
+                        <div id="request-text">${this.formData.button_text}</div>
+                    </button>
+                </form>
+            `;
+        } else if (this.formData.form_integration.type === 'formspree') {
+            return `
+                <form action="https://formspree.io/f/${this.formData.recipient_email}" method="POST" style="display: inline;">
+                    <input type="hidden" name="nome" id="hidden-nome">
+                    <input type="hidden" name="cognome" id="hidden-cognome">
+                    <input type="hidden" name="messaggio" id="hidden-messaggio">
+                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer;">
+                        <div id="request-text">${this.formData.button_text}</div>
+                    </button>
+                </form>
+            `;
+        } else {
+            // Default: mailto link
+            return `
+                <a href="mailto:${this.formData.recipient_email}" target="_blank">
+                    <div id="request-cta">
+                        <div id="request-text">${this.formData.button_text}</div>
+                    </div>
+                </a>
+            `;
+        }
+    }
+
     setupMenuForm() {
         const nomeInput = document.getElementById('nome');
         const cognomeInput = document.getElementById('cognome');
@@ -852,6 +927,33 @@ class Navbar {
         const requestCta = document.getElementById('request-cta');
         
         if (nomeInput && cognomeInput && messaggioInput && requestCta) {
+            // Se stiamo usando un form reale, aggiorna i campi nascosti
+            if (this.formData.form_integration.type !== 'custom') {
+                const form = requestCta.closest('form');
+                if (form) {
+                    // Previeni invio del form se i campi non sono completi
+                    form.addEventListener('submit', (e) => {
+                        const nomeValue = nomeInput.value.trim();
+                        const cognomeValue = cognomeInput.value.trim();
+                        const messaggioValue = messaggioInput.value.trim();
+                        
+                        if (!nomeValue || !cognomeValue || !messaggioValue) {
+                            e.preventDefault();
+                            return false;
+                        }
+                        
+                        // Aggiorna i campi nascosti
+                        const hiddenNome = document.getElementById('hidden-nome');
+                        const hiddenCognome = document.getElementById('hidden-cognome');
+                        const hiddenMessaggio = document.getElementById('hidden-messaggio');
+                        
+                        if (hiddenNome) hiddenNome.value = nomeValue;
+                        if (hiddenCognome) hiddenCognome.value = cognomeValue;
+                        if (hiddenMessaggio) hiddenMessaggio.value = messaggioValue;
+                    });
+                }
+            }
+            
             // Use unified FormValidator if available
             if (typeof FormValidator !== 'undefined') {
                 new FormValidator({
@@ -896,6 +998,13 @@ function initializeNavbar() {
 window.updateNavigationData = function(data) {
     if (navbarInstance) {
         navbarInstance.updateNavigationData(data);
+    }
+};
+
+// Global function to update form data from CMS
+window.updateFormData = function(data) {
+    if (navbarInstance) {
+        navbarInstance.updateFormData(data);
     }
 };
 

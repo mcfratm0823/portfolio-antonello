@@ -97,12 +97,6 @@ collections:
             widget: "object"
             fields:
               - {label: "Titolo", name: "title", widget: "text"}
-              - {label: "Titolo Form", name: "form_title", widget: "string"}
-              - {label: "Placeholder Nome", name: "name_placeholder", widget: "string"}
-              - {label: "Placeholder Cognome", name: "surname_placeholder", widget: "string"}
-              - {label: "Placeholder Messaggio", name: "message_placeholder", widget: "string"}
-              - {label: "Testo Bottone", name: "button_text", widget: "string"}
-              - {label: "Email Link", name: "email_link", widget: "string"}
               - {label: "Email Footer", name: "bottom_email", widget: "string"}
               - {label: "Telefono Footer", name: "bottom_phone", widget: "string"}
 
@@ -136,6 +130,25 @@ collections:
               - {label: "Instagram", name: "instagram", widget: "string", required: false}
               - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
               - {label: "Behance", name: "behance", widget: "string", required: false}
+      
+      - label: "Form Contatto"
+        name: "contact_form"
+        file: "data/contact-form.json"
+        fields:
+          - {label: "Titolo Form", name: "form_title", widget: "string", default: "CONTATTAMI"}
+          - {label: "Placeholder Nome", name: "name_placeholder", widget: "string", default: "NOME"}
+          - {label: "Placeholder Cognome", name: "surname_placeholder", widget: "string", default: "COGNOME"}
+          - {label: "Placeholder Messaggio", name: "message_placeholder", widget: "string", default: "Scrivi qui la tua richiesta"}
+          - {label: "Testo Bottone", name: "button_text", widget: "string", default: "CONTATTAMI"}
+          - {label: "Email Destinatario", name: "recipient_email", widget: "string", default: "antonelloguarnieri6@gmail.com"}
+          - {label: "Messaggio di Successo", name: "success_message", widget: "string", default: "Grazie! Il tuo messaggio è stato inviato."}
+          - {label: "Messaggio di Errore", name: "error_message", widget: "string", default: "Ops! Qualcosa è andato storto. Riprova."}
+          - label: "Integrazione Form"
+            name: "form_integration"
+            widget: "object"
+            fields:
+              - {label: "Tipo", name: "type", widget: "select", options: ["netlify", "formspree", "custom"], default: "netlify", hint: "Scegli il servizio per gestire l'invio del form"}
+              - {label: "Endpoint Custom", name: "custom_endpoint", widget: "string", required: false, hint: "Solo se hai scelto 'custom' come tipo"}
       
       - label: "Navigazione"
         name: "navigation"

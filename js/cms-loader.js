@@ -3,17 +3,24 @@ async function loadCMSData() {
     try {
         // Carica i dati della homepage con cache busting
         const timestamp = new Date().getTime();
-        const [homepageResponse, navigationResponse] = await Promise.all([
+        const [homepageResponse, navigationResponse, formResponse] = await Promise.all([
             fetch(`./data/homepage.json?t=${timestamp}`),
-            fetch(`./data/navigation.json?t=${timestamp}`)
+            fetch(`./data/navigation.json?t=${timestamp}`),
+            fetch(`./data/contact-form.json?t=${timestamp}`)
         ]);
         
         const data = await homepageResponse.json();
         const navData = await navigationResponse.json();
+        const formData = await formResponse.json();
         
         // Aggiorna i dati di navigazione se disponibili
         if (window.updateNavigationData && navData) {
             window.updateNavigationData(navData);
+        }
+        
+        // Aggiorna i dati del form se disponibili
+        if (window.updateFormData && formData) {
+            window.updateFormData(formData);
         }
         
         // Aggiorna Hero Section
@@ -84,14 +91,18 @@ async function loadCMSData() {
         // Aggiorna Footer
         if (data.footer) {
             updateElement('#test-section h2', data.footer.title);
-            updateElement('.footer-menu-item:first-child', data.footer.form_title);
-            updateElement('#footer-nome', data.footer.name_placeholder, 'placeholder');
-            updateElement('#footer-cognome', data.footer.surname_placeholder, 'placeholder');
-            updateElement('#footer-messaggio', data.footer.message_placeholder, 'placeholder');
-            updateElement('#footer-request-text', data.footer.button_text);
             
-            const emailLink = document.querySelector('.footer-menu-item a[href^="mailto"]');
-            if (emailLink) emailLink.href = `mailto:${data.footer.email_link}`;
+            // Usa i dati del form centralizzato se disponibili
+            if (formData) {
+                updateElement('.footer-menu-item:first-child', formData.form_title);
+                updateElement('#footer-nome', formData.name_placeholder, 'placeholder');
+                updateElement('#footer-cognome', formData.surname_placeholder, 'placeholder');
+                updateElement('#footer-messaggio', formData.message_placeholder, 'placeholder');
+                updateElement('#footer-request-text', formData.button_text);
+                
+                const emailLink = document.querySelector('.footer-menu-item a[href^="mailto"]');
+                if (emailLink) emailLink.href = `mailto:${formData.recipient_email}`;
+            }
             
             const footerLinks = document.querySelectorAll('.footer-contact-link');
             if (footerLinks[0]) {

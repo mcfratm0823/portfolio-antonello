@@ -1,0 +1,14 @@
+{
+  "form_title": "CONTATTAMI",
+  "name_placeholder": "NOME",
+  "surname_placeholder": "COGNOME",
+  "message_placeholder": "Scrivi qui la tua richiesta",
+  "button_text": "CONTATTAMI",
+  "recipient_email": "antonelloguarnieri6@gmail.com",
+  "success_message": "Grazie! Il tuo messaggio è stato inviato.",
+  "error_message": "Ops! Qualcosa è andato storto. Riprova.",
+  "form_integration": {
+    "type": "netlify",
+    "custom_endpoint": ""
+  }
+}
