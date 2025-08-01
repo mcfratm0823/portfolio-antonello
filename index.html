@@ -83,10 +83,11 @@
 </head>
 <body>
     <!-- Form nascosto per Netlify Forms -->
-    <form name="contact-menu" netlify netlify-honeypot="bot-field" hidden>
+    <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success" style="display: none;">
         <input type="text" name="nome" />
         <input type="text" name="cognome" />
         <textarea name="messaggio"></textarea>
+        <input type="hidden" name="form-name" value="contact-menu">
     </form>
 
     <!-- Preloader -->
