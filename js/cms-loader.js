@@ -23,6 +23,11 @@ async function loadCMSData() {
             window.updateFormData(formData);
         }
         
+        // Se navbar ha una funzione separata per il form, aggiornala anche lì
+        if (window.updateNavbarFormData && formData) {
+            window.updateNavbarFormData(formData);
+        }
+        
         // Aggiorna Hero Section
         if (data.hero) {
             console.log('Tagline originale:', data.hero.tagline);
