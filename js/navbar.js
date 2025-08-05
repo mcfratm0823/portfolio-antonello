@@ -872,8 +872,14 @@ class Navbar {
         // Setup form functionality
         this.setupMenuForm();
         
-        // Notifica che il form è stato creato
-        window.dispatchEvent(new Event('formCreated'));
+        // Aggiungi gestione AJAX direttamente al form
+        setTimeout(() => {
+            const form = document.querySelector('#menu-overlay form[data-netlify="true"]');
+            if (form && window.handleFormSubmit) {
+                form.addEventListener('submit', window.handleFormSubmit);
+                console.log('AJAX handler aggiunto al form del menu');
+            }
+        }, 100);
     }
     
     closeMenuOverlay() {

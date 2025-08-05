@@ -81,4 +81,7 @@ window.addEventListener('formCreated', () => {
     setTimeout(initializeFormAjax, 100);
 });
 
+// Rendi handleFormSubmit disponibile globalmente
+window.handleFormSubmit = handleFormSubmit;
+
 export { handleFormSubmit, initializeFormAjax };

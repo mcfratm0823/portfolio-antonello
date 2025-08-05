@@ -56,8 +56,12 @@ class FormHandler {
         // Applica la validazione del form
         this.setupFormValidation('footer');
         
-        // Notifica che il form è stato creato
-        window.dispatchEvent(new Event('formCreated'));
+        // Aggiungi gestione AJAX direttamente al form
+        const form = footerForm.querySelector('form[data-netlify="true"]');
+        if (form && window.handleFormSubmit) {
+            form.addEventListener('submit', window.handleFormSubmit);
+            console.log('AJAX handler aggiunto al form del footer');
+        }
     }
 
     setupFormValidation(formType = 'footer') {
