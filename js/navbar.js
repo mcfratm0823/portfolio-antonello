@@ -871,6 +871,9 @@ class Navbar {
         
         // Setup form functionality
         this.setupMenuForm();
+        
+        // Notifica che il form è stato creato
+        window.dispatchEvent(new Event('formCreated'));
     }
     
     closeMenuOverlay() {
@@ -886,7 +889,7 @@ class Navbar {
         // Genera HTML in base al tipo di integrazione
         if (this.formData.form_integration.type === 'netlify') {
             return `
-                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?form-success=true" style="display: inline;">
+                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: inline;">
                     <input type="hidden" name="form-name" value="contact-menu">
                     <input type="hidden" name="bot-field">
                     <input type="hidden" name="nome" id="hidden-nome">

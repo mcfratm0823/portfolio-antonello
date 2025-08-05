@@ -30,7 +30,7 @@ class FormHandler {
 
         // Sostituisci il contenuto con un form reale
         const formHTML = `
-            <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?form-success=true">
+            <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field">
                 <input type="hidden" name="form-name" value="contact-menu">
                 <input type="hidden" name="bot-field">
                 <div class="footer-menu-item">${this.formData.form_title}</div>
@@ -55,6 +55,9 @@ class FormHandler {
 
         // Applica la validazione del form
         this.setupFormValidation('footer');
+        
+        // Notifica che il form è stato creato
+        window.dispatchEvent(new Event('formCreated'));
     }
 
     setupFormValidation(formType = 'footer') {
