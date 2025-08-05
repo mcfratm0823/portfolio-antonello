@@ -144,12 +144,12 @@ function showSuccessMessageDirect() {
         successDiv.style.transform = 'scale(1)';
     });
     
-    // Rimuovi dopo 3 secondi
+    // Rimuovi dopo 5 secondi
     setTimeout(() => {
         overlay.style.opacity = '0';
         successDiv.style.transform = 'scale(0.9)';
         setTimeout(() => overlay.remove(), 300);
-    }, 3000);
+    }, 5000);
 }
 
 // Rendi handleFormSubmit disponibile globalmente
