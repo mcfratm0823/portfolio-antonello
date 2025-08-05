@@ -27,6 +27,107 @@ class FormHandler {
     setupFooterForm() {
         const footerForm = document.querySelector('.footer-contact-form');
         if (!footerForm) return;
+        
+        // Aggiungi CSS per uniformare spaziature con il menu
+        if (!document.getElementById('footer-form-styles')) {
+            const style = document.createElement('style');
+            style.id = 'footer-form-styles';
+            style.textContent = `
+                .footer-menu-item {
+                    font-family: Neue;
+                    font-size: clamp(12px, 0.9vw, 16px);
+                    font-weight: 400;
+                    line-height: normal;
+                    color: rgba(255, 255, 255, 0.7);
+                    text-transform: uppercase;
+                    letter-spacing: 0.07vw;
+                    margin-bottom: 1vw;
+                    cursor: default;
+                    transition: color 0s;
+                }
+                
+                .footer-menu-item:last-child {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                }
+                
+                .footer-menu-item:first-child {
+                    font-size: clamp(12px, 0.9vw, 16px);
+                    color: #fff;
+                }
+                
+                .footer-menu-item:hover {
+                    color: #fff !important;
+                    transition: none !important;
+                }
+                
+                /* Stili per input e textarea nel footer */
+                .footer-menu-item input,
+                .footer-menu-item textarea {
+                    background: transparent;
+                    border: none;
+                    color: #474747;
+                    font-family: Neue;
+                    font-size: clamp(12px, 0.9vw, 16px);
+                    font-weight: 400;
+                    line-height: normal;
+                    text-transform: uppercase;
+                    letter-spacing: 0.07vw;
+                    outline: none;
+                    width: 100%;
+                    padding: 0;
+                    transition: all 0.3s ease;
+                }
+                
+                .footer-menu-item input::placeholder,
+                .footer-menu-item textarea::placeholder {
+                    color: #474747;
+                    opacity: 1;
+                }
+                
+                .footer-menu-item input:focus,
+                .footer-menu-item textarea:focus {
+                    color: #474747;
+                }
+                
+                .footer-menu-item input:not(:placeholder-shown),
+                .footer-menu-item textarea:not(:placeholder-shown) {
+                    color: #fff;
+                }
+                
+                .footer-menu-item textarea {
+                    text-transform: none;
+                    letter-spacing: normal;
+                    resize: none;
+                    min-height: 3vw;
+                }
+                
+                #footer-request-cta {
+                    font-family: Neue;
+                    font-size: clamp(12px, 0.9vw, 16px);
+                    text-transform: uppercase;
+                    background: transparent;
+                    cursor: pointer;
+                    color: #474747;
+                    display: inline-block;
+                    opacity: 1;
+                    pointer-events: none;
+                }
+                
+                #footer-request-cta.active {
+                    color: white;
+                    pointer-events: auto;
+                }
+                
+                #footer-request-text {
+                    opacity: 1;
+                    color: inherit;
+                    white-space: nowrap;
+                    transition: all .5s ease;
+                }
+            `;
+            document.head.appendChild(style);
+        }
 
         // Sostituisci il contenuto con un form reale
         const formHTML = `
