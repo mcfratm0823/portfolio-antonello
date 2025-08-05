@@ -895,7 +895,7 @@ class Navbar {
                     <input type="hidden" name="nome" id="hidden-nome">
                     <input type="hidden" name="cognome" id="hidden-cognome">
                     <input type="hidden" name="messaggio" id="hidden-messaggio">
-                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer;">
+                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer; width: 100%; text-align: left;">
                         <div id="request-text">${this.formData.button_text}</div>
                     </button>
                 </form>
@@ -906,7 +906,7 @@ class Navbar {
                     <input type="hidden" name="nome" id="hidden-nome">
                     <input type="hidden" name="cognome" id="hidden-cognome">
                     <input type="hidden" name="messaggio" id="hidden-messaggio">
-                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer;">
+                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer; width: 100%; text-align: left;">
                         <div id="request-text">${this.formData.button_text}</div>
                     </button>
                 </form>

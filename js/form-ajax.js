@@ -2,6 +2,9 @@
 
 function handleFormSubmit(e) {
     e.preventDefault();
+    e.stopPropagation();
+    
+    console.log('handleFormSubmit chiamato per:', e.target.getAttribute('name'));
     
     const form = e.target;
     const formData = new FormData(form);
@@ -47,17 +50,25 @@ function handleFormSubmit(e) {
 
 // Applica a tutti i form Netlify
 function initializeFormAjax() {
-    // Aspetta un attimo per essere sicuri che i form siano stati creati
-    setTimeout(() => {
-        const forms = document.querySelectorAll('form[data-netlify="true"]');
-        forms.forEach(form => {
-            form.removeEventListener('submit', handleFormSubmit); // Rimuovi listener esistenti
-            form.addEventListener('submit', handleFormSubmit);
-        });
-    }, 500);
+    const forms = document.querySelectorAll('form[data-netlify="true"]');
+    forms.forEach(form => {
+        // Rimuovi listener esistenti per evitare duplicati
+        form.removeEventListener('submit', handleFormSubmit);
+        form.addEventListener('submit', handleFormSubmit);
+        console.log('Form AJAX inizializzato per:', form.getAttribute('name'));
+    });
 }
 
-// Inizializza quando il DOM è pronto
+// Usa delegazione eventi per catturare tutti i submit, anche futuri
+document.addEventListener('submit', function(e) {
+    const form = e.target;
+    if (form.hasAttribute('data-netlify')) {
+        console.log('Intercettato submit del form:', form.getAttribute('name'));
+        handleFormSubmit(e);
+    }
+}, true); // Usa capture phase
+
+// Inizializza form esistenti quando il DOM è pronto
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeFormAjax);
 } else {
@@ -65,6 +76,9 @@ if (document.readyState === 'loading') {
 }
 
 // Re-inizializza quando i form vengono creati dinamicamente
-window.addEventListener('formCreated', initializeFormAjax);
+window.addEventListener('formCreated', () => {
+    console.log('Evento formCreated ricevuto');
+    setTimeout(initializeFormAjax, 100);
+});
 
 export { handleFormSubmit, initializeFormAjax };
