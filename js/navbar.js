@@ -1063,6 +1063,8 @@ function initializeNavbar() {
     if (!navbarInstance) {
         navbarInstance = new Navbar();
         navbarInstance.init();
+        // Rendi navbarInstance disponibile globalmente
+        window.navbarInstance = navbarInstance;
     } else {
     }
 }

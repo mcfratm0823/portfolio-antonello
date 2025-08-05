@@ -22,9 +22,16 @@ function handleFormSubmit(e) {
         body: new URLSearchParams(formData).toString()
     })
     .then(() => {
+        console.log('Form inviato con successo!');
+        
         // Successo - mostra il messaggio personalizzato
         if (window.navbarInstance && window.navbarInstance.showSuccessMessage) {
+            console.log('Chiamando showSuccessMessage da navbarInstance');
             window.navbarInstance.showSuccessMessage();
+        } else {
+            console.log('navbarInstance non disponibile, creo messaggio diretto');
+            // Fallback: crea il messaggio direttamente
+            showSuccessMessageDirect();
         }
         
         // Reset del form
@@ -80,6 +87,70 @@ window.addEventListener('formCreated', () => {
     console.log('Evento formCreated ricevuto');
     setTimeout(initializeFormAjax, 100);
 });
+
+// Funzione di fallback per mostrare il messaggio di successo
+function showSuccessMessageDirect() {
+    // Chiudi il menu se è aperto
+    const menuOverlay = document.getElementById('menu-overlay');
+    if (menuOverlay) {
+        menuOverlay.remove();
+        document.body.style.overflow = '';
+    }
+    
+    // Crea overlay scuro
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    `;
+    
+    // Crea messaggio
+    const successDiv = document.createElement('div');
+    successDiv.style.cssText = `
+        background: transparent;
+        color: #fff;
+        padding: 3rem;
+        text-align: center;
+        transform: scale(0.9);
+        transition: transform 0.3s ease;
+    `;
+    
+    successDiv.innerHTML = `
+        <h2 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 3rem; margin: 0 0 1rem 0; font-weight: 400; letter-spacing: -0.02em;">
+            Grazie! Il tuo messaggio è stato inviato.
+        </h2>
+        <p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1rem; opacity: 0.7; margin: 0;">
+            Ti risponderò al più presto
+        </p>
+    `;
+    
+    overlay.appendChild(successDiv);
+    document.body.appendChild(overlay);
+    
+    // Animazione entrata
+    requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+        successDiv.style.transform = 'scale(1)';
+    });
+    
+    // Rimuovi dopo 3 secondi
+    setTimeout(() => {
+        overlay.style.opacity = '0';
+        successDiv.style.transform = 'scale(0.9)';
+        setTimeout(() => overlay.remove(), 300);
+    }, 3000);
+}
 
 // Rendi handleFormSubmit disponibile globalmente
 window.handleFormSubmit = handleFormSubmit;
