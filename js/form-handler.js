@@ -99,7 +99,10 @@ class FormHandler {
                     text-transform: none;
                     letter-spacing: normal;
                     resize: none;
-                    min-height: 3vw;
+                    min-height: 1.2em;
+                    height: 1.2em;
+                    overflow: hidden;
+                    white-space: nowrap;
                 }
                 
                 #footer-request-cta {
@@ -142,7 +145,7 @@ class FormHandler {
                     <input type="text" name="cognome" id="footer-cognome" placeholder="${this.formData.surname_placeholder}" required />
                 </div>
                 <div class="footer-menu-item">
-                    <textarea name="messaggio" id="footer-messaggio" placeholder="${this.formData.message_placeholder}" rows="3" required></textarea>
+                    <textarea name="messaggio" id="footer-messaggio" placeholder="${this.formData.message_placeholder}" rows="1" required></textarea>
                 </div>
                 <div class="footer-menu-item">
                     <button type="submit" id="footer-request-cta" style="background: none; border: none; cursor: pointer; width: 100%;">
