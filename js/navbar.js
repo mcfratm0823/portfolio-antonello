@@ -886,7 +886,7 @@ class Navbar {
         // Genera HTML in base al tipo di integrazione
         if (this.formData.form_integration.type === 'netlify') {
             return `
-                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: inline;">
+                <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?form-success=true" style="display: inline;">
                     <input type="hidden" name="form-name" value="contact-menu">
                     <input type="hidden" name="bot-field">
                     <input type="hidden" name="nome" id="hidden-nome">
@@ -926,14 +926,7 @@ class Navbar {
         const messaggioInput = document.getElementById('messaggio');
         const requestCta = document.getElementById('request-cta');
         
-        // Controlla se c'è un parametro success nell'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
-            // Mostra messaggio di successo
-            this.showSuccessMessage();
-            // Rimuovi il parametro dall'URL
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
+        // Non serve più qui perché lo gestiremo globalmente
         
         if (nomeInput && cognomeInput && messaggioInput && requestCta) {
             // Se stiamo usando un form reale, aggiorna i campi nascosti
@@ -993,29 +986,64 @@ class Navbar {
     }
     
     showSuccessMessage() {
-        // Crea e mostra un messaggio di successo
+        // Chiudi il menu se è aperto
+        const menuOverlay = document.getElementById('menu-overlay');
+        if (menuOverlay) {
+            this.closeMenuOverlay();
+        }
+        
+        // Crea overlay scuro
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        `;
+        
+        // Crea messaggio
         const successDiv = document.createElement('div');
         successDiv.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #000;
+            background: transparent;
             color: #fff;
-            padding: 2rem 3rem;
-            border-radius: 0;
-            z-index: 10000;
-            font-family: Neue;
-            font-size: 1rem;
+            padding: 3rem;
             text-align: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         `;
-        successDiv.textContent = this.formData.success_message;
-        document.body.appendChild(successDiv);
         
-        // Rimuovi il messaggio dopo 3 secondi
+        successDiv.innerHTML = `
+            <h2 style="font-family: Neue; font-size: 3rem; margin: 0 0 1rem 0; font-weight: 400; letter-spacing: -0.02em;">
+                ${this.formData.success_message}
+            </h2>
+            <p style="font-family: Neue; font-size: 1rem; opacity: 0.7; margin: 0;">
+                Ti risponderò al più presto
+            </p>
+        `;
+        
+        overlay.appendChild(successDiv);
+        document.body.appendChild(overlay);
+        
+        // Animazione entrata
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '1';
+            successDiv.style.transform = 'scale(1)';
+        });
+        
+        // Rimuovi dopo 3 secondi
         setTimeout(() => {
-            successDiv.remove();
+            overlay.style.opacity = '0';
+            successDiv.style.transform = 'scale(0.9)';
+            setTimeout(() => overlay.remove(), 300);
         }, 3000);
     }
 }
@@ -1053,4 +1081,19 @@ if (document.readyState === 'loading') {
 } else {
     // DOM is already loaded
     initializeNavbar();
+}
+
+// Controlla se il form è stato inviato con successo
+if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('form-success') === 'true') {
+        // Aspetta che navbar sia inizializzato
+        setTimeout(() => {
+            if (navbarInstance && navbarInstance.showSuccessMessage) {
+                navbarInstance.showSuccessMessage();
+            }
+            // Rimuovi il parametro dall'URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }, 100);
+    }
 }
