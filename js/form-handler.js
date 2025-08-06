@@ -99,10 +99,12 @@ class FormHandler {
                     text-transform: none;
                     letter-spacing: normal;
                     resize: none;
-                    min-height: 1.2em;
-                    height: 1.2em;
+                    min-height: 1.5em;
+                    height: 1.5em;
                     overflow: hidden;
                     white-space: nowrap;
+                    padding-top: 0.1em;
+                    padding-bottom: 0.1em;
                 }
                 
                 #footer-request-cta {

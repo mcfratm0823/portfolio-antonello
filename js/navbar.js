@@ -386,11 +386,13 @@ class Navbar {
                     outline: none;
                     width: 100%;
                     padding: 0;
+                    padding-top: 0.1em;
+                    padding-bottom: 0.1em;
                     transition: all 0.3s ease;
                     position: relative;
                     resize: none;
-                    min-height: 1.2em;
-                    height: 1.2em;
+                    min-height: 1.5em;
+                    height: 1.5em;
                     overflow: hidden;
                     white-space: nowrap;
                     cursor: text;
