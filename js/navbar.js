@@ -298,9 +298,16 @@ class Navbar {
                     justify-content: space-between;
                     padding: 4vw;
                 }
+                
+                #menu-contact-form {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    width: 100%;
+                }
 
                 #left-menu {
-                    flex: 1;
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
