@@ -304,6 +304,8 @@ class Navbar {
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
+                    width: 100%;
+                    max-width: 400px;
                 }
 
                 .menu-item {
@@ -317,6 +319,7 @@ class Navbar {
                     margin-bottom: 1vw;
                     cursor: default;
                     transition: color 0s;
+                    width: 100%;
                 }
 
                 .menu-item:last-child {
