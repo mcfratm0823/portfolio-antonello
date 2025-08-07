@@ -15,7 +15,7 @@ public_folder: "/img/uploads" # Public path for media files
 # Collections - define the content types
 collections:
   - name: "projects" # Used in routes
-    label: "Progetti" # Used in the UI
+    label: "Lavori" # Used in the UI
     folder: "_projects" # Where the documents are stored
     create: true # Allow users to create new documents
     slug: "{{slug}}" # Filename template
@@ -100,11 +100,11 @@ collections:
               - {label: "Email Footer", name: "bottom_email", widget: "string"}
               - {label: "Telefono Footer", name: "bottom_phone", widget: "string"}
 
-      - label: "Portfolio Page"
+      - label: "Pagina Lavori"
         name: "portfolio"
         file: "data/portfolio-page.json"
         fields:
-          - {label: "Titolo principale", name: "main_title", widget: "text", default: "PROGETTI"}
+          - {label: "Titolo principale", name: "main_title", widget: "text", default: "SFOGLIA I LAVORI"}
           - label: "Filtri"
             name: "filters"
             widget: "list"
