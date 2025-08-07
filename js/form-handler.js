@@ -84,7 +84,7 @@ class FormHandler {
                     text-transform: uppercase;
                     letter-spacing: 0.07vw;
                     outline: none;
-                    width: 100%;
+                    width: 100% !important;
                     padding: 0;
                     transition: all 0.3s ease;
                 }
