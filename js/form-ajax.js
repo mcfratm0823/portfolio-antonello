@@ -7,6 +7,25 @@ function handleFormSubmit(e) {
     console.log('handleFormSubmit chiamato per:', e.target.getAttribute('name'));
     
     const form = e.target;
+    
+    // Se è il form del menu, copia i valori dai campi visibili ai campi nascosti
+    if (form.getAttribute('name') === 'contact-menu' && form.closest('#menu-overlay')) {
+        const nomeInput = document.getElementById('nome');
+        const cognomeInput = document.getElementById('cognome');
+        const emailInput = document.getElementById('email');
+        const messaggioInput = document.getElementById('messaggio');
+        
+        const hiddenNome = document.getElementById('hidden-nome');
+        const hiddenCognome = document.getElementById('hidden-cognome');
+        const hiddenEmail = document.getElementById('hidden-email');
+        const hiddenMessaggio = document.getElementById('hidden-messaggio');
+        
+        if (hiddenNome && nomeInput) hiddenNome.value = nomeInput.value.trim();
+        if (hiddenCognome && cognomeInput) hiddenCognome.value = cognomeInput.value.trim();
+        if (hiddenEmail && emailInput) hiddenEmail.value = emailInput.value.trim();
+        if (hiddenMessaggio && messaggioInput) hiddenMessaggio.value = messaggioInput.value.trim();
+    }
+    
     const formData = new FormData(form);
     
     // Disabilita il bottone durante l'invio
