@@ -38,10 +38,22 @@ async function loadCMSData() {
             window.updateNavbarFormData(formData);
         }
         
-        // Se siamo sulla pagina portfolio, aggiorna il titolo
+        // Se siamo sulla pagina portfolio, aggiorna il titolo e i filtri
         if (isPortfolioPage && pageData) {
             updateElement('#portfolio-title', pageData.main_title);
-            // Potremmo anche aggiornare i filtri se necessario
+            
+            // Aggiorna i filtri
+            const filtersContainer = document.getElementById('filters');
+            if (filtersContainer && pageData.filters) {
+                filtersContainer.innerHTML = pageData.filters.map((filter, index) => 
+                    `<div class="filter-item ${index === 0 ? 'active' : ''}" data-filter="${filter.value}">${filter.name}</div>`
+                ).join('');
+                
+                // Riattacca gli event listener per i filtri
+                if (window.initializeFilters) {
+                    window.initializeFilters();
+                }
+            }
         }
         
         // Se siamo sulla homepage, aggiorna i contenuti homepage

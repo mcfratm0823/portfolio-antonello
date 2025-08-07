@@ -590,16 +590,15 @@ class StaticPortfolio {
      */
     async generateFilters(projects) {
         try {
-            // Get categories from data source for future flexibility
-            const categories = await this.dataSource.getCategories();
-            
-            // Find filters container
+            // Se i filtri sono già stati caricati dal CMS, non sovrascriverli
             const filtersContainer = document.getElementById('filters');
-            
-            if (!filtersContainer) {
-                console.warn('Filters container not found');
+            if (!filtersContainer || filtersContainer.children.length > 0) {
+                console.log('Filters already loaded from CMS, skipping generation');
                 return;
             }
+            
+            // Get categories from data source for future flexibility
+            const categories = await this.dataSource.getCategories();
             
             // Create filters HTML
             let filtersHTML = '<div class="filter-item active" data-filter="all">TUTTI I LAVORI</div>';
@@ -784,6 +783,34 @@ document.addEventListener('DOMContentLoaded', function() {
         img.addEventListener('dragstart', e => e.preventDefault());
     });
 });
+
+// Funzione globale per reinizializzare i filtri dopo il caricamento dal CMS
+window.initializeFilters = function() {
+    // Trova tutti i nuovi filtri caricati dal CMS
+    const filters = document.querySelectorAll('.filter-item');
+    
+    filters.forEach(filter => {
+        filter.addEventListener('click', function() {
+            // Rimuovi active da tutti
+            filters.forEach(f => f.classList.remove('active'));
+            // Aggiungi active al cliccato
+            this.classList.add('active');
+            
+            // Filtra i progetti
+            const filterValue = this.dataset.filter;
+            const projects = document.querySelectorAll('.project-card');
+            
+            projects.forEach(project => {
+                const category = project.dataset.category;
+                if (filterValue === 'all' || category === filterValue) {
+                    project.style.display = 'block';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+        });
+    });
+};
 
 // Export for ES6 module support
 if (typeof module !== 'undefined' && module.exports) {
