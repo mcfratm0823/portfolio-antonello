@@ -829,24 +829,30 @@ class Navbar {
                 <div id="menu-container">
                     <!-- Left Side - Menu Items -->
                     <div id="left-side">
-                        <div id="left-menu">
-                            <div class="menu-item">${this.formData.form_title}</div>
-                            <div class="menu-item">
-                                <input type="text" id="nome" placeholder="${this.formData.name_placeholder}" />
+                        <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="menu-contact-form">
+                            <input type="hidden" name="form-name" value="contact-menu">
+                            <input type="hidden" name="bot-field">
+                            <div id="left-menu">
+                                <div class="menu-item">${this.formData.form_title}</div>
+                                <div class="menu-item">
+                                    <input type="text" name="nome" id="nome" placeholder="${this.formData.name_placeholder}" />
+                                </div>
+                                <div class="menu-item">
+                                    <input type="text" name="cognome" id="cognome" placeholder="${this.formData.surname_placeholder}" />
+                                </div>
+                                <div class="menu-item">
+                                    <input type="email" name="email" id="email" placeholder="${this.formData.email_placeholder}" />
+                                </div>
+                                <div class="menu-item">
+                                    <textarea name="messaggio" id="messaggio" placeholder="${this.formData.message_placeholder}"></textarea>
+                                </div>
+                                <div class="menu-item">
+                                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer; width: 100%; text-align: left;">
+                                        <div id="request-text">${this.formData.button_text}</div>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="menu-item">
-                                <input type="text" id="cognome" placeholder="${this.formData.surname_placeholder}" />
-                            </div>
-                            <div class="menu-item">
-                                <input type="email" id="email" placeholder="${this.formData.email_placeholder}" />
-                            </div>
-                            <div class="menu-item">
-                                <textarea id="messaggio" placeholder="${this.formData.message_placeholder}"></textarea>
-                            </div>
-                            <div class="menu-item">
-                                ${this.getFormActionHTML()}
-                            </div>
-                        </div>
+                        </form>
                         
                         <!-- Bottom Left Info -->
                         <div id="left-info">
@@ -887,7 +893,7 @@ class Navbar {
         
         // Aggiungi gestione AJAX direttamente al form
         setTimeout(() => {
-            const form = document.querySelector('#menu-overlay form[data-netlify="true"]');
+            const form = document.getElementById('menu-contact-form');
             if (form && window.handleFormSubmit) {
                 form.addEventListener('submit', window.handleFormSubmit);
                 console.log('AJAX handler aggiunto al form del menu');
@@ -950,38 +956,7 @@ class Navbar {
         const messaggioInput = document.getElementById('messaggio');
         const requestCta = document.getElementById('request-cta');
         
-        // Non serve più qui perché lo gestiremo globalmente
-        
         if (nomeInput && cognomeInput && emailInput && messaggioInput && requestCta) {
-            // Se stiamo usando un form reale, aggiorna i campi nascosti
-            if (this.formData.form_integration.type !== 'custom') {
-                const form = requestCta.closest('form');
-                if (form) {
-                    // Previeni invio del form se i campi non sono completi
-                    form.addEventListener('submit', (e) => {
-                        const nomeValue = nomeInput.value.trim();
-                        const cognomeValue = cognomeInput.value.trim();
-                        const emailValue = emailInput.value.trim();
-                        const messaggioValue = messaggioInput.value.trim();
-                        
-                        if (!nomeValue || !cognomeValue || !emailValue || !messaggioValue) {
-                            e.preventDefault();
-                            return false;
-                        }
-                        
-                        // Aggiorna i campi nascosti
-                        const hiddenNome = document.getElementById('hidden-nome');
-                        const hiddenCognome = document.getElementById('hidden-cognome');
-                        const hiddenEmail = document.getElementById('hidden-email');
-                        const hiddenMessaggio = document.getElementById('hidden-messaggio');
-                        
-                        if (hiddenNome) hiddenNome.value = nomeValue;
-                        if (hiddenCognome) hiddenCognome.value = cognomeValue;
-                        if (hiddenEmail) hiddenEmail.value = emailValue;
-                        if (hiddenMessaggio) hiddenMessaggio.value = messaggioValue;
-                    });
-                }
-            }
             
             // Use unified FormValidator if available
             if (typeof FormValidator !== 'undefined') {
