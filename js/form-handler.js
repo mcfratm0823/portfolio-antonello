@@ -33,6 +33,11 @@ class FormHandler {
             const style = document.createElement('style');
             style.id = 'footer-form-styles';
             style.textContent = `
+                .footer-contact-form {
+                    width: 100%;
+                    max-width: 400px;
+                }
+                
                 .footer-menu-item {
                     font-family: Neue;
                     font-size: clamp(12px, 0.9vw, 16px);
@@ -109,8 +114,6 @@ class FormHandler {
                     white-space: nowrap;
                     padding-top: 0.1em;
                     padding-bottom: 0.1em;
-                    text-indent: -0.5em;
-                    padding-left: 0.5em;
                 }
                 
                 #footer-request-cta {
