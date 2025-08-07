@@ -47,7 +47,6 @@ class FormHandler {
                     text-transform: uppercase;
                     letter-spacing: 0.07vw;
                     margin-bottom: 1vw;
-                    cursor: default;
                     transition: color 0s;
                 }
                 
@@ -59,12 +58,10 @@ class FormHandler {
                 /* Titolo del form sempre bianco */
                 .footer-form-title {
                     color: #fff !important;
-                    cursor: auto !important;
                 }
                 
                 .footer-form-title:hover {
                     color: #fff !important;
-                    cursor: auto !important;
                 }
                 
                 /* Hover solo per gli altri elementi */
