@@ -39,6 +39,14 @@ class FormHandler {
                     max-width: 600px;
                 }
                 
+                .footer-contact-form form {
+                    width: 100%;
+                }
+                
+                .footer-contact-form .footer-menu-item {
+                    width: 100%;
+                }
+                
                 .footer-menu-item {
                     font-family: Neue;
                     font-size: clamp(12px, 0.9vw, 16px);
@@ -72,8 +80,8 @@ class FormHandler {
                 }
                 
                 /* Stili per input e textarea nel footer */
-                .footer-menu-item input,
-                .footer-menu-item textarea {
+                .footer-contact-form .footer-menu-item input,
+                .footer-contact-form .footer-menu-item textarea {
                     background: transparent;
                     border: none;
                     color: #474747;
@@ -85,8 +93,10 @@ class FormHandler {
                     letter-spacing: 0.07vw;
                     outline: none;
                     width: 100% !important;
+                    max-width: 100% !important;
                     padding: 0;
                     transition: all 0.3s ease;
+                    box-sizing: border-box;
                 }
                 
                 .footer-menu-item input::placeholder {
