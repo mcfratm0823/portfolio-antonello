@@ -6,6 +6,7 @@ class FormHandler {
             form_title: "CONTATTAMI",
             name_placeholder: "NOME",
             surname_placeholder: "COGNOME",
+            email_placeholder: "EMAIL",
             message_placeholder: "Scrivi qui la tua richiesta",
             button_text: "CONTATTAMI",
             recipient_email: "antonelloguarnieri6@gmail.com",
@@ -159,6 +160,9 @@ class FormHandler {
                     <input type="text" name="cognome" id="footer-cognome" placeholder="${this.formData.surname_placeholder}" required />
                 </div>
                 <div class="footer-menu-item">
+                    <input type="email" name="email" id="footer-email" placeholder="${this.formData.email_placeholder}" required />
+                </div>
+                <div class="footer-menu-item">
                     <textarea name="messaggio" id="footer-messaggio" placeholder="${this.formData.message_placeholder}" required></textarea>
                 </div>
                 <div class="footer-menu-item">
@@ -186,16 +190,18 @@ class FormHandler {
         const prefix = formType === 'footer' ? 'footer-' : '';
         const nomeInput = document.getElementById(`${prefix}nome`);
         const cognomeInput = document.getElementById(`${prefix}cognome`);
+        const emailInput = document.getElementById(`${prefix}email`);
         const messaggioInput = document.getElementById(`${prefix}messaggio`);
         const requestCta = document.getElementById(`${prefix}request-cta`);
 
-        if (nomeInput && cognomeInput && messaggioInput && requestCta) {
+        if (nomeInput && cognomeInput && emailInput && messaggioInput && requestCta) {
             function checkFormCompletion() {
                 const nomeValue = nomeInput.value.trim();
                 const cognomeValue = cognomeInput.value.trim();
+                const emailValue = emailInput.value.trim();
                 const messaggioValue = messaggioInput.value.trim();
                 
-                if (nomeValue && cognomeValue && messaggioValue) {
+                if (nomeValue && cognomeValue && emailValue && messaggioValue) {
                     requestCta.classList.add('active');
                 } else {
                     requestCta.classList.remove('active');
@@ -204,6 +210,7 @@ class FormHandler {
             
             nomeInput.addEventListener('input', checkFormCompletion);
             cognomeInput.addEventListener('input', checkFormCompletion);
+            emailInput.addEventListener('input', checkFormCompletion);
             messaggioInput.addEventListener('input', checkFormCompletion);
             checkFormCompletion();
         }

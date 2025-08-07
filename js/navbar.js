@@ -40,6 +40,7 @@ class Navbar {
             form_title: "CONTATTAMI",
             name_placeholder: "NOME",
             surname_placeholder: "COGNOME",
+            email_placeholder: "EMAIL",
             message_placeholder: "Scrivi qui la tua richiesta",
             button_text: "CONTATTAMI",
             recipient_email: "antonelloguarnieri6@gmail.com",
@@ -680,6 +681,7 @@ class Navbar {
         // Aggiorna i placeholder e i testi del form se esistono
         const nomeInput = document.getElementById('nome');
         const cognomeInput = document.getElementById('cognome');
+        const emailInput = document.getElementById('email');
         const messaggioInput = document.getElementById('messaggio');
         const formTitle = document.querySelector('#left-menu .menu-item:first-child');
         const requestText = document.getElementById('request-text');
@@ -687,6 +689,7 @@ class Navbar {
         
         if (nomeInput) nomeInput.placeholder = this.formData.name_placeholder;
         if (cognomeInput) cognomeInput.placeholder = this.formData.surname_placeholder;
+        if (emailInput) emailInput.placeholder = this.formData.email_placeholder;
         if (messaggioInput) messaggioInput.placeholder = this.formData.message_placeholder;
         if (formTitle) formTitle.textContent = this.formData.form_title;
         if (requestText) requestText.textContent = this.formData.button_text;
@@ -835,6 +838,9 @@ class Navbar {
                                 <input type="text" id="cognome" placeholder="${this.formData.surname_placeholder}" />
                             </div>
                             <div class="menu-item">
+                                <input type="email" id="email" placeholder="${this.formData.email_placeholder}" />
+                            </div>
+                            <div class="menu-item">
                                 <textarea id="messaggio" placeholder="${this.formData.message_placeholder}"></textarea>
                             </div>
                             <div class="menu-item">
@@ -907,6 +913,7 @@ class Navbar {
                     <input type="hidden" name="bot-field">
                     <input type="hidden" name="nome" id="hidden-nome">
                     <input type="hidden" name="cognome" id="hidden-cognome">
+                    <input type="hidden" name="email" id="hidden-email">
                     <input type="hidden" name="messaggio" id="hidden-messaggio">
                     <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer; width: 100%; text-align: left;">
                         <div id="request-text">${this.formData.button_text}</div>
@@ -939,12 +946,13 @@ class Navbar {
     setupMenuForm() {
         const nomeInput = document.getElementById('nome');
         const cognomeInput = document.getElementById('cognome');
+        const emailInput = document.getElementById('email');
         const messaggioInput = document.getElementById('messaggio');
         const requestCta = document.getElementById('request-cta');
         
         // Non serve più qui perché lo gestiremo globalmente
         
-        if (nomeInput && cognomeInput && messaggioInput && requestCta) {
+        if (nomeInput && cognomeInput && emailInput && messaggioInput && requestCta) {
             // Se stiamo usando un form reale, aggiorna i campi nascosti
             if (this.formData.form_integration.type !== 'custom') {
                 const form = requestCta.closest('form');
@@ -953,9 +961,10 @@ class Navbar {
                     form.addEventListener('submit', (e) => {
                         const nomeValue = nomeInput.value.trim();
                         const cognomeValue = cognomeInput.value.trim();
+                        const emailValue = emailInput.value.trim();
                         const messaggioValue = messaggioInput.value.trim();
                         
-                        if (!nomeValue || !cognomeValue || !messaggioValue) {
+                        if (!nomeValue || !cognomeValue || !emailValue || !messaggioValue) {
                             e.preventDefault();
                             return false;
                         }
@@ -963,10 +972,12 @@ class Navbar {
                         // Aggiorna i campi nascosti
                         const hiddenNome = document.getElementById('hidden-nome');
                         const hiddenCognome = document.getElementById('hidden-cognome');
+                        const hiddenEmail = document.getElementById('hidden-email');
                         const hiddenMessaggio = document.getElementById('hidden-messaggio');
                         
                         if (hiddenNome) hiddenNome.value = nomeValue;
                         if (hiddenCognome) hiddenCognome.value = cognomeValue;
+                        if (hiddenEmail) hiddenEmail.value = emailValue;
                         if (hiddenMessaggio) hiddenMessaggio.value = messaggioValue;
                     });
                 }
@@ -975,7 +986,7 @@ class Navbar {
             // Use unified FormValidator if available
             if (typeof FormValidator !== 'undefined') {
                 new FormValidator({
-                    fields: [nomeInput, cognomeInput, messaggioInput],
+                    fields: [nomeInput, cognomeInput, emailInput, messaggioInput],
                     submitButton: requestCta,
                     validateOnInit: false // Menu starts empty, no need for initial check
                 });
@@ -984,9 +995,10 @@ class Navbar {
                 function checkFormCompletion() {
                     const nomeValue = nomeInput.value.trim();
                     const cognomeValue = cognomeInput.value.trim();
+                    const emailValue = emailInput.value.trim();
                     const messaggioValue = messaggioInput.value.trim();
                     
-                    if (nomeValue && cognomeValue && messaggioValue) {
+                    if (nomeValue && cognomeValue && emailValue && messaggioValue) {
                         requestCta.classList.add('active');
                     } else {
                         requestCta.classList.remove('active');
@@ -995,6 +1007,7 @@ class Navbar {
                 
                 nomeInput.addEventListener('input', checkFormCompletion);
                 cognomeInput.addEventListener('input', checkFormCompletion);
+                emailInput.addEventListener('input', checkFormCompletion);
                 messaggioInput.addEventListener('input', checkFormCompletion);
                 checkFormCompletion();
             }

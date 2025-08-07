@@ -138,6 +138,7 @@ collections:
           - {label: "Titolo Form", name: "form_title", widget: "string", default: "CONTATTAMI"}
           - {label: "Placeholder Nome", name: "name_placeholder", widget: "string", default: "NOME"}
           - {label: "Placeholder Cognome", name: "surname_placeholder", widget: "string", default: "COGNOME"}
+          - {label: "Placeholder Email", name: "email_placeholder", widget: "string", default: "EMAIL"}
           - {label: "Placeholder Messaggio", name: "message_placeholder", widget: "string", default: "Scrivi qui la tua richiesta"}
           - {label: "Testo Bottone", name: "button_text", widget: "string", default: "CONTATTAMI"}
           - {label: "Email Destinatario", name: "recipient_email", widget: "string", default: "antonelloguarnieri6@gmail.com"}
