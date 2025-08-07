@@ -36,7 +36,7 @@ class FormHandler {
             style.textContent = `
                 .footer-contact-form {
                     width: 100%;
-                    max-width: 400px;
+                    max-width: 600px;
                 }
                 
                 .footer-menu-item {
