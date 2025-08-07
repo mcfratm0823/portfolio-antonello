@@ -56,12 +56,18 @@ class FormHandler {
                     margin-bottom: 0;
                 }
                 
-                .footer-menu-item:first-child {
-                    font-size: clamp(12px, 0.9vw, 16px);
-                    color: #fff;
+                /* Titolo del form sempre bianco */
+                .footer-form-title {
+                    color: #fff !important;
+                    cursor: default !important;
                 }
                 
-                .footer-menu-item:hover {
+                .footer-form-title:hover {
+                    color: #fff !important;
+                }
+                
+                /* Hover solo per gli altri elementi */
+                .footer-menu-item:not(.footer-form-title):hover {
                     color: #fff !important;
                     transition: none !important;
                 }
@@ -147,7 +153,7 @@ class FormHandler {
             <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field">
                 <input type="hidden" name="form-name" value="contact-menu">
                 <input type="hidden" name="bot-field">
-                <div class="footer-menu-item">${this.formData.form_title}</div>
+                <div class="footer-menu-item footer-form-title">${this.formData.form_title}</div>
                 <div class="footer-menu-item">
                     <input type="text" name="nome" id="footer-nome" placeholder="${this.formData.name_placeholder}" required />
                 </div>
