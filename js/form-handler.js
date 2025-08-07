@@ -119,6 +119,20 @@ class FormHandler {
                     color: #fff;
                 }
                 
+                /* Rimuovi stili autocomplete del browser */
+                .footer-contact-form input:-webkit-autofill,
+                .footer-contact-form input:-webkit-autofill:hover, 
+                .footer-contact-form input:-webkit-autofill:focus,
+                .footer-contact-form textarea:-webkit-autofill,
+                .footer-contact-form textarea:-webkit-autofill:hover,
+                .footer-contact-form textarea:-webkit-autofill:focus {
+                    -webkit-text-fill-color: #fff !important;
+                    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+                    box-shadow: 0 0 0px 1000px transparent inset !important;
+                    background-color: transparent !important;
+                    transition: background-color 5000s ease-in-out 0s;
+                }
+                
                 .footer-menu-item textarea {
                     text-transform: none;
                     letter-spacing: normal;

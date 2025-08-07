@@ -382,6 +382,20 @@ class Navbar {
                 .menu-item input:not(:placeholder-shown) {
                     color: #fff;
                 }
+                
+                /* Rimuovi stili autocomplete del browser */
+                #menu-overlay input:-webkit-autofill,
+                #menu-overlay input:-webkit-autofill:hover, 
+                #menu-overlay input:-webkit-autofill:focus,
+                #menu-overlay textarea:-webkit-autofill,
+                #menu-overlay textarea:-webkit-autofill:hover,
+                #menu-overlay textarea:-webkit-autofill:focus {
+                    -webkit-text-fill-color: #fff !important;
+                    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+                    box-shadow: 0 0 0px 1000px transparent inset !important;
+                    background-color: transparent !important;
+                    transition: background-color 5000s ease-in-out 0s;
+                }
 
                 /* Textarea styling */
                 .menu-item textarea {
