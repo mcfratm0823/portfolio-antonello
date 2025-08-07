@@ -1,17 +1,27 @@
-// Carica i dati dal CMS e aggiorna la homepage
+// Carica i dati dal CMS e aggiorna la pagina corrente
 async function loadCMSData() {
     try {
-        // Carica i dati della homepage con cache busting
+        // Carica i dati con cache busting
         const timestamp = new Date().getTime();
-        const [homepageResponse, navigationResponse, formResponse] = await Promise.all([
-            fetch(`./data/homepage.json?t=${timestamp}`),
+        const isPortfolioPage = window.location.pathname.includes('portfolio');
+        
+        // Carica sempre navigation e form data
+        const promises = [
             fetch(`./data/navigation.json?t=${timestamp}`),
             fetch(`./data/contact-form.json?t=${timestamp}`)
-        ]);
+        ];
         
-        const data = await homepageResponse.json();
-        const navData = await navigationResponse.json();
-        const formData = await formResponse.json();
+        // Aggiungi dati specifici per pagina
+        if (isPortfolioPage) {
+            promises.push(fetch(`./data/portfolio-page.json?t=${timestamp}`));
+        } else {
+            promises.push(fetch(`./data/homepage.json?t=${timestamp}`));
+        }
+        
+        const responses = await Promise.all(promises);
+        const navData = await responses[0].json();
+        const formData = await responses[1].json();
+        const pageData = await responses[2].json();
         
         // Aggiorna i dati di navigazione se disponibili
         if (window.updateNavigationData && navData) {
@@ -28,48 +38,54 @@ async function loadCMSData() {
             window.updateNavbarFormData(formData);
         }
         
-        // Aggiorna Hero Section
-        if (data.hero) {
-            console.log('Tagline originale:', data.hero.tagline);
-            updateElement('#antonello-title h1', data.hero.title_left);
-            updateElement('#guarnieri-title h1', data.hero.title_right);
-            updateElement('#left-text p', data.hero.name_text);
-            updateElement('#right-text p', data.hero.tagline);
+        // Se siamo sulla pagina portfolio, aggiorna il titolo
+        if (isPortfolioPage && pageData) {
+            updateElement('#portfolio-title', pageData.main_title);
+            // Potremmo anche aggiornare i filtri se necessario
+        }
+        
+        // Se siamo sulla homepage, aggiorna i contenuti homepage
+        if (!isPortfolioPage && pageData.hero) {
+            console.log('Tagline originale:', pageData.hero.tagline);
+            updateElement('#antonello-title h1', pageData.hero.title_left);
+            updateElement('#guarnieri-title h1', pageData.hero.title_right);
+            updateElement('#left-text p', pageData.hero.name_text);
+            updateElement('#right-text p', pageData.hero.tagline);
             
             // Gestisci media centrale (video o immagine)
             const centerPhoto = document.querySelector('#center-photo');
             const centerVideo = document.querySelector('#center-video');
             
-            if (data.hero.center_media_type === 'video' && centerVideo) {
+            if (pageData.hero.center_media_type === 'video' && centerVideo) {
                 centerVideo.style.display = 'block';
                 if (centerPhoto) centerPhoto.style.display = 'none';
                 const video = centerVideo.querySelector('video source');
-                if (video) video.src = data.hero.center_media;
+                if (video) video.src = pageData.hero.center_media;
             } else if (centerPhoto) {
                 centerPhoto.style.display = 'block';
                 if (centerVideo) centerVideo.style.display = 'none';
                 const img = centerPhoto.querySelector('img');
-                if (img) img.src = data.hero.center_media;
+                if (img) img.src = pageData.hero.center_media;
             }
         }
         
         // Aggiorna About Section
-        if (data.about) {
-            updateElement('.about-label', data.about.label);
-            updateElement('#about-text p', data.about.main_text);
+        if (!isPortfolioPage && pageData.about) {
+            updateElement('.about-label', pageData.about.label);
+            updateElement('#about-text p', pageData.about.main_text);
             const columns = document.querySelectorAll('.detail-column p');
-            if (columns[0]) columns[0].textContent = data.about.column1;
-            if (columns[1]) columns[1].textContent = data.about.column2;
+            if (columns[0]) columns[0].textContent = pageData.about.column1;
+            if (columns[1]) columns[1].textContent = pageData.about.column2;
         }
         
         // Aggiorna Services Section
-        if (data.services) {
-            updateElement('.services-title', data.services.title);
-            updateElement('.services-description p', data.services.description);
+        if (!isPortfolioPage && pageData.services) {
+            updateElement('.services-title', pageData.services.title);
+            updateElement('.services-description p', pageData.services.description);
             
             // Aggiorna lista servizi
             const serviceItems = document.querySelectorAll('.service-item');
-            data.services.list.forEach((service, index) => {
+            pageData.services.list.forEach((service, index) => {
                 if (serviceItems[index]) {
                     const item = serviceItems[index];
                     item.dataset.image = service.image;
@@ -80,9 +96,9 @@ async function loadCMSData() {
         }
         
         // Aggiorna Portfolio Section
-        if (data.portfolio && data.portfolio.projects) {
+        if (!isPortfolioPage && pageData.portfolio && pageData.portfolio.projects) {
             const workItems = document.querySelectorAll('.selected_work_item');
-            data.portfolio.projects.forEach((project, index) => {
+            pageData.portfolio.projects.forEach((project, index) => {
                 if (workItems[index]) {
                     const item = workItems[index];
                     item.querySelector('.selected_work_name').textContent = project.name;
@@ -94,8 +110,8 @@ async function loadCMSData() {
         }
         
         // Aggiorna Footer
-        if (data.footer) {
-            updateElement('#test-section h2', data.footer.title);
+        if (!isPortfolioPage && pageData.footer) {
+            updateElement('#test-section h2', pageData.footer.title);
             
             // Usa i dati del form centralizzato se disponibili
             if (formData) {
@@ -111,12 +127,12 @@ async function loadCMSData() {
             
             const footerLinks = document.querySelectorAll('.footer-contact-link');
             if (footerLinks[0]) {
-                footerLinks[0].href = `mailto:${data.footer.bottom_email}`;
-                footerLinks[0].textContent = data.footer.bottom_email;
+                footerLinks[0].href = `mailto:${pageData.footer.bottom_email}`;
+                footerLinks[0].textContent = pageData.footer.bottom_email;
             }
             if (footerLinks[1]) {
-                footerLinks[1].href = `tel:${data.footer.bottom_phone}`;
-                footerLinks[1].textContent = data.footer.bottom_phone;
+                footerLinks[1].href = `tel:${pageData.footer.bottom_phone}`;
+                footerLinks[1].textContent = pageData.footer.bottom_phone;
             }
         }
         
