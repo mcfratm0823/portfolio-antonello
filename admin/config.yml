@@ -14,27 +14,6 @@ public_folder: "/img/uploads" # Public path for media files
 
 # Collections - define the content types
 collections:
-  - name: "projects" # Used in routes
-    label: "Lavori" # Used in the UI
-    folder: "_projects" # Where the documents are stored
-    create: true # Allow users to create new documents
-    slug: "{{slug}}" # Filename template
-    fields: # The fields for each document
-      - {label: "Titolo", name: "title", widget: "string"}
-      - {label: "Data", name: "date", widget: "datetime"}
-      - {label: "Categoria", name: "category", widget: "select", options: ["Digital", "Brand", "Web", "Print"]}
-      - {label: "Immagine di copertina", name: "thumbnail", widget: "image"}
-      - {label: "Descrizione breve", name: "description", widget: "text"}
-      - {label: "Contenuto", name: "body", widget: "markdown"}
-      - label: "Galleria"
-        name: "gallery"
-        widget: "list"
-        field: {label: "Immagine", name: "image", widget: "image"}
-      - {label: "Cliente", name: "client", widget: "string", required: false}
-      - {label: "Anno", name: "year", widget: "string"}
-      - {label: "Servizi", name: "services", widget: "list", default: ["Design", "Development"]}
-      - {label: "Link esterno", name: "external_link", widget: "string", required: false}
-      - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
 
   - name: "pages"
     label: "Pagine"
@@ -111,6 +90,21 @@ collections:
             fields:
               - {label: "Nome", name: "name", widget: "string"}
               - {label: "Valore", name: "value", widget: "string"}
+      
+      - label: "Progetti"
+        name: "projects"
+        file: "data/projects.json"
+        fields:
+          - label: "Lista Progetti"
+            name: "projects"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number", value_type: "int"}
+              - {label: "Titolo", name: "title", widget: "string"}
+              - {label: "Categoria", name: "category", widget: "select", options: ["digital", "brand", "web", "print"]}
+              - {label: "Immagine", name: "image", widget: "image"}
+              - {label: "Descrizione", name: "description", widget: "text"}
+              - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
 
   - name: "settings"
     label: "Impostazioni"

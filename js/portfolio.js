@@ -749,8 +749,13 @@ class StaticPortfolio {
 
 // Initialize Everything
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Static Portfolio
-    const staticPortfolio = new StaticPortfolio();
+    // Non inizializzare StaticPortfolio se siamo sulla pagina portfolio
+    // poiché i progetti verranno caricati dal CMS
+    const isPortfolioPage = window.location.pathname.includes('portfolio');
+    if (!isPortfolioPage) {
+        // Initialize Static Portfolio solo per altre pagine
+        const staticPortfolio = new StaticPortfolio();
+    }
     
     updateDate();
     
@@ -809,6 +814,47 @@ window.initializeFilters = function() {
                 }
             });
         });
+    });
+};
+
+// Funzione globale per renderizzare i progetti dal CMS
+window.renderProjects = function(projects) {
+    const projectsContainer = document.getElementById('projects-container');
+    const loadingMessage = document.getElementById('loading-message');
+    
+    if (!projectsContainer) return;
+    
+    // Nascondi il messaggio di caricamento
+    if (loadingMessage) {
+        loadingMessage.style.display = 'none';
+    }
+    
+    // Genera HTML per ogni progetto
+    const projectsHTML = projects.map((project, index) => {
+        // Usa l'immagine del progetto se disponibile, altrimenti un'immagine di placeholder
+        const imageUrl = project.image || `https://picsum.photos/400/550?random=${project.id}`;
+        
+        return `
+            <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}">
+                <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
+                    <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                    <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
+                        <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Inserisci i progetti nel container
+    projectsContainer.innerHTML = projectsHTML;
+    
+    // Reinizializza i componenti dopo il caricamento dei progetti
+    requestAnimationFrame(() => {
+        // Inizializza il ProjectStack per l'effetto circolare
+        new ProjectStack();
+        // Inizializza il FilterSystem
+        new FilterSystem();
     });
 };
 

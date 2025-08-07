@@ -54,6 +54,9 @@ async function loadCMSData() {
                     window.initializeFilters();
                 }
             }
+            
+            // Carica i progetti
+            loadProjects();
         }
         
         // Se siamo sulla homepage, aggiorna i contenuti homepage
@@ -168,6 +171,21 @@ function updateElement(selector, value, attribute = 'textContent') {
         } else {
             element[attribute] = value;
         }
+    }
+}
+
+// Carica i progetti dal CMS
+async function loadProjects() {
+    try {
+        const timestamp = new Date().getTime();
+        const response = await fetch(`./data/projects.json?t=${timestamp}`);
+        const data = await response.json();
+        
+        if (data && data.projects && window.renderProjects) {
+            window.renderProjects(data.projects);
+        }
+    } catch (error) {
+        console.error('Errore nel caricamento dei progetti:', error);
     }
 }
 
