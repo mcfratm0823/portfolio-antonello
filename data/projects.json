@@ -2,42 +2,42 @@
   "projects": [
     {
       "id": 1,
-      "title": "Progetto Digital Design",
+      "title": "Progetto Uno",
       "category": "digital",
       "image": "https://picsum.photos/600/400?random=101",
-      "description": "Design digitale innovativo per interfacce moderne",
+      "description": "Descrizione del primo progetto",
       "featured": true
     },
     {
       "id": 2,
-      "title": "Brand Identity System",
+      "title": "Progetto Due",
       "category": "brand",
       "image": "https://picsum.photos/600/400?random=102",
-      "description": "Sistema di identità visiva completo per startup tech",
+      "description": "Descrizione del secondo progetto",
       "featured": false
     },
     {
       "id": 3,
-      "title": "E-commerce Platform",
+      "title": "Progetto Tre",
       "category": "web",
       "image": "https://picsum.photos/600/400?random=103",
-      "description": "Piattaforma e-commerce responsive con UX ottimizzata",
+      "description": "Descrizione del terzo progetto",
       "featured": true
     },
     {
       "id": 4,
-      "title": "Print Campaign",
+      "title": "Progetto Quattro",
       "category": "print",
       "image": "https://picsum.photos/600/400?random=104",
-      "description": "Campagna stampa per evento culturale",
+      "description": "Descrizione del quarto progetto",
       "featured": false
     },
     {
       "id": 5,
-      "title": "Mobile App UI",
+      "title": "Progetto Cinque",
       "category": "digital",
       "image": "https://picsum.photos/600/400?random=105",
-      "description": "Interfaccia utente per app mobile di fitness",
+      "description": "Descrizione del quinto progetto",
       "featured": true
     }
   ]
