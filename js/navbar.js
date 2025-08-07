@@ -388,6 +388,7 @@ class Navbar {
                     padding: 0;
                     padding-top: 0.1em;
                     padding-bottom: 0.1em;
+                    padding-left: 0.5em;
                     transition: all 0.3s ease;
                     position: relative;
                     resize: none;
@@ -396,6 +397,7 @@ class Navbar {
                     overflow: hidden;
                     white-space: nowrap;
                     cursor: text;
+                    text-indent: -0.5em;
                 }
 
                 .menu-item textarea::placeholder {

@@ -79,7 +79,11 @@ class FormHandler {
                     transition: all 0.3s ease;
                 }
                 
-                .footer-menu-item input::placeholder,
+                .footer-menu-item input::placeholder {
+                    color: #474747;
+                    opacity: 1;
+                }
+                
                 .footer-menu-item textarea::placeholder {
                     color: #474747;
                     opacity: 1;
@@ -105,6 +109,8 @@ class FormHandler {
                     white-space: nowrap;
                     padding-top: 0.1em;
                     padding-bottom: 0.1em;
+                    text-indent: -0.5em;
+                    padding-left: 0.5em;
                 }
                 
                 #footer-request-cta {
