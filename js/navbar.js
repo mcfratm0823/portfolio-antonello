@@ -395,9 +395,8 @@ class Navbar {
                     position: relative;
                     resize: none;
                     min-height: 1.5em;
-                    height: 1.5em;
+                    height: auto;
                     overflow: hidden;
-                    white-space: nowrap;
                     cursor: text;
                 }
 
@@ -836,7 +835,7 @@ class Navbar {
                                 <input type="text" id="cognome" placeholder="${this.formData.surname_placeholder}" />
                             </div>
                             <div class="menu-item">
-                                <textarea id="messaggio" placeholder="${this.formData.message_placeholder}" rows="1"></textarea>
+                                <textarea id="messaggio" placeholder="${this.formData.message_placeholder}"></textarea>
                             </div>
                             <div class="menu-item">
                                 ${this.getFormActionHTML()}
