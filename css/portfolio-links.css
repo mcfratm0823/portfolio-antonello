@@ -17,6 +17,17 @@
     z-index: 9999 !important;
 }
 
+/* Fix: i filtri non devono coprire le card */
+#filters {
+    z-index: 10 !important;
+    pointer-events: auto !important;
+}
+
+/* Le card devono stare sopra i filtri */
+.project-card.position-center {
+    z-index: 10000 !important;
+}
+
 .project-card .project-content,
 .project-card .project-content * {
     pointer-events: none !important;
