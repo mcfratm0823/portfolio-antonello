@@ -866,10 +866,12 @@ window.renderProjects = function(projects) {
         
         // Assicura che i link dei progetti funzionino
         const projectLinks = document.querySelectorAll('.project-link');
+        console.log('Project links trovati:', projectLinks.length);
         projectLinks.forEach(link => {
+            console.log('Link href:', link.href);
             link.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // Il link funzionerà normalmente
+                console.log('Click su progetto!', e.currentTarget.href);
+                // Non prevenire il default, lascia che il link funzioni normalmente
             });
         });
     });
