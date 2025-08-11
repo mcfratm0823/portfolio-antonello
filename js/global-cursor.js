@@ -53,7 +53,7 @@ class GlobalCursor {
             opacity: 0;
             transition: opacity 0.2s ease;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            margin-left: 8px;
+            margin-left: 2px;
             margin-top: -8px;
         `;
         document.body.appendChild(this.cursorText);
@@ -119,7 +119,7 @@ class GlobalCursor {
             if (!ticking) {
                 requestAnimationFrame(() => {
                     this.cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
-                    this.cursorText.style.transform = `translate(${e.clientX + 10}px, ${e.clientY - 5}px)`;
+                    this.cursorText.style.transform = `translate(${e.clientX + 6}px, ${e.clientY - 5}px)`;
                     ticking = false;
                 });
                 ticking = true;
