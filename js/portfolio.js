@@ -57,14 +57,24 @@ class ProjectStack {
      * @returns {void}
      */
     addHoverListeners() {
+        let wheelHandler = null;
+        
         this.projects.forEach(project => {
             project.addEventListener('mouseenter', () => {
                 this.isRotating = true; // Blocca temporaneamente la rotazione
+                // Rimuovi temporaneamente il wheel handler
+                if (this.wheelHandler) {
+                    document.removeEventListener('wheel', this.wheelHandler);
+                }
             });
             
             project.addEventListener('mouseleave', () => {
                 setTimeout(() => {
                     this.isRotating = false; // Riabilita la rotazione dopo un piccolo delay
+                    // Riattacca il wheel handler
+                    if (this.wheelHandler) {
+                        document.addEventListener('wheel', this.wheelHandler, { passive: false });
+                    }
                 }, 100);
             });
         });
@@ -142,9 +152,9 @@ class ProjectStack {
          * @returns {boolean} Always returns false to prevent default
          */
         const handleWheel = (e) => {
-            // Non bloccare se il target è un link
-            if (e.target.closest('.project-link')) {
-                console.log('Wheel su link - non blocco');
+            // Non bloccare se il target è un project card (permetti click)
+            if (e.target.closest('.project-card')) {
+                console.log('Wheel su project card - non blocco per permettere click');
                 return;
             }
             
@@ -172,6 +182,9 @@ class ProjectStack {
             
             return false;
         };
+        
+        // Salva il riferimento al wheel handler
+        this.wheelHandler = handleWheel;
         
         // Use only the standard 'wheel' event - it's supported by all modern browsers
         // Remove redundant listeners for better performance
