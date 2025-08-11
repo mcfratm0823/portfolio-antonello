@@ -831,17 +831,20 @@ window.renderProjects = function(projects) {
     
     // Genera HTML per ogni progetto
     const projectsHTML = projects.map((project, index) => {
-        // Usa l'immagine del progetto se disponibile, altrimenti un'immagine di placeholder
-        const imageUrl = project.image || `https://picsum.photos/400/550?random=${project.id}`;
+        // Usa la thumbnail del progetto se disponibile
+        const imageUrl = project.thumbnail || project.image || `https://picsum.photos/400/550?random=${project.id}`;
+        const projectUrl = project.slug ? `./progetti/project-detail.html?p=${project.slug}` : '#';
         
         return `
             <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}">
-                <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
-                    <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                    <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
-                        <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+                <a href="${projectUrl}" class="project-link" style="display: block; width: 100%; height: 100%; text-decoration: none;">
+                    <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
+                        <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
+                            <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         `;
     }).join('');

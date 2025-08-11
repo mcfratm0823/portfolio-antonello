@@ -15,6 +15,71 @@ public_folder: "/img/uploads" # Public path for media files
 # Collections - define the content types
 collections:
 
+  - name: "project_pages"
+    label: "Pagine Progetto"
+    folder: "data"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    filter: {field: "slug", value: "progetto-*"}
+    fields:
+      - {label: "ID", name: "id", widget: "number", value_type: "int"}
+      - {label: "Slug URL", name: "slug", widget: "string"}
+      - {label: "Titolo", name: "title", widget: "string"}
+      - {label: "Sottotitolo", name: "subtitle", widget: "string"}
+      - {label: "Categoria", name: "category", widget: "select", options: ["DIGITAL", "BRAND", "WEB", "PRINT"]}
+      - {label: "Anno", name: "year", widget: "string"}
+      - {label: "Cliente", name: "client", widget: "string"}
+      - {label: "Meta Description", name: "meta_description", widget: "text"}
+      
+      - label: "Blocco Info"
+        name: "info_block"
+        widget: "object"
+        fields:
+          - {label: "Label", name: "label", widget: "string", default: "(INFO)"}
+          - {label: "Testo", name: "text", widget: "text"}
+      
+      - {label: "Immagine Hero", name: "hero_image", widget: "image"}
+      
+      - label: "Blocco Approccio"
+        name: "approach_block"
+        widget: "object"
+        fields:
+          - {label: "Label", name: "label", widget: "string", default: "(APPROCCIO)"}
+          - {label: "Testo", name: "text", widget: "text"}
+      
+      - label: "Gallery Coppia"
+        name: "gallery_pair"
+        widget: "list"
+        max: 2
+        fields:
+          - {label: "Immagine", name: "image", widget: "image"}
+          - {label: "Didascalia", name: "caption", widget: "string"}
+      
+      - label: "Sezioni Extra"
+        name: "extra_sections"
+        widget: "list"
+        fields:
+          - {label: "Tipo", name: "type", widget: "select", options: ["text", "full_image"]}
+          - {label: "Label", name: "label", widget: "string", required: false}
+          - {label: "Testo", name: "text", widget: "text", required: false}
+          - {label: "Immagine", name: "image", widget: "image", required: false}
+          - {label: "Didascalia", name: "caption", widget: "string", required: false}
+      
+      - label: "Credits"
+        name: "credits"
+        widget: "list"
+        fields:
+          - {label: "Ruolo", name: "role", widget: "string"}
+          - {label: "Nome", name: "name", widget: "string"}
+      
+      - label: "Progetti Correlati"
+        name: "related_projects"
+        widget: "list"
+        value_type: "int"
+        hint: "Inserisci gli ID dei progetti correlati (massimo 4)"
+
   - name: "pages"
     label: "Pagine"
     files:
@@ -91,7 +156,7 @@ collections:
               - {label: "Nome", name: "name", widget: "string"}
               - {label: "Valore", name: "value", widget: "string"}
       
-      - label: "Progetti"
+      - label: "Lista Progetti Portfolio"
         name: "projects"
         file: "data/projects.json"
         fields:
@@ -101,10 +166,12 @@ collections:
             fields:
               - {label: "ID", name: "id", widget: "number", value_type: "int"}
               - {label: "Titolo", name: "title", widget: "string"}
+              - {label: "Slug URL", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Solo lettere minuscole, numeri e trattini"]}
               - {label: "Categoria", name: "category", widget: "select", options: ["digital", "brand", "web", "print"]}
-              - {label: "Immagine", name: "image", widget: "image"}
-              - {label: "Descrizione", name: "description", widget: "text"}
+              - {label: "Thumbnail Portfolio", name: "thumbnail", widget: "image"}
+              - {label: "Anno", name: "year", widget: "string", default: "2024"}
               - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
+              - {label: "Ordine", name: "order", widget: "number", value_type: "int"}
 
   - name: "settings"
     label: "Impostazioni"

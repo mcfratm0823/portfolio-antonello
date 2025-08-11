@@ -1,0 +1,52 @@
+{
+  "id": 3,
+  "slug": "progetto-tre",
+  "title": "PROGETTO TRE",
+  "subtitle": "E-commerce Experience Design",
+  "category": "WEB",
+  "year": "2024",
+  "client": "RETAIL INNOVATIVO",
+  "meta_description": "Piattaforma e-commerce responsive con UX ottimizzata per conversioni",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER LA CREAZIONE DELLA NUOVA PIATTAFORMA E-COMMERCE, ANTONELLO GUARNIERI HA PROGETTATO UN'ESPERIENZA D'ACQUISTO FLUIDA E COINVOLGENTE, OTTIMIZZANDO OGNI ASPETTO DEL CUSTOMER JOURNEY PER MASSIMIZZARE LE CONVERSIONI."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=401",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "L'ARCHITETTURA DELL'INFORMAZIONE È STATA SVILUPPATA ATTRAVERSO TEST DI USABILITÀ E ANALISI DEI DATI. OGNI DECISIONE DI DESIGN È STATA VALIDATA CON METRICHE CONCRETE, CREANDO UN'ESPERIENZA OTTIMIZZATA PER LA VENDITA ONLINE."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=402",
+      "caption": "Homepage responsive design"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=403",
+      "caption": "Checkout flow ottimizzato"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "IL NUOVO E-COMMERCE HA REGISTRATO UN AUMENTO DEL 180% NELLE VENDITE E UNA RIDUZIONE DEL 60% NEL TASSO DI ABBANDONO DEL CARRELLO. L'ESPERIENZA MOBILE HA SUPERATO LE ASPETTATIVE CON UN ENGAGEMENT RATE DEL 85%.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=404",
+      "caption": "Dashboard analytics performance"
+    }
+  ],
+  "credits": [
+    {
+      "role": "UX/UI Design",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "Frontend Development",
+      "name": "Tech Partner"
+    }
+  ],
+  "related_projects": [7, 1, 5]
+}
