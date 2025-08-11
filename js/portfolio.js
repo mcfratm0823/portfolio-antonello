@@ -813,45 +813,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Funzione per gestire il click solo sul progetto centrale
-function setupCenterProjectClick() {
-    // Aggiungi click listener a tutti i progetti
-    const projects = document.querySelectorAll('.project-card');
-    
-    projects.forEach(project => {
-        project.addEventListener('click', function(e) {
-            // Controlla se questo progetto ha la classe position-center
-            if (this.classList.contains('position-center')) {
-                const projectUrl = this.dataset.url;
-                if (projectUrl && projectUrl !== '#') {
-                    window.location.href = projectUrl;
-                }
-            } else {
-                // Se non è al centro, non fare nulla
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        });
-        
-        // Cambia il cursore solo per il progetto centrale
-        project.style.cursor = project.classList.contains('position-center') ? 'pointer' : 'default';
-    });
-    
-    // Osserva i cambiamenti di classe per aggiornare il cursore
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach(mutation => {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-                const project = mutation.target;
-                project.style.cursor = project.classList.contains('position-center') ? 'pointer' : 'default';
-            }
-        });
-    });
-    
-    // Osserva tutti i progetti per cambiamenti di classe
-    projects.forEach(project => {
-        observer.observe(project, { attributes: true, attributeFilter: ['class'] });
-    });
-}
 
 // Funzione globale per reinizializzare i filtri dopo il caricamento dal CMS
 window.initializeFilters = function() {
@@ -900,13 +861,15 @@ window.renderProjects = function(projects) {
         const projectUrl = project.slug ? `./progetti/project-detail.html?p=${project.slug}` : '#';
         
         return `
-            <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}" data-url="${projectUrl}">
-                <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
-                    <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                    <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
-                        <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+            <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}">
+                <a href="${projectUrl}" class="project-link" style="display: block; width: 100%; height: 100%; text-decoration: none; position: relative; z-index: 999;">
+                    <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden; pointer-events: none;">
+                        <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
+                            <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         `;
     }).join('');
@@ -921,8 +884,7 @@ window.renderProjects = function(projects) {
         // Inizializza il FilterSystem
         new FilterSystem();
         
-        // Aggiungi click handler solo per il progetto centrale
-        setupCenterProjectClick();
+        // Non serve più il setup del click centrale
     });
 };
 
