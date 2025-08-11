@@ -39,6 +39,14 @@
       "image": "https://picsum.photos/600/400?random=105",
       "description": "Descrizione del quinto progetto",
       "featured": true
+    },
+    {
+      "id": 6,
+      "title": "Progetto Sei",
+      "category": "brand",
+      "image": "https://picsum.photos/600/400?random=106",
+      "description": "Descrizione del sesto progetto",
+      "featured": false
     }
   ]
 }
