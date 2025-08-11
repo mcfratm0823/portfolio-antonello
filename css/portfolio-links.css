@@ -22,6 +22,8 @@
     width: fit-content !important;
     width: -moz-fit-content !important;
     pointer-events: none !important;
+    /* Nascondi temporaneamente i filtri */
+    display: none !important;
 }
 
 #filters .filter-item {

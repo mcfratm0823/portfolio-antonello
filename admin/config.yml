@@ -150,12 +150,13 @@ collections:
         file: "data/portfolio-page.json"
         fields:
           - {label: "Titolo principale", name: "main_title", widget: "text", default: "SFOGLIA I LAVORI"}
-          - label: "Filtri"
-            name: "filters"
-            widget: "list"
-            fields:
-              - {label: "Nome", name: "name", widget: "string"}
-              - {label: "Valore", name: "value", widget: "string"}
+          # Filtri temporaneamente nascosti - decommentare quando necessario
+          # - label: "Filtri"
+          #   name: "filters"
+          #   widget: "list"
+          #   fields:
+          #     - {label: "Nome", name: "name", widget: "string"}
+          #     - {label: "Valore", name: "value", widget: "string"}
       
       - label: "Lista Progetti Portfolio"
         name: "projects"
