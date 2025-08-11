@@ -17,8 +17,15 @@
     z-index: 9999 !important;
 }
 
-.project-card .project-content {
-    pointer-events: none;
+.project-card .project-content,
+.project-card .project-content * {
+    pointer-events: none !important;
+}
+
+/* Specifico per il titolo desktop */
+.project-card .desktop-title,
+.project-card .desktop-title * {
+    pointer-events: none !important;
 }
 
 .project-card .project-content * {
