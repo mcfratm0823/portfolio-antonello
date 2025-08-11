@@ -17,13 +17,18 @@
     z-index: 9999 !important;
 }
 
-/* Fix: i filtri non devono coprire le card */
+/* Fix: limita l'area cliccabile dei filtri alla loro dimensione reale */
 #filters {
-    z-index: 10 !important;
+    width: fit-content !important;
+    width: -moz-fit-content !important;
+    pointer-events: none !important;
+}
+
+#filters .filter-item {
     pointer-events: auto !important;
 }
 
-/* Le card devono stare sopra i filtri */
+/* Le card devono stare sopra tutto */
 .project-card.position-center {
     z-index: 10000 !important;
 }
