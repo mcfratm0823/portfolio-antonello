@@ -36,6 +36,27 @@ class GlobalCursor {
         this.cursor = document.createElement('div');
         this.cursor.className = 'custom-cursor';
         document.body.appendChild(this.cursor);
+        
+        // Create "Scopri" text element
+        this.cursorText = document.createElement('div');
+        this.cursorText.className = 'cursor-text';
+        this.cursorText.textContent = 'Scopri';
+        this.cursorText.style.cssText = `
+            position: fixed;
+            color: white;
+            font-family: 'Neue', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            pointer-events: none;
+            z-index: 100002;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin-left: 20px;
+            margin-top: -10px;
+        `;
+        document.body.appendChild(this.cursorText);
 
         // Setup mouse tracking
         this.setupMouseTracking();
@@ -45,6 +66,9 @@ class GlobalCursor {
         
         // Ensure cursor stays on top when new elements are added
         this.setupMutationObserver();
+        
+        // Setup hover detection for project cards
+        this.setupProjectHover();
     }
 
     setupMutationObserver() {
@@ -95,9 +119,32 @@ class GlobalCursor {
             if (!ticking) {
                 requestAnimationFrame(() => {
                     this.cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
+                    this.cursorText.style.transform = `translate(${e.clientX + 15}px, ${e.clientY - 5}px)`;
                     ticking = false;
                 });
                 ticking = true;
+            }
+        });
+    }
+
+    /**
+     * Setup hover detection for project cards
+     * @private
+     * @returns {void}
+     */
+    setupProjectHover() {
+        // Use event delegation for better performance
+        document.addEventListener('mouseover', (e) => {
+            const projectCard = e.target.closest('.project-card');
+            if (projectCard) {
+                this.cursorText.style.opacity = '1';
+            }
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            const projectCard = e.target.closest('.project-card');
+            if (projectCard && !e.relatedTarget?.closest('.project-card')) {
+                this.cursorText.style.opacity = '0';
             }
         });
     }

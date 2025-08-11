@@ -46,34 +46,6 @@
     pointer-events: none !important;
 }
 
-/* Effetto hover "Scopri" */
-.project-card .project-link::after {
-    content: "Scopri";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-family: 'Neue', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 10;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.project-card:hover .project-link::after {
-    opacity: 1;
-}
-
-/* Scurisce leggermente l'immagine all'hover */
-.project-card:hover .desktop-title {
-    background: rgba(0,0,0,0.5) !important;
-    transition: background 0.3s ease;
-}
 
 .project-card .project-content * {
     pointer-events: none;
