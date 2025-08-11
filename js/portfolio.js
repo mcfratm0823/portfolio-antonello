@@ -144,9 +144,11 @@ class ProjectStack {
         const handleWheel = (e) => {
             // Non bloccare se il target è un link
             if (e.target.closest('.project-link')) {
+                console.log('Wheel su link - non blocco');
                 return;
             }
             
+            console.log('Wheel event - blocco default');
             e.preventDefault();
             e.stopImmediatePropagation();
             
@@ -884,7 +886,34 @@ window.renderProjects = function(projects) {
         // Inizializza il FilterSystem
         new FilterSystem();
         
-        // Non serve più il setup del click centrale
+        // Debug: verifica i link
+        const links = document.querySelectorAll('.project-link');
+        console.log('=== DEBUG LINKS ===');
+        console.log('Numero di link trovati:', links.length);
+        
+        links.forEach((link, index) => {
+            console.log(`Link ${index}:`, {
+                href: link.href,
+                parent: link.parentElement.className,
+                clickable: window.getComputedStyle(link).pointerEvents
+            });
+            
+            // Aggiungi listener per debug
+            link.addEventListener('click', (e) => {
+                console.log('CLICK DETECTED on:', link.href);
+                console.log('Event target:', e.target);
+                console.log('Current target:', e.currentTarget);
+                console.log('Default prevented?', e.defaultPrevented);
+            }, true);
+        });
+        
+        // Debug: verifica se qualcosa blocca i click
+        document.addEventListener('click', (e) => {
+            console.log('Document click:', e.target);
+            if (e.target.closest('.project-card')) {
+                console.log('Click su project card rilevato');
+            }
+        }, true);
     });
 };
 
