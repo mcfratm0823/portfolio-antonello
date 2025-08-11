@@ -40,19 +40,18 @@ class GlobalCursor {
         // Create "Scopri" text element
         this.cursorText = document.createElement('div');
         this.cursorText.className = 'cursor-text';
-        this.cursorText.textContent = 'Scopri';
+        this.cursorText.textContent = 'scopri';
         this.cursorText.style.cssText = `
             position: fixed;
             color: white;
             font-family: 'Neue', sans-serif;
             font-size: 0.7rem;
             font-weight: 600;
-            text-transform: uppercase;
+            text-transform: none;
             pointer-events: none;
             z-index: 100002;
             opacity: 0;
             transition: opacity 0.2s ease;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
             margin-left: 2px;
             margin-top: -8px;
         `;
