@@ -47,6 +47,30 @@
       "image": "https://picsum.photos/600/400?random=106",
       "description": "Descrizione del sesto progetto",
       "featured": false
+    },
+    {
+      "id": 7,
+      "title": "Progetto Sette",
+      "category": "web",
+      "image": "https://picsum.photos/600/400?random=107",
+      "description": "Descrizione del settimo progetto",
+      "featured": true
+    },
+    {
+      "id": 8,
+      "title": "Progetto Otto",
+      "category": "print",
+      "image": "https://picsum.photos/600/400?random=108",
+      "description": "Descrizione dell'ottavo progetto",
+      "featured": false
+    },
+    {
+      "id": 9,
+      "title": "Progetto Nove",
+      "category": "digital",
+      "image": "https://picsum.photos/600/400?random=109",
+      "description": "Descrizione del nono progetto",
+      "featured": true
     }
   ]
 }
