@@ -123,6 +123,11 @@ class ProjectStack {
          * @returns {boolean} Always returns false to prevent default
          */
         const handleWheel = (e) => {
+            // Non bloccare se il target è un link
+            if (e.target.closest('.project-link')) {
+                return;
+            }
+            
             e.preventDefault();
             e.stopImmediatePropagation();
             
@@ -858,6 +863,15 @@ window.renderProjects = function(projects) {
         new ProjectStack();
         // Inizializza il FilterSystem
         new FilterSystem();
+        
+        // Assicura che i link dei progetti funzionino
+        const projectLinks = document.querySelectorAll('.project-link');
+        projectLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Il link funzionerà normalmente
+            });
+        });
     });
 };
 

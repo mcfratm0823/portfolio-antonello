@@ -181,8 +181,6 @@ async function loadProjects() {
         const response = await fetch(`./data/projects.json?t=${timestamp}`);
         const data = await response.json();
         
-        console.log('Progetti caricati dal CMS:', data.projects);
-        
         if (data && data.projects && window.renderProjects) {
             window.renderProjects(data.projects);
         }

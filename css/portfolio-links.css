@@ -1,0 +1,40 @@
+/* Assicura che i link dei progetti siano cliccabili */
+.project-card {
+    pointer-events: auto !important;
+}
+
+.project-card .project-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+.project-card .project-content {
+    pointer-events: none;
+}
+
+.project-card .project-content * {
+    pointer-events: none;
+}
+
+/* Assicura che durante l'hover il cursore cambi */
+.project-card:hover {
+    cursor: pointer;
+}
+
+/* Fix per mobile */
+@media (max-width: 768px) {
+    .project-card {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .project-card .project-link {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}

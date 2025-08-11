@@ -22,7 +22,8 @@ collections:
     slug: "{{slug}}"
     extension: "json"
     format: "json"
-    filter: {field: "slug", value: "progetto-*"}
+    identifier_field: "slug"
+    summary: "{{title}} - {{category}}"
     fields:
       - {label: "ID", name: "id", widget: "number", value_type: "int"}
       - {label: "Slug URL", name: "slug", widget: "string"}
