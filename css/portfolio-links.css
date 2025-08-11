@@ -1,24 +1,22 @@
-/* Assicura che i link dei progetti siano cliccabili */
+/* Solo il progetto centrale è cliccabile */
 .project-card {
     pointer-events: auto !important;
+    cursor: default;
+    transition: cursor 0.3s ease;
 }
 
 /* Fix specifico per le diverse posizioni */
-.project-card.position-center,
+.project-card.position-center {
+    pointer-events: auto !important;
+    z-index: 100 !important;
+    cursor: pointer !important;
+}
+
 .project-card.position-top,
 .project-card.position-bottom {
     pointer-events: auto !important;
-    z-index: 100 !important;
-}
-
-.project-card .project-link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 101 !important;
-    cursor: pointer;
-    pointer-events: auto !important;
+    z-index: 50 !important;
+    cursor: default !important;
 }
 
 .project-card .project-content {
