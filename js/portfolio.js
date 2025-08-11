@@ -927,19 +927,6 @@ window.renderProjects = function(projects) {
                 console.log('Click su project card rilevato');
             }
         }, true);
-        
-        // Aggiungi click handler diretto sulle card
-        const cards = document.querySelectorAll('.project-card');
-        cards.forEach(card => {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', (e) => {
-                const link = card.querySelector('.project-link');
-                if (link && !e.target.closest('a')) {
-                    console.log('Click su card, triggero il link:', link.href);
-                    link.click();
-                }
-            });
-        });
     });
 };
 
