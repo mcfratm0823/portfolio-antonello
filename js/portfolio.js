@@ -48,7 +48,26 @@ class ProjectStack {
         if (window.innerWidth > window.CONSTANTS.BREAKPOINTS.MOBILE) {
             this.positionProjects();
             this.addEventListeners();
+            this.addHoverListeners();
         }
+    }
+    
+    /**
+     * Add hover listeners to disable rotation on hover
+     * @returns {void}
+     */
+    addHoverListeners() {
+        this.projects.forEach(project => {
+            project.addEventListener('mouseenter', () => {
+                this.isRotating = true; // Blocca temporaneamente la rotazione
+            });
+            
+            project.addEventListener('mouseleave', () => {
+                setTimeout(() => {
+                    this.isRotating = false; // Riabilita la rotazione dopo un piccolo delay
+                }, 100);
+            });
+        });
     }
 
     /**
