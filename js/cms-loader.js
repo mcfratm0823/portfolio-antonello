@@ -183,13 +183,21 @@ async function loadProjects() {
         
         if (data && data.projects && window.renderProjects) {
             // Filtra progetti vuoti o malformati per sicurezza
-            const validProjects = data.projects.filter(project => 
-                project.title && 
-                project.title !== '-' && 
-                project.slug && 
-                project.slug !== '-' &&
-                project.id
-            );
+            const validProjects = data.projects.filter(project => {
+                // Validazione rigorosa dello slug
+                const isValidSlug = project.slug && 
+                                  project.slug !== '-' && 
+                                  /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(project.slug);
+                
+                // Validazione completa del progetto
+                return project.title && 
+                       project.title !== '-' && 
+                       isValidSlug &&
+                       project.id &&
+                       project.category;
+            });
+            
+            console.log(`Progetti validi: ${validProjects.length} su ${data.projects.length}`);
             window.renderProjects(validProjects);
         }
     } catch (error) {

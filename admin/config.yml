@@ -26,12 +26,12 @@ collections:
     summary: "{{title}} - {{category}}"
     fields:
       - {label: "ID", name: "id", widget: "number", value_type: "int"}
-      - {label: "Slug URL", name: "slug", widget: "string"}
-      - {label: "Titolo", name: "title", widget: "string"}
-      - {label: "Sottotitolo", name: "subtitle", widget: "string"}
-      - {label: "Categoria", name: "category", widget: "select", options: ["DIGITAL", "BRAND", "WEB", "PRINT"]}
-      - {label: "Anno", name: "year", widget: "string"}
-      - {label: "Cliente", name: "client", widget: "string"}
+      - {label: "Slug URL", name: "slug", widget: "string", required: true, pattern: ["^(?!-$)[a-z0-9]+(?:-[a-z0-9]+)*$", "Lo slug deve contenere solo lettere minuscole, numeri e trattini (non può essere solo un trattino)"]}
+      - {label: "Titolo", name: "title", widget: "string", required: true}
+      - {label: "Sottotitolo", name: "subtitle", widget: "string", required: true}
+      - {label: "Categoria", name: "category", widget: "select", options: ["DIGITAL", "BRAND", "WEB", "PRINT"], required: true}
+      - {label: "Anno", name: "year", widget: "string", required: true}
+      - {label: "Cliente", name: "client", widget: "string", required: true}
       - {label: "Meta Description", name: "meta_description", widget: "text"}
       
       - label: "Blocco Info"
