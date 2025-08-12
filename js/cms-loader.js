@@ -182,7 +182,15 @@ async function loadProjects() {
         const data = await response.json();
         
         if (data && data.projects && window.renderProjects) {
-            window.renderProjects(data.projects);
+            // Filtra progetti vuoti o malformati per sicurezza
+            const validProjects = data.projects.filter(project => 
+                project.title && 
+                project.title !== '-' && 
+                project.slug && 
+                project.slug !== '-' &&
+                project.id
+            );
+            window.renderProjects(validProjects);
         }
     } catch (error) {
         console.error('Errore nel caricamento dei progetti:', error);

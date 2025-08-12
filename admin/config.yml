@@ -166,14 +166,14 @@ collections:
             name: "projects"
             widget: "list"
             fields:
-              - {label: "ID", name: "id", widget: "number", value_type: "int"}
-              - {label: "Titolo", name: "title", widget: "string"}
-              - {label: "Slug URL", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Solo lettere minuscole, numeri e trattini"]}
-              - {label: "Categoria", name: "category", widget: "select", options: ["digital", "brand", "web", "print"]}
-              - {label: "Thumbnail Portfolio", name: "thumbnail", widget: "image"}
-              - {label: "Anno", name: "year", widget: "string", default: "2024"}
+              - {label: "ID", name: "id", widget: "number", value_type: "int", required: true}
+              - {label: "Titolo", name: "title", widget: "string", required: true}
+              - {label: "Slug URL", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Solo lettere minuscole, numeri e trattini"], required: true}
+              - {label: "Categoria", name: "category", widget: "select", options: ["digital", "brand", "web", "print"], required: true}
+              - {label: "Thumbnail Portfolio", name: "thumbnail", widget: "image", required: true}
+              - {label: "Anno", name: "year", widget: "string", default: "2024", required: true}
               - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
-              - {label: "Ordine", name: "order", widget: "number", value_type: "int"}
+              - {label: "Ordine", name: "order", widget: "number", value_type: "int", required: true}
 
   - name: "settings"
     label: "Impostazioni"

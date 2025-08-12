@@ -1,0 +1,61 @@
+{
+  "id": 1,
+  "slug": "progetto-uno",
+  "title": "PROGETTO UNO",
+  "subtitle": "Innovazione Digitale per il Future",
+  "category": "DIGITAL",
+  "year": "2024",
+  "client": "STARTUP INNOVATIVA",
+  "meta_description": "Design digitale innovativo per interfacce moderne e user experience all'avanguardia",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER IL LANCIO DELLA NUOVA PIATTAFORMA DIGITALE, ANTONELLO GUARNIERI HA COLLABORATO CON IL CLIENTE PER CREARE UN'ESPERIENZA UTENTE RIVOLUZIONARIA, COMBINANDO DESIGN MINIMALISTA E TECNOLOGIE ALL'AVANGUARDIA PER RIDEFINIRE GLI STANDARD DEL SETTORE."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=201",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "L'APPROCCIO PROGETTUALE SI È BASATO SU UNA RICERCA APPROFONDITA DEGLI UTENTI E DEI LORO COMPORTAMENTI DIGITALI. ATTRAVERSO WORKSHOP COLLABORATIVI E SESSIONI DI DESIGN THINKING, ABBIAMO SVILUPPATO UN SISTEMA VISIVO CHE BILANCIA PERFETTAMENTE ESTETICA E FUNZIONALITÀ, CREANDO UN'ESPERIENZA FLUIDA E INTUITIVA."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=202",
+      "caption": "Dettaglio interfaccia principale"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=203",
+      "caption": "Sistema di navigazione responsive"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "IL PROGETTO HA PORTATO A UN INCREMENTO DEL 150% NELL'ENGAGEMENT DEGLI UTENTI E UNA RIDUZIONE DEL 40% NEL TEMPO DI COMPLETAMENTO DELLE AZIONI PRINCIPALI. LA NUOVA IDENTITÀ DIGITALE HA RAFFORZATO IL POSIZIONAMENTO DEL BRAND NEL MERCATO.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=204",
+      "caption": "Vista completa della dashboard"
+    },
+    {
+      "label": "(PROCESSO)",
+      "text": "DAL CONCEPT INIZIALE ALLA REALIZZAZIONE FINALE, OGNI FASE DEL PROGETTO È STATA GUIDATA DA UN APPROCCIO USER-CENTERED. LE ITERAZIONI CONTINUE E I TEST CON UTENTI REALI HANNO PERMESSO DI AFFINARE OGNI DETTAGLIO DELL'ESPERIENZA.",
+      "type": "text"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Creative Direction",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "UX Design",
+      "name": "Team Collaborativo"
+    },
+    {
+      "role": "Development",
+      "name": "Partner Tecnico"
+    }
+  ],
+  "related_projects": [2, 5, 9]
+}

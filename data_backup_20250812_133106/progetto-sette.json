@@ -1,0 +1,52 @@
+{
+  "id": 7,
+  "slug": "progetto-sette",
+  "title": "PROGETTO SETTE",
+  "subtitle": "Web Platform Innovation",
+  "category": "WEB",
+  "year": "2024",
+  "client": "PIATTAFORMA EDUCATIVA",
+  "meta_description": "Piattaforma web innovativa per l'educazione digitale del futuro",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER RIVOLUZIONARE L'APPRENDIMENTO ONLINE, ANTONELLO GUARNIERI HA PROGETTATO UNA PIATTAFORMA CHE TRASFORMA L'EDUCAZIONE IN UN'ESPERIENZA INTERATTIVA E PERSONALIZZATA, UTILIZZANDO AI E GAMIFICATION PER MASSIMIZZARE L'ENGAGEMENT."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=801",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "IL DESIGN È STATO GUIDATO DA PRINCIPI DI NEUROSCIENZE APPLICATE ALL'APPRENDIMENTO. OGNI ELEMENTO DELL'INTERFACCIA È OTTIMIZZATO PER FACILITARE LA CONCENTRAZIONE E LA RETENTION DELLE INFORMAZIONI."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=802",
+      "caption": "Dashboard studente personalizzata"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=803",
+      "caption": "Sistema di videoconferenze integrate"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "LA PIATTAFORMA HA RAGGIUNTO 1M DI STUDENTI ATTIVI CON UN COMPLETION RATE DEI CORSI DEL 85%, SUPERIORE DEL 300% ALLA MEDIA DEL SETTORE. IL SISTEMA DI AI HA PERSONALIZZATO L'ESPERIENZA PER OGNI UTENTE.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=804",
+      "caption": "Analytics dashboard performance"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Platform Design",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "EdTech Consulting",
+      "name": "Education Experts"
+    }
+  ],
+  "related_projects": [3, 5, 9]
+}
