@@ -34,11 +34,6 @@ collections:
       - {label: "Cliente", name: "client", widget: "string", required: true}
       - {label: "Meta Description", name: "meta_description", widget: "text"}
       
-      # Campi per la visualizzazione nel portfolio
-      - {label: "Thumbnail Portfolio", name: "thumbnail", widget: "image", required: true, hint: "Immagine che appare nella griglia del portfolio (600x400)"}
-      - {label: "In evidenza", name: "featured", widget: "boolean", default: false, hint: "Mostra questo progetto in evidenza"}
-      - {label: "Ordine", name: "order", widget: "number", value_type: "int", required: true, hint: "Ordine di visualizzazione nel portfolio (1 = primo)"}
-      
       - label: "Blocco Info"
         name: "info_block"
         widget: "object"
@@ -163,7 +158,22 @@ collections:
           #     - {label: "Nome", name: "name", widget: "string"}
           #     - {label: "Valore", name: "value", widget: "string"}
       
-      # Lista Progetti Portfolio rimossa - ora gestita direttamente da Pagine Progetto
+      - label: "Lista Progetti Portfolio"
+        name: "projects"
+        file: "data/projects.json"
+        fields:
+          - label: "Lista Progetti"
+            name: "projects"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number", value_type: "int", required: true}
+              - {label: "Titolo", name: "title", widget: "string", required: true}
+              - {label: "Slug URL", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Solo lettere minuscole, numeri e trattini"], required: true}
+              - {label: "Categoria", name: "category", widget: "select", options: ["digital", "brand", "web", "print"], required: true}
+              - {label: "Thumbnail Portfolio", name: "thumbnail", widget: "image", required: true}
+              - {label: "Anno", name: "year", widget: "string", default: "2024", required: true}
+              - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
+              - {label: "Ordine", name: "order", widget: "number", value_type: "int", required: true}
 
   - name: "settings"
     label: "Impostazioni"
