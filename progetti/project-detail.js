@@ -64,9 +64,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     img.style.opacity = '0';
                     img.style.transition = 'opacity 0.5s ease-in-out';
                     
-                    img.addEventListener('load', function() {
+                    // Check if image is already loaded
+                    if (img.complete && img.naturalHeight !== 0) {
                         img.style.opacity = '1';
-                    }, { once: true });
+                    } else {
+                        img.addEventListener('load', function() {
+                            img.style.opacity = '1';
+                        }, { once: true });
+                    }
                     
                     // Handle image loading errors
                     img.addEventListener('error', function() {
