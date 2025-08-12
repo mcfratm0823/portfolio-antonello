@@ -1,0 +1,23 @@
+{
+  "id": 992,
+  "slug": "temp-del-2",
+  "title": "-",
+  "subtitle": "TEMPORANEO DA ELIMINARE",
+  "category": "DIGITAL",
+  "year": "2024",
+  "client": "TEMP",
+  "meta_description": "Temporaneo da eliminare",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "QUESTO È UN PROGETTO TEMPORANEO DA ELIMINARE"
+  },
+  "hero_image": "https://via.placeholder.com/150",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "TEMPORANEO"
+  },
+  "gallery_pair": [],
+  "extra_sections": [],
+  "credits": [],
+  "related_projects": []
+}
