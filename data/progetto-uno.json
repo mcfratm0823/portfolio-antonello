@@ -1,21 +1,5 @@
 {
-  "id": 1,
-  "slug": "progetto-uno",
-  "title": "PROGETTO UNO",
-  "subtitle": "Innovazione Digitale per il Future",
-  "category": "DIGITAL",
-  "year": "2024",
-  "client": "STARTUP INNOVATIVA",
   "meta_description": "Design digitale innovativo per interfacce moderne e user experience all'avanguardia",
-  "info_block": {
-    "label": "(INFO)",
-    "text": "PER IL LANCIO DELLA NUOVA PIATTAFORMA DIGITALE, ANTONELLO GUARNIERI HA COLLABORATO CON IL CLIENTE PER CREARE UN'ESPERIENZA UTENTE RIVOLUZIONARIA, COMBINANDO DESIGN MINIMALISTA E TECNOLOGIE ALL'AVANGUARDIA PER RIDEFINIRE GLI STANDARD DEL SETTORE."
-  },
-  "hero_image": "https://picsum.photos/1200/600?random=201",
-  "approach_block": {
-    "label": "(APPROCCIO)",
-    "text": "L'APPROCCIO PROGETTUALE SI È BASATO SU UNA RICERCA APPROFONDITA DEGLI UTENTI E DEI LORO COMPORTAMENTI DIGITALI. ATTRAVERSO WORKSHOP COLLABORATIVI E SESSIONI DI DESIGN THINKING, ABBIAMO SVILUPPATO UN SISTEMA VISIVO CHE BILANCIA PERFETTAMENTE ESTETICA E FUNZIONALITÀ, CREANDO UN'ESPERIENZA FLUIDA E INTUITIVA."
-  },
   "gallery_pair": [
     {
       "image": "https://picsum.photos/1200/800?random=202",
@@ -26,6 +10,40 @@
       "caption": "Sistema di navigazione responsive"
     }
   ],
+  "slug": "progetto-uno",
+  "client": "STARTUP INNOVATIVA",
+  "related_projects": [
+    2,
+    5,
+    9
+  ],
+  "hero_image": "https://picsum.photos/1200/600?random=201",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "L'APPROCCIO PROGETTUALE SI È BASATO SU UNA RICERCA APPROFONDITA DEGLI UTENTI E DEI LORO COMPORTAMENTI DIGITALI. ATTRAVERSO WORKSHOP COLLABORATIVI E SESSIONI DI DESIGN THINKING, ABBIAMO SVILUPPATO UN SISTEMA VISIVO CHE BILANCIA PERFETTAMENTE ESTETICA E FUNZIONALITÀ, CREANDO UN'ESPERIENZA FLUIDA E INTUITIVA."
+  },
+  "subtitle": "Innovazione Digitale per il Future",
+  "title": "PROGETTO UNO-uno",
+  "credits": [
+    {
+      "role": "Creative Direction",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "UX Design",
+      "name": "Team Collaborativo"
+    },
+    {
+      "role": "Development",
+      "name": "Partner Tecnico"
+    }
+  ],
+  "id": 1,
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER IL LANCIO DELLA NUOVA PIATTAFORMA DIGITALE, ANTONELLO GUARNIERI HA COLLABORATO CON IL CLIENTE PER CREARE UN'ESPERIENZA UTENTE RIVOLUZIONARIA, COMBINANDO DESIGN MINIMALISTA E TECNOLOGIE ALL'AVANGUARDIA PER RIDEFINIRE GLI STANDARD DEL SETTORE."
+  },
+  "year": "2024",
   "extra_sections": [
     {
       "label": "(RISULTATI)",
@@ -43,19 +61,5 @@
       "type": "text"
     }
   ],
-  "credits": [
-    {
-      "role": "Creative Direction",
-      "name": "Antonello Guarnieri"
-    },
-    {
-      "role": "UX Design",
-      "name": "Team Collaborativo"
-    },
-    {
-      "role": "Development",
-      "name": "Partner Tecnico"
-    }
-  ],
-  "related_projects": [2, 5, 9]
+  "category": "DIGITAL"
 }
