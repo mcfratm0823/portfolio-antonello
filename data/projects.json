@@ -2,93 +2,93 @@
   "projects": [
     {
       "id": 1,
-      "title": "Progetto Uno",
-      "slug": "progetto-uno",
+      "title": "Cafè 124",
+      "slug": "Cafè 124",
       "category": "digital",
-      "thumbnail": "https://picsum.photos/600/400?random=101",
+      "thumbnail": "https://picsum.photos/1200/600?random=201",
       "year": "2024",
-      "featured": true,
-      "order": 1
+      "featured": false,
+      "order": 9
     },
     {
       "id": 2,
-      "title": "Progetto Due",
+      "title": "PROGETTO DUE",
       "slug": "progetto-due",
       "category": "brand",
-      "thumbnail": "https://picsum.photos/600/400?random=102",
+      "thumbnail": "https://picsum.photos/1200/600?random=301",
       "year": "2024",
       "featured": false,
       "order": 2
     },
     {
       "id": 3,
-      "title": "Progetto Tre",
+      "title": "PROGETTO TRE",
       "slug": "progetto-tre",
       "category": "web",
-      "thumbnail": "https://picsum.photos/600/400?random=103",
+      "thumbnail": "https://picsum.photos/1200/600?random=401",
       "year": "2024",
-      "featured": true,
-      "order": 3
+      "featured": false,
+      "order": 8
     },
     {
       "id": 4,
-      "title": "Progetto Quattro",
+      "title": "PROGETTO QUATTRO",
       "slug": "progetto-quattro",
       "category": "print",
-      "thumbnail": "https://picsum.photos/600/400?random=104",
+      "thumbnail": "https://picsum.photos/1200/600?random=501",
       "year": "2024",
       "featured": false,
-      "order": 4
-    },
-    {
-      "id": 5,
-      "title": "Progetto Cinque",
-      "slug": "progetto-cinque",
-      "category": "digital",
-      "thumbnail": "https://picsum.photos/600/400?random=105",
-      "year": "2024",
-      "featured": true,
       "order": 5
     },
     {
+      "id": 5,
+      "title": "PROGETTO CINQUE",
+      "slug": "progetto-cinque",
+      "category": "digital",
+      "thumbnail": "https://picsum.photos/1200/600?random=601",
+      "year": "2024",
+      "featured": true,
+      "order": 1
+    },
+    {
       "id": 6,
-      "title": "Progetto Sei",
+      "title": "PROGETTO SEI",
       "slug": "progetto-sei",
       "category": "brand",
-      "thumbnail": "https://picsum.photos/600/400?random=106",
+      "thumbnail": "https://picsum.photos/1200/600?random=701",
       "year": "2024",
       "featured": false,
       "order": 6
     },
     {
       "id": 7,
-      "title": "Progetto Sette",
+      "title": "PROGETTO SETTE",
       "slug": "progetto-sette",
       "category": "web",
-      "thumbnail": "https://picsum.photos/600/400?random=107",
+      "thumbnail": "https://picsum.photos/1200/600?random=801",
       "year": "2024",
       "featured": true,
       "order": 7
     },
     {
       "id": 8,
-      "title": "Progetto Otto",
+      "title": "PROGETTO OTTO",
       "slug": "progetto-otto",
       "category": "print",
-      "thumbnail": "https://picsum.photos/600/400?random=108",
+      "thumbnail": "https://picsum.photos/1200/600?random=901",
       "year": "2024",
-      "featured": false,
-      "order": 8
+      "featured": true,
+      "order": 4
     },
     {
       "id": 9,
-      "title": "Progetto Nove",
+      "title": "PROGETTO NOVE",
       "slug": "progetto-nove",
       "category": "digital",
-      "thumbnail": "https://picsum.photos/600/400?random=109",
+      "thumbnail": "https://picsum.photos/1200/600?random=1001",
       "year": "2024",
-      "featured": true,
-      "order": 9
+      "featured": false,
+      "order": 3
     }
   ]
 }

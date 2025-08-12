@@ -25,10 +25,10 @@ projectFiles.forEach((file, index) => {
                 title: data.title,
                 slug: data.slug,
                 category: (data.category || 'DIGITAL').toLowerCase(),
-                thumbnail: data.hero_image || `https://picsum.photos/600/400?random=${100 + index}`,
+                thumbnail: data.thumbnail || data.hero_image || `https://picsum.photos/600/400?random=${100 + index}`,
                 year: data.year || '2024',
-                featured: index % 3 === 0, // Ogni terzo progetto è featured
-                order: index + 1
+                featured: data.featured !== undefined ? data.featured : (index % 3 === 0),
+                order: data.order || index + 1
             });
         }
     } catch (error) {
