@@ -69,7 +69,6 @@
     <link href="./css/global-cursor.css" rel="stylesheet">
     <link href="./utils/imageLoader.css" rel="stylesheet">
     <link href="./css/nuovahome.css" rel="stylesheet">
-    <link href="./css/navbar-fix.css" rel="stylesheet">
     
     <!-- Check for ES6 module support -->
     <script>
@@ -83,10 +82,6 @@
     </script>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div id="custom-cursor" class="custom-cursor">
-        <div class="cursor-inner"></div>
-    </div>
     <!-- Form nascosto per Netlify Forms -->
     <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
         <input type="text" name="nome" />
@@ -107,8 +102,6 @@
         </div>
     </div>
 
-
-    <!-- Navbar will be injected here by navbar.js -->
 
     <!-- Main Content -->
     <main id="main-content">
@@ -407,37 +400,37 @@
     </main>
 
     <!-- External Dependencies -->
+    <!-- App Coordinator - DEVE essere caricato per primo -->
+    <script src="./js/app-coordinator.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
     
-    <!-- Debug tracker (only in debug mode) -->
-    <script>
-        if (window.location.search.includes('debug=true')) {
-            document.write('<script src="./js/debug-init-tracker.js"><\/script>');
-            document.write('<script src="./js/double-load-detector.js"><\/script>');
-        }
+    <!-- Module-based loading (modern browsers) -->
+    <script type="module">
+        import './js/form-ajax.js';  // Carica prima form-ajax
+        import './js/main.js';
+        import './js/nuovahome.js';
+        import './js/form-handler.js';
+        import './js/cms-loader.js';
     </script>
     
-    <!-- SIMPLIFIED INITIALIZATION - All in one coordinated system -->
-    
-    <!-- Constants and utilities first -->
-    <script src="./config/constants.js"></script>
-    <script src="./utils/formValidator.js"></script>
-    <script src="./utils/imageLoader.js"></script>
-    <script src="./utils/smartImagePreloader.js"></script>
-    
-    <!-- UI Components -->
-    <script src="./js/global-cursor.js"></script>
-    <script src="./js/navbar.js"></script>
-    <script src="./js/form-handler.js"></script>
-    <script src="./js/form-ajax.js"></script>
-    
-    <!-- Portfolio functionality -->
-    <script src="./js/portfolio.js"></script>
-    
-    <!-- Main initialization - handles everything in coordinated way -->
-    <script src="./js/simple-init.js"></script>
+    <!-- Fallback for browsers without module support -->
+    <script nomodule src="./config/constants.js"></script>
+    <script nomodule src="./utils/formValidator.js"></script>
+    <script nomodule src="./utils/imageLoader.js"></script>
+    <script nomodule src="./utils/smartImagePreloader.js"></script>
+    <script nomodule src="./utils/portfolioLazyLoader.js"></script>
+    <script nomodule src="./utils/errorHandler.js"></script>
+    <script nomodule src="./utils/performanceMonitor.js"></script>
+    <script nomodule src="./utils/clsOptimizer.js"></script>
+    <script nomodule src="./js/global-cursor.js"></script>
+    <script nomodule src="./js/form-ajax.js"></script>
+    <script nomodule src="./js/navbar.js"></script>
+    <script nomodule src="./js/nuovahome.js"></script>
+    <script nomodule src="./js/form-handler.js"></script>
+    <script nomodule src="./js/cms-loader.js"></script>
 </body>
 </html>

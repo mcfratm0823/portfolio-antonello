@@ -212,16 +212,9 @@ async function loadProjects() {
     }
 }
 
-// TEMPORANEAMENTE DISABILITATO - Gestito da CMSModule nella nuova architettura
-// Il CMSModule in /js/modules/cms-module.js gestisce ora il caricamento dati
-/*
+// Carica i dati quando il DOM è pronto
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadCMSData);
 } else {
     loadCMSData();
 }
-*/
-
-// Esporta le funzioni per uso da parte del nuovo modulo se necessario
-window.loadCMSData = loadCMSData;
-window.loadProjects = loadProjects;

@@ -1102,20 +1102,12 @@ window.updateFormData = function(data) {
 // Export for ES6 modules
 export { Navbar, initializeNavbar };
 
-// Initialize for backward compatibility - con controllo duplicazione
-if (!window.__NAVBAR_INITIALIZED__) {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            if (!window.__NAVBAR_INITIALIZED__) {
-                window.__NAVBAR_INITIALIZED__ = true;
-                initializeNavbar();
-            }
-        });
-    } else {
-        // DOM is already loaded
-        window.__NAVBAR_INITIALIZED__ = true;
-        initializeNavbar();
-    }
+// Initialize for backward compatibility
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeNavbar);
+} else {
+    // DOM is already loaded
+    initializeNavbar();
 }
 
 // Controlla se il form è stato inviato con successo
