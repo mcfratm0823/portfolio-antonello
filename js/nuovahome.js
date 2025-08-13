@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Only apply animation on desktop/landscape tablets
     if (window.innerWidth >= 1024) {
         const centerPhoto = document.getElementById('center-photo');
+        const centerVideo = document.getElementById('center-video');
         const visualTitle = document.getElementById('antonello-title');
         const designerTitle = document.getElementById('guarnieri-title');
         
@@ -151,6 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Define the animation with GSAP tweens instead of onUpdate
         photoTimeline
             .to(centerPhoto, {
+                width: getFullScreenDimensions().width,
+                height: getFullScreenDimensions().height,
+                duration: 1,
+                ease: "power3.inOut"
+            }, 0)
+            .to(centerVideo, {
                 width: getFullScreenDimensions().width,
                 height: getFullScreenDimensions().height,
                 duration: 1,

@@ -75,7 +75,11 @@ async function loadCMSData() {
                 centerVideo.style.display = 'block';
                 if (centerPhoto) centerPhoto.style.display = 'none';
                 const video = centerVideo.querySelector('video source');
-                if (video) video.src = pageData.hero.center_media;
+                const videoElement = centerVideo.querySelector('video');
+                if (video && videoElement) {
+                    video.src = pageData.hero.center_media;
+                    videoElement.load(); // Ricarica il video con il nuovo source
+                }
             } else if (centerPhoto) {
                 centerPhoto.style.display = 'block';
                 if (centerVideo) centerVideo.style.display = 'none';
