@@ -69,6 +69,7 @@
     <link href="./css/global-cursor.css" rel="stylesheet">
     <link href="./utils/imageLoader.css" rel="stylesheet">
     <link href="./css/nuovahome.css" rel="stylesheet">
+    <link href="./css/navbar.css" rel="stylesheet">
     
     <!-- Check for ES6 module support -->
     <script>
@@ -82,6 +83,10 @@
     </script>
 </head>
 <body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor" class="custom-cursor">
+        <div class="cursor-inner"></div>
+    </div>
     <!-- Form nascosto per Netlify Forms -->
     <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
         <input type="text" name="nome" />
@@ -102,6 +107,28 @@
         </div>
     </div>
 
+
+    <!-- Navbar -->
+    <nav id="navbar" class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <a href="/" class="navbar-logo">ANTONELLO GUARNIERI</a>
+            </div>
+            <div class="navbar-center">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/portfolio.html" class="nav-link">Portfolio</a>
+                <a href="#about-section" class="nav-link">About</a>
+                <a href="#services-section" class="nav-link">Services</a>
+            </div>
+            <div class="navbar-right">
+                <button class="navbar-menu-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
     <!-- Main Content -->
     <main id="main-content">
@@ -406,60 +433,31 @@
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
     
     <!-- Debug tracker (only in debug mode) -->
-    <!-- Commented out for production - uncomment for debugging
     <script>
         if (window.location.search.includes('debug=true')) {
             document.write('<script src="./js/debug-init-tracker.js"><\/script>');
             document.write('<script src="./js/double-load-detector.js"><\/script>');
         }
     </script>
-    -->
     
-    <!-- Core Application Architecture -->
-    <!-- These must be loaded in this specific order -->
+    <!-- SIMPLIFIED INITIALIZATION - All in one coordinated system -->
+    
+    <!-- Constants and utilities first -->
     <script src="./config/constants.js"></script>
-    <script src="./js/core/event-bus.js"></script>
-    <script src="./js/core/module-registry.js"></script>
-    <script src="./js/core/app-state.js"></script>
-    <script src="./js/core/app-initializer.js"></script>
-    
-    <!-- Utilities (can load in any order) -->
     <script src="./utils/formValidator.js"></script>
     <script src="./utils/imageLoader.js"></script>
     <script src="./utils/smartImagePreloader.js"></script>
-    <script src="./utils/errorHandler.js"></script>
-    <script src="./utils/performanceMonitor.js"></script>
-    <script src="./utils/clsOptimizer.js"></script>
     
-    <!-- Feature Scripts (these will be wrapped by modules) -->
+    <!-- UI Components -->
     <script src="./js/global-cursor.js"></script>
-    <script src="./js/form-ajax.js"></script>
     <script src="./js/navbar.js"></script>
     <script src="./js/form-handler.js"></script>
-    <!-- cms-loader.js functions available but not auto-initialized -->
-    <script src="./js/cms-loader.js"></script>
+    <script src="./js/form-ajax.js"></script>
     
-    <!-- Original scripts needed for classes -->
-    <!-- Using refactored version without multiple DOMContentLoaded -->
-    <script src="./js/nuovahome-refactored.js"></script>
+    <!-- Portfolio functionality -->
     <script src="./js/portfolio.js"></script>
     
-    <!-- Legacy scripts commented out - kept for reference
-    <script src="./js/preloader-guard.js"></script>
-    <script src="./js/nuovahome-init-wrapper.js"></script>
-    <script src="./js/nuovahome.js"></script>
-    -->
-    
-    <!-- Modules that integrate with new architecture -->
-    <script src="./js/modules/cms-module.js"></script>
-    <!-- Homepage animations now handled by nuovahome-refactored.js -->
-    <!-- <script src="./js/modules/homepage-module.js"></script> -->
-    <script src="./js/modules/portfolio-module.js"></script>
-    
-    <!-- Lazy loader last as it depends on DOM -->
-    <script src="./utils/portfolioLazyLoader.js"></script>
-    
-    <!-- Main App Entry Point - MUST BE LAST -->
-    <script src="./js/app.js"></script>
+    <!-- Main initialization - handles everything in coordinated way -->
+    <script src="./js/simple-init.js"></script>
 </body>
 </html>
