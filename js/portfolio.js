@@ -823,12 +823,16 @@ window.initializeFilters = function() {
     });
 };
 
+// Flag per evitare doppia inizializzazione
+window.__PROJECTS_RENDERED__ = false;
+
 // Funzione globale per renderizzare i progetti dal CMS
 window.renderProjects = function(projects) {
     const projectsContainer = document.getElementById('projects-container');
     const loadingMessage = document.getElementById('loading-message');
     
-    if (!projectsContainer) return;
+    if (!projectsContainer || window.__PROJECTS_RENDERED__) return;
+    window.__PROJECTS_RENDERED__ = true;
     
     // Nascondi il messaggio di caricamento
     if (loadingMessage) {
@@ -860,11 +864,15 @@ window.renderProjects = function(projects) {
     
     // Reinizializza i componenti dopo il caricamento dei progetti
     requestAnimationFrame(() => {
-        // Inizializza il ProjectStack per l'effetto circolare
-        new ProjectStack();
-        // Inizializza il FilterSystem
-        new FilterSystem();
-        
+        // Inizializza solo se non già esistenti
+        if (!window.__PROJECT_STACK_INITIALIZED__) {
+            window.__PROJECT_STACK_INITIALIZED__ = true;
+            window.projectStackInstance = new ProjectStack();
+        }
+        if (!window.__FILTER_SYSTEM_INITIALIZED__) {
+            window.__FILTER_SYSTEM_INITIALIZED__ = true;
+            window.filterSystemInstance = new FilterSystem();
+        }
     });
 };
 
