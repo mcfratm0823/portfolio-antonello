@@ -117,8 +117,15 @@
                             ease: "power3.inOut",
                             onComplete: () => {
                                 preloader.style.display = 'none';
-                                const navbar = document.getElementById('navbar');
-                                if (navbar) navbar.classList.add('visible');
+                                // La navbar dovrebbe già essere inizializzata e visibile
+                                // Forziamo la visibilità se necessario
+                                setTimeout(() => {
+                                    const navbar = document.getElementById('navbar');
+                                    if (navbar) {
+                                        navbar.style.opacity = '1';
+                                        navbar.classList.add('visible');
+                                    }
+                                }, 100);
                             }
                         });
                     }

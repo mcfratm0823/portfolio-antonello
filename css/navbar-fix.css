@@ -1,0 +1,58 @@
+/* Navbar Fix - Assicura che la navbar sia visibile */
+#navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 80px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 clamp(2rem, 4vw, 6rem) !important;
+    z-index: 9999 !important;
+    background: transparent !important;
+    mix-blend-mode: exclusion !important;
+    pointer-events: auto !important;
+}
+
+#navbar.visible {
+    opacity: 1 !important;
+}
+
+.navbar-logo,
+.navbar-menu {
+    color: white !important;
+    font-family: 'PPNeueMontreal-Regular', 'Helvetica Neue', sans-serif !important;
+    font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
+    letter-spacing: 0.02em !important;
+    cursor: pointer !important;
+}
+
+.navbar-menu {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.navbar-arrow {
+    width: 12px !important;
+    height: 12px !important;
+    display: inline-block !important;
+}
+
+/* Assicura che il navbar sia sopra il preloader */
+#preloader {
+    z-index: 9998 !important;
+}
+
+/* Fix per mobile */
+@media (max-width: 768px) {
+    #navbar {
+        padding: 0 1.5rem !important;
+    }
+    
+    .navbar-logo,
+    .navbar-menu {
+        font-size: 0.875rem !important;
+    }
+}
