@@ -72,6 +72,7 @@ async function loadCMSData() {
             const centerVideo = document.querySelector('#center-video');
             
             if (pageData.hero.center_media_type === 'video' && centerVideo) {
+                console.log('Mostrando video:', pageData.hero.center_media);
                 centerVideo.style.display = 'block';
                 if (centerPhoto) centerPhoto.style.display = 'none';
                 const video = centerVideo.querySelector('video source');
@@ -79,6 +80,8 @@ async function loadCMSData() {
                 if (video && videoElement) {
                     video.src = pageData.hero.center_media;
                     videoElement.load(); // Ricarica il video con il nuovo source
+                    // Assicuriamoci che il video parta
+                    videoElement.play().catch(e => console.log('Autoplay bloccato:', e));
                 }
             } else if (centerPhoto) {
                 centerPhoto.style.display = 'block';
