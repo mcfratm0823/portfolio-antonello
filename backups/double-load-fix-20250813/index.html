@@ -406,14 +406,12 @@
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
     
     <!-- Debug tracker (only in debug mode) -->
-    <!-- Commented out for production - uncomment for debugging
     <script>
         if (window.location.search.includes('debug=true')) {
             document.write('<script src="./js/debug-init-tracker.js"><\/script>');
             document.write('<script src="./js/double-load-detector.js"><\/script>');
         }
     </script>
-    -->
     
     <!-- Core Application Architecture -->
     <!-- These must be loaded in this specific order -->
@@ -440,20 +438,15 @@
     <script src="./js/cms-loader.js"></script>
     
     <!-- Original scripts needed for classes -->
-    <!-- Using refactored version without multiple DOMContentLoaded -->
-    <script src="./js/nuovahome-refactored.js"></script>
-    <script src="./js/portfolio.js"></script>
-    
-    <!-- Legacy scripts commented out - kept for reference
+    <!-- Guards and wrappers to prevent multiple initializations -->
     <script src="./js/preloader-guard.js"></script>
     <script src="./js/nuovahome-init-wrapper.js"></script>
     <script src="./js/nuovahome.js"></script>
-    -->
+    <script src="./js/portfolio.js"></script>
     
     <!-- Modules that integrate with new architecture -->
     <script src="./js/modules/cms-module.js"></script>
-    <!-- Homepage animations now handled by nuovahome-refactored.js -->
-    <!-- <script src="./js/modules/homepage-module.js"></script> -->
+    <script src="./js/modules/homepage-module.js"></script>
     <script src="./js/modules/portfolio-module.js"></script>
     
     <!-- Lazy loader last as it depends on DOM -->

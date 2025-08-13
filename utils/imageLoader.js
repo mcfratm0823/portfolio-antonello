@@ -229,11 +229,17 @@ export { ImageLoader };
 // Create global instance for backward compatibility
 window.imageLoader = new ImageLoader();
 
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
+// Auto-initialize when DOM is ready - con controllo duplicazione
+if (!window.__IMAGE_LOADER_INITIALIZED__) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!window.__IMAGE_LOADER_INITIALIZED__) {
+                window.__IMAGE_LOADER_INITIALIZED__ = true;
+                window.imageLoader.init();
+            }
+        });
+    } else {
+        window.__IMAGE_LOADER_INITIALIZED__ = true;
         window.imageLoader.init();
-    });
-} else {
-    window.imageLoader.init();
+    }
 }

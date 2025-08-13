@@ -113,11 +113,17 @@ class PortfolioLazyLoader {
 // Export for ES6 modules
 export { PortfolioLazyLoader };
 
-// Initialize when DOM is ready for backward compatibility
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
+// Initialize when DOM is ready for backward compatibility - con controllo duplicazione
+if (!window.__PORTFOLIO_LAZY_LOADER_INITIALIZED__) {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!window.__PORTFOLIO_LAZY_LOADER_INITIALIZED__) {
+                window.__PORTFOLIO_LAZY_LOADER_INITIALIZED__ = true;
+                window.portfolioLazyLoader = new PortfolioLazyLoader();
+            }
+        });
+    } else {
+        window.__PORTFOLIO_LAZY_LOADER_INITIALIZED__ = true;
         window.portfolioLazyLoader = new PortfolioLazyLoader();
-    });
-} else {
-    window.portfolioLazyLoader = new PortfolioLazyLoader();
+    }
 }
