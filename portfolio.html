@@ -61,8 +61,8 @@
     <link href="./css/portfolio.css" rel="stylesheet">
     <link href="./css/portfolio-links.css" rel="stylesheet">
     <script>
-        // Data automatica - verrà gestita dal modulo portfolio
-        window.updateCurrentDate = function() {
+        // Data automatica
+        document.addEventListener('DOMContentLoaded', function() {
             const dateElement = document.getElementById('current-date');
             if (dateElement) {
                 const today = new Date();
@@ -71,7 +71,7 @@
                 const year = String(today.getFullYear()).slice(-2);
                 dateElement.textContent = `${day}/${month}/${year}`;
             }
-        };
+        });
     </script>
     <meta name="google" value="notranslate">
 </head>
@@ -126,37 +126,24 @@
         </div>
     </footer>
 
-    <!-- Core Application Architecture -->
-    <!-- These must be loaded in this specific order -->
-    <script src="./config/constants.js"></script>
-    <script src="./js/core/event-bus.js"></script>
-    <script src="./js/core/module-registry.js"></script>
-    <script src="./js/core/app-state.js"></script>
-    <script src="./js/core/app-initializer.js"></script>
+    <!-- Module-based loading (modern browsers) -->
+    <script type="module">
+        import './js/main.js';
+        import './js/portfolio.js';
+        import './js/cms-loader.js';
+    </script>
     
-    <!-- Utilities (can load in any order) -->
-    <script src="./utils/formValidator.js"></script>
-    <script src="./utils/imageLoader.js"></script>
-    <script src="./utils/smartImagePreloader.js"></script>
-    <script src="./utils/errorHandler.js"></script>
-    <script src="./utils/performanceMonitor.js"></script>
-    <script src="./utils/clsOptimizer.js"></script>
-    
-    <!-- Feature Scripts (these will be wrapped by modules) -->
-    <script src="./js/global-cursor.js"></script>
-    <script src="./js/navbar.js"></script>
-    
-    <!-- Original scripts needed for classes -->
-    <script src="./js/portfolio.js"></script>
-    
-    <!-- Modules that integrate with new architecture -->
-    <script src="./js/modules/cms-module.js"></script>
-    <script src="./js/modules/portfolio-module.js"></script>
-    
-    <!-- Lazy loader last as it depends on DOM -->
-    <script src="./utils/portfolioLazyLoader.js"></script>
-    
-    <!-- Main App Entry Point - MUST BE LAST -->
-    <script src="./js/app.js"></script>
+    <!-- Fallback for browsers without module support -->
+    <script nomodule src="./config/constants.js"></script>
+    <script nomodule src="./utils/formValidator.js"></script>
+    <script nomodule src="./utils/imageLoader.js"></script>
+    <script nomodule src="./utils/smartImagePreloader.js"></script>
+    <script nomodule src="./utils/portfolioLazyLoader.js"></script>
+    <script nomodule src="./utils/errorHandler.js"></script>
+    <script nomodule src="./utils/performanceMonitor.js"></script>
+    <script nomodule src="./utils/clsOptimizer.js"></script>
+    <script nomodule src="./js/global-cursor.js"></script>
+    <script nomodule src="./js/navbar.js"></script>
+    <script nomodule src="./js/portfolio.js"></script>
 </body>
 </html>
