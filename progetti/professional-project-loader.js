@@ -89,8 +89,9 @@ class ProjectLoader {
                 return;
             }
             
-            // Dynamic import of projects data
-            const { getProject, getRelatedProjects } = await import('../js/projects-data.js');
+            // Dynamic import with proper error handling and no cache hacks
+            const moduleUrl = new URL('../js/projects-data.js', window.location.href);
+            const { getProject, getRelatedProjects } = await import(moduleUrl.href);
             
             // Get project data
             const projectData = getProject(slug);
