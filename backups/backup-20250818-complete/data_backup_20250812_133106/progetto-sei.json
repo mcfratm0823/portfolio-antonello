@@ -1,0 +1,52 @@
+{
+  "id": 6,
+  "slug": "progetto-sei",
+  "title": "PROGETTO SEI",
+  "subtitle": "Corporate Identity Evolution",
+  "category": "BRAND",
+  "year": "2024",
+  "client": "GRUPPO INDUSTRIALE",
+  "meta_description": "Evoluzione dell'identità aziendale per gruppo industriale internazionale",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER LA TRASFORMAZIONE DIGITALE DEL GRUPPO INDUSTRIALE, ANTONELLO GUARNIERI HA RIDEFINITO L'IDENTITÀ AZIENDALE MANTENENDO L'HERITAGE STORICO MENTRE PROIETTA IL BRAND VERSO IL FUTURO DELL'INDUSTRIA 4.0."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=701",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "LA STRATEGIA HA BILANCIATO TRADIZIONE E INNOVAZIONE ATTRAVERSO UN SISTEMA MODULARE CHE SI ADATTA AI DIVERSI SETTORI DEL GRUPPO. OGNI ELEMENTO VISIVO RACCONTA LA STORIA DELL'AZIENDA GUARDANDO AL FUTURO."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=702",
+      "caption": "Sistema logo modulare"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=703",
+      "caption": "Corporate stationery design"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "IL REBRAND HA UNIFICATO LA COMUNICAZIONE DI 15 DIVISIONI AZIENDALI, AUMENTANDO LA BRAND RECOGNITION DEL 250%. IL NUOVO SISTEMA HA FACILITATO L'ESPANSIONE IN 5 NUOVI MERCATI INTERNAZIONALI.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=704",
+      "caption": "Environmental design headquarters"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Strategic Design",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "Implementation",
+      "name": "Corporate Team"
+    }
+  ],
+  "related_projects": [2, 4, 8]
+}

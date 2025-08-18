@@ -1,0 +1,57 @@
+/* Global Custom Cursor Styles */
+
+/* Hide native cursor everywhere */
+* {
+    cursor: none !important;
+}
+
+/* Doppia sicurezza per nascondere il cursore su link e hover */
+a, a:hover, a:focus,
+.project-link, .project-link:hover,
+.project-card, .project-card:hover,
+button, button:hover,
+[role="button"], [role="button"]:hover {
+    cursor: none !important;
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    pointer-events: none;
+    z-index: 999999;
+    mix-blend-mode: difference;
+    will-change: transform;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    transform: translateZ(0);
+}
+
+/* Cursor text "Scopri" */
+.cursor-text {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000000;
+    will-change: transform, opacity;
+}
+
+/* Performance optimization during scroll */
+body.is-scrolling * {
+    transition: none !important;
+    animation-play-state: paused !important;
+}
+
+/* Mobile: hide custom cursor and restore native */
+@media (max-width: 768px) {
+    .custom-cursor {
+        display: none !important;
+    }
+    
+    * {
+        cursor: auto !important;
+    }
+}

@@ -1,0 +1,52 @@
+{
+  "id": 8,
+  "slug": "progetto-otto",
+  "title": "PROGETTO OTTO",
+  "subtitle": "Editorial Design Excellence",
+  "category": "PRINT",
+  "year": "2024",
+  "client": "MAGAZINE INTERNAZIONALE",
+  "meta_description": "Design editoriale per magazine di cultura contemporanea",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER IL RILANCIO DEL MAGAZINE DI CULTURA CONTEMPORANEA, ANTONELLO GUARNIERI HA CREATO UN LINGUAGGIO EDITORIALE CHE SFIDA LE CONVENZIONI, COMBINANDO TIPOGRAFIA SPERIMENTALE E FOTOGRAFIA D'AUTORE IN LAYOUT SORPRENDENTI."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=901",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "OGNI NUMERO È STATO CONCEPITO COME UN OGGETTO D'ARTE. LA GRIGLIA MODULARE PERMETTE INFINITE VARIAZIONI MANTENENDO COERENZA VISIVA. L'USO DEL COLORE E DELLO SPAZIO BIANCO CREA RITMO E RESPIRO NELLA LETTURA."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=902",
+      "caption": "Cover design sistema modulare"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=903",
+      "caption": "Spread articolo feature"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "IL REDESIGN HA AUMENTATO LE VENDITE IN EDICOLA DEL 120% E GLI ABBONAMENTI DEL 200%. IL MAGAZINE HA VINTO 3 PREMI INTERNAZIONALI PER L'ECCELLENZA NEL DESIGN EDITORIALE.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=904",
+      "caption": "Collezione numeri speciali"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Editorial Design",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "Photography",
+      "name": "Collettivo Fotografico"
+    }
+  ],
+  "related_projects": [4, 6, 2]
+}

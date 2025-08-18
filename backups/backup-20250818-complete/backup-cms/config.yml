@@ -1,0 +1,250 @@
+backend:
+  name: git-gateway
+  branch: main # Branch to update (optional; defaults to master)
+
+# This line tells the CMS where the admin folder is
+site_url: https://resilient-nougat-34eb70.netlify.app
+
+# Publish mode - simple mode publishes directly
+# publish_mode: editorial_workflow
+
+# Media files storage
+media_folder: "img/uploads" # Media files will be stored here
+public_folder: "/img/uploads" # Public path for media files
+
+# Collections - define the content types
+collections:
+
+  - name: "project_pages"
+    label: "Pagine Progetto"
+    folder: "data"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "slug"
+    summary: "{{title}} - {{category}}"
+    fields:
+      - {label: "ID", name: "id", widget: "number", value_type: "int"}
+      - {label: "Slug URL", name: "slug", widget: "string", required: true, pattern: ["^(?!-$)[a-z0-9]+(?:-[a-z0-9]+)*$", "Lo slug deve contenere solo lettere minuscole, numeri e trattini (non può essere solo un trattino)"]}
+      - {label: "Titolo", name: "title", widget: "string", required: true}
+      - {label: "Sottotitolo", name: "subtitle", widget: "string", required: true}
+      - {label: "Categoria", name: "category", widget: "select", options: ["DIGITAL", "BRAND", "WEB", "PRINT"], required: true}
+      - {label: "Anno", name: "year", widget: "string", required: true}
+      - {label: "Cliente", name: "client", widget: "string", required: true}
+      - {label: "Meta Description", name: "meta_description", widget: "text"}
+      
+      - label: "Blocco Info"
+        name: "info_block"
+        widget: "object"
+        fields:
+          - {label: "Label", name: "label", widget: "string", default: "(INFO)"}
+          - {label: "Testo", name: "text", widget: "text"}
+      
+      - {label: "Immagine Hero", name: "hero_image", widget: "image"}
+      
+      - label: "Blocco Approccio"
+        name: "approach_block"
+        widget: "object"
+        fields:
+          - {label: "Label", name: "label", widget: "string", default: "(APPROCCIO)"}
+          - {label: "Testo", name: "text", widget: "text"}
+      
+      - label: "Gallery Coppia"
+        name: "gallery_pair"
+        widget: "list"
+        max: 2
+        fields:
+          - {label: "Immagine", name: "image", widget: "image"}
+          - {label: "Didascalia", name: "caption", widget: "string"}
+      
+      - label: "Sezioni Extra"
+        name: "extra_sections"
+        widget: "list"
+        fields:
+          - {label: "Tipo", name: "type", widget: "select", options: ["text", "full_image"]}
+          - {label: "Label", name: "label", widget: "string", required: false}
+          - {label: "Testo", name: "text", widget: "text", required: false}
+          - {label: "Immagine", name: "image", widget: "image", required: false}
+          - {label: "Didascalia", name: "caption", widget: "string", required: false}
+      
+      - label: "Credits"
+        name: "credits"
+        widget: "list"
+        fields:
+          - {label: "Ruolo", name: "role", widget: "string"}
+          - {label: "Nome", name: "name", widget: "string"}
+      
+      - label: "Progetti Correlati"
+        name: "related_projects"
+        widget: "list"
+        value_type: "int"
+        hint: "Inserisci gli ID dei progetti correlati (massimo 4)"
+
+  - name: "pages"
+    label: "Pagine"
+    files:
+      - label: "Homepage"
+        name: "home"
+        file: "data/homepage.json"
+        fields:
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Titolo Sinistra (VISUAL)", name: "title_left", widget: "string"}
+              - {label: "Titolo Destra (DESIGN)", name: "title_right", widget: "string"}
+              - {label: "Nome", name: "name_text", widget: "string"}
+              - {label: "Tagline", name: "tagline", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Tipo Media Centrale", name: "center_media_type", widget: "select", options: ["image", "video"], default: "image"}
+              - {label: "Media Centrale (Immagine o Video)", name: "center_media", widget: "file", hint: "Carica un'immagine o un video"}
+          
+          - label: "About Section"
+            name: "about"
+            widget: "object"
+            fields:
+              - {label: "Label", name: "label", widget: "string"}
+              - {label: "Testo Principale", name: "main_text", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Colonna 1", name: "column1", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Colonna 2", name: "column2", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+          
+          - label: "Services Section"
+            name: "services"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "string"}
+              - {label: "Descrizione", name: "description", widget: "text"}
+              - label: "Lista Servizi"
+                name: "list"
+                widget: "list"
+                fields:
+                  - {label: "Nome", name: "name", widget: "string"}
+                  - {label: "Descrizione", name: "description", widget: "text"}
+                  - {label: "Immagine", name: "image", widget: "image"}
+          
+          - label: "Portfolio Section"
+            name: "portfolio"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "string"}
+              - label: "Progetti in Homepage"
+                name: "projects"
+                widget: "list"
+                max: 4
+                fields:
+                  - {label: "Nome", name: "name", widget: "string"}
+                  - {label: "Categoria", name: "category", widget: "string"}
+                  - {label: "Immagine Box", name: "box_image", widget: "image"}
+                  - {label: "Immagine Background", name: "bg_image", widget: "image"}
+          
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            fields:
+              - {label: "Titolo", name: "title", widget: "text"}
+              - {label: "Email Footer", name: "bottom_email", widget: "string"}
+              - {label: "Telefono Footer", name: "bottom_phone", widget: "string"}
+
+      - label: "Pagina Lavori"
+        name: "portfolio"
+        file: "data/portfolio-page.json"
+        fields:
+          - {label: "Titolo principale", name: "main_title", widget: "text", default: "SFOGLIA I LAVORI"}
+          # Filtri temporaneamente nascosti - decommentare quando necessario
+          # - label: "Filtri"
+          #   name: "filters"
+          #   widget: "list"
+          #   fields:
+          #     - {label: "Nome", name: "name", widget: "string"}
+          #     - {label: "Valore", name: "value", widget: "string"}
+      
+      - label: "Lista Progetti Portfolio"
+        name: "projects"
+        file: "data/projects.json"
+        fields:
+          - label: "Lista Progetti"
+            name: "projects"
+            widget: "list"
+            fields:
+              - {label: "ID", name: "id", widget: "number", value_type: "int", required: true}
+              - {label: "Titolo", name: "title", widget: "string", required: true}
+              - {label: "Slug URL", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Solo lettere minuscole, numeri e trattini"], required: true}
+              - {label: "Categoria", name: "category", widget: "select", options: ["digital", "brand", "web", "print"], required: true}
+              - {label: "Thumbnail Portfolio", name: "thumbnail", widget: "image", required: true}
+              - {label: "Anno", name: "year", widget: "string", default: "2024", required: true}
+              - {label: "In evidenza", name: "featured", widget: "boolean", default: false}
+              - {label: "Ordine", name: "order", widget: "number", value_type: "int", required: true}
+
+  - name: "settings"
+    label: "Impostazioni"
+    files:
+      - label: "Informazioni generali"
+        name: "general"
+        file: "data/settings.json"
+        fields:
+          - {label: "Titolo del sito", name: "site_title", widget: "string"}
+          - {label: "Email", name: "email", widget: "string"}
+          - {label: "Telefono", name: "phone", widget: "string"}
+          - {label: "Indirizzo", name: "address", widget: "text"}
+          - label: "Social Media"
+            name: "social"
+            widget: "object"
+            fields:
+              - {label: "Instagram", name: "instagram", widget: "string", required: false}
+              - {label: "LinkedIn", name: "linkedin", widget: "string", required: false}
+              - {label: "Behance", name: "behance", widget: "string", required: false}
+      
+      - label: "Form Contatto"
+        name: "contact_form"
+        file: "data/contact-form.json"
+        fields:
+          - {label: "Titolo Form", name: "form_title", widget: "string", default: "CONTATTAMI"}
+          - {label: "Placeholder Nome", name: "name_placeholder", widget: "string", default: "NOME"}
+          - {label: "Placeholder Cognome", name: "surname_placeholder", widget: "string", default: "COGNOME"}
+          - {label: "Placeholder Email", name: "email_placeholder", widget: "string", default: "EMAIL"}
+          - {label: "Placeholder Messaggio", name: "message_placeholder", widget: "string", default: "Scrivi qui la tua richiesta"}
+          - {label: "Testo Bottone", name: "button_text", widget: "string", default: "CONTATTAMI"}
+          - {label: "Email Destinatario", name: "recipient_email", widget: "string", default: "antonelloguarnieri6@gmail.com"}
+          - {label: "Messaggio di Successo", name: "success_message", widget: "string", default: "Grazie! Il tuo messaggio è stato inviato."}
+          - {label: "Messaggio di Errore", name: "error_message", widget: "string", default: "Ops! Qualcosa è andato storto. Riprova."}
+          - label: "Integrazione Form"
+            name: "form_integration"
+            widget: "object"
+            fields:
+              - {label: "Tipo", name: "type", widget: "select", options: ["netlify", "formspree", "custom"], default: "netlify", hint: "Scegli il servizio per gestire l'invio del form"}
+              - {label: "Endpoint Custom", name: "custom_endpoint", widget: "string", required: false, hint: "Solo se hai scelto 'custom' come tipo"}
+      
+      - label: "Navigazione"
+        name: "navigation"
+        file: "data/navigation.json"
+        fields:
+          - label: "Logo"
+            name: "logo"
+            widget: "object"
+            fields:
+              - {label: "Testo Logo", name: "text", widget: "string", default: "0823®"}
+              - {label: "Link Home", name: "link", widget: "hidden", default: "index.html"}
+          
+          - label: "Menu Trigger"
+            name: "menu_trigger"
+            widget: "object"
+            fields:
+              - {label: "Testo", name: "text", widget: "string", default: "IV.V.MMXXIII"}
+              - {label: "Mostra Freccia", name: "show_arrow", widget: "boolean", default: true}
+          
+          - label: "Menu Overlay"
+            name: "menu_overlay"
+            widget: "object"
+            fields:
+              - {label: "Testo Chiudi", name: "close_text", widget: "string", default: "CHIUDI"}
+              - {label: "Descrizione Footer", name: "footer_description", widget: "markdown", minimal: true, buttons: ["bold", "italic"], editor_components: []}
+              - {label: "Website Footer", name: "footer_website", widget: "string", default: "ANTONELLOGUARNIERI.NET"}
+              - {label: "Email Footer", name: "footer_email", widget: "string", default: "ANTONELLOGUARNIERI6@GMAIL.COM"}
+              
+              - label: "Voci Menu Principale"
+                name: "main_menu"
+                widget: "list"
+                fields:
+                  - {label: "Nome", name: "name", widget: "string"}
+                  - {label: "Link", name: "link", widget: "string", hint: "Es: index.html, portfolio.html, ecc."}
+                  - {label: "Ordine", name: "order", widget: "number", value_type: "int", min: 1}

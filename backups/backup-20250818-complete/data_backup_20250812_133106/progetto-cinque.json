@@ -1,0 +1,52 @@
+{
+  "id": 5,
+  "slug": "progetto-cinque",
+  "title": "PROGETTO CINQUE",
+  "subtitle": "Mobile App Innovation",
+  "category": "DIGITAL",
+  "year": "2024",
+  "client": "STARTUP WELLNESS",
+  "meta_description": "Interfaccia utente innovativa per app mobile di fitness e benessere",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER LA NUOVA APP DI FITNESS E MINDFULNESS, ANTONELLO GUARNIERI HA PROGETTATO UN'INTERFACCIA CHE COMBINA SEMPLICITÀ D'USO E PROFONDITÀ FUNZIONALE, CREANDO UN'ESPERIENZA CHE MOTIVA E COINVOLGE GLI UTENTI NEL LORO PERCORSO DI BENESSERE."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=601",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "IL DESIGN SYSTEM È STATO SVILUPPATO CON UN FOCUS SULLA PSICOLOGIA DEL COMPORTAMENTO. OGNI MICROINTERAZIONE È STATA PROGETTATA PER INCENTIVARE L'ENGAGEMENT E CREARE ABITUDINI POSITIVE NEGLI UTENTI."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=602",
+      "caption": "Onboarding flow personalizzato"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=603",
+      "caption": "Dashboard attività giornaliere"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "L'APP HA RAGGIUNTO 500K DOWNLOAD NEI PRIMI 3 MESI CON UN RETENTION RATE DEL 75%. GLI UTENTI ATTIVI GIORNALIERI SONO CRESCIUTI DEL 400% GRAZIE AL DESIGN COINVOLGENTE E ALLE FUNZIONALITÀ INTUITIVE.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=604",
+      "caption": "Sistema di gamification e rewards"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Product Design",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "UX Research",
+      "name": "Research Team"
+    }
+  ],
+  "related_projects": [1, 9, 3]
+}

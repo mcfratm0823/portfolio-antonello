@@ -1,0 +1,52 @@
+{
+  "id": 9,
+  "slug": "progetto-nove",
+  "title": "PROGETTO NOVE",
+  "subtitle": "AI-Powered Design System",
+  "category": "DIGITAL",
+  "year": "2024",
+  "client": "TECH CORPORATION",
+  "meta_description": "Sistema di design generativo potenziato dall'intelligenza artificiale",
+  "info_block": {
+    "label": "(INFO)",
+    "text": "PER LA TECH CORPORATION LEADER NEL SETTORE AI, ANTONELLO GUARNIERI HA SVILUPPATO UN DESIGN SYSTEM RIVOLUZIONARIO CHE UTILIZZA L'INTELLIGENZA ARTIFICIALE PER GENERARE INTERFACCE ADAPTIVE IN TEMPO REALE BASATE SUL COMPORTAMENTO UTENTE."
+  },
+  "hero_image": "https://picsum.photos/1200/600?random=1001",
+  "approach_block": {
+    "label": "(APPROCCIO)",
+    "text": "IL SISTEMA COMBINA MACHINE LEARNING E PRINCIPI DI DESIGN GENERATIVO. OGNI COMPONENTE SI EVOLVE E SI ADATTA AUTOMATICAMENTE, CREANDO ESPERIENZE UNICHE E PERSONALIZZATE PER OGNI UTENTE MANTENENDO COERENZA VISIVA."
+  },
+  "gallery_pair": [
+    {
+      "image": "https://picsum.photos/1200/800?random=1002",
+      "caption": "Dashboard AI generativa"
+    },
+    {
+      "image": "https://picsum.photos/1200/800?random=1003",
+      "caption": "Sistema componenti adaptive"
+    }
+  ],
+  "extra_sections": [
+    {
+      "label": "(RISULTATI)",
+      "text": "IL SISTEMA HA RIDOTTO I TEMPI DI SVILUPPO DEL 70% E AUMENTATO LA SODDISFAZIONE UTENTE DEL 95%. LA TECNOLOGIA È STATA BREVETTATA E HA ATTRATTO INVESTIMENTI PER 50M IN FUNDING.",
+      "type": "text"
+    },
+    {
+      "type": "full_image",
+      "image": "https://picsum.photos/1400/900?random=1004",
+      "caption": "Visualizzazione algoritmi generativi"
+    }
+  ],
+  "credits": [
+    {
+      "role": "Design Innovation",
+      "name": "Antonello Guarnieri"
+    },
+    {
+      "role": "AI Engineering",
+      "name": "Tech Innovation Lab"
+    }
+  ],
+  "related_projects": [1, 5, 7]
+}
