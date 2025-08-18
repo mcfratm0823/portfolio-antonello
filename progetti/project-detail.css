@@ -29,11 +29,6 @@
     font-display: swap
 }
 
-@font-face {
-    font-family: PT Mono;
-    src: url(../fonts/PTMono-Regular.ttf) format("truetype");
-    font-display: swap
-}
 
 /* CSS Variables */
 :root {
@@ -111,7 +106,7 @@ html {
 }
 
 #project-category {
-    font-family: PT Mono;
+    font-family: Neue, monospace;
     font-size: var(--p5);
     color: #999;
     margin-bottom: 0.5vw;
@@ -626,7 +621,7 @@ html {
 }
 
 .rail-markers span {
-    font-family: PT Mono;
+    font-family: Neue, monospace;
     font-size: 0.7vw;
     color: rgba(255,255,255,0.3);
     letter-spacing: 1px;
@@ -1053,7 +1048,7 @@ html {
 }
 
 #contact-info p {
-    font-family: PT Mono;
+    font-family: Neue, monospace;
     font-size: var(--p5);
     margin-bottom: 0.5vw;
 }
