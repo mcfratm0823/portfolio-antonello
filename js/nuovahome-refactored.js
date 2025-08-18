@@ -107,6 +107,7 @@ class NuovaHomeInitializer {
         // Mark preloader as shown
         sessionStorage.setItem('preloaderShown', 'true');
         
+        
         // Initial state
         gsap.set(mainContent, { opacity: 0, willChange: 'opacity' });
         gsap.set([preloaderLeft, preloaderRight], { opacity: 0 });
@@ -153,11 +154,6 @@ class NuovaHomeInitializer {
                             const navbar = document.getElementById('navbar');
                             if (navbar) {
                                 navbar.classList.add('visible');
-                            }
-                            // Start video after preloader is gone
-                            const heroVideo = document.getElementById('hero-video');
-                            if (heroVideo) {
-                                heroVideo.play();
                             }
                         }
                     });
