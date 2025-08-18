@@ -22,14 +22,19 @@ class ProjectLoader {
      * Initialize the loader
      */
     async init() {
+        console.log('🔍 [DEBUG] ProjectLoader initializing...');
+        console.log('🔍 [DEBUG] Current URL:', window.location.href);
+        
         try {
             // Show loading state
             this.showLoading();
             
             // Get project slug from URL
             const slug = this.extractSlugFromURL();
+            console.log('🔍 [DEBUG] Extracted slug:', slug);
             
             if (!slug) {
+                console.error('🔍 [DEBUG] No slug found in URL');
                 this.handleError('No project specified', true);
                 return;
             }
@@ -38,8 +43,8 @@ class ProjectLoader {
             await this.loadProject(slug);
             
         } catch (error) {
+            console.error('🔍 [DEBUG] Init error:', error);
             this.handleError('Failed to initialize project loader', true);
-            console.error('ProjectLoader init error:', error);
         }
     }
     
@@ -52,25 +57,42 @@ class ProjectLoader {
      */
     extractSlugFromURL() {
         const url = new URL(window.location.href);
+        console.log('🔍 [DEBUG] URL analysis:', {
+            href: url.href,
+            search: url.search,
+            hash: url.hash,
+            pathname: url.pathname
+        });
         
         // Method 1: Query parameter
         const slugParam = url.searchParams.get('slug') || url.searchParams.get('p');
-        if (slugParam) return slugParam;
+        console.log('🔍 [DEBUG] Query params - slug:', url.searchParams.get('slug'), 'p:', url.searchParams.get('p'));
+        if (slugParam) {
+            console.log('🔍 [DEBUG] Found slug via query param:', slugParam);
+            return slugParam;
+        }
         
         // Method 2: Hash fragment
         const hash = url.hash.replace('#', '');
-        if (hash) return hash;
+        console.log('🔍 [DEBUG] Hash fragment:', hash);
+        if (hash) {
+            console.log('🔍 [DEBUG] Found slug via hash:', hash);
+            return hash;
+        }
         
         // Method 3: Path-based routing (future)
         const pathSegments = url.pathname.split('/');
+        console.log('🔍 [DEBUG] Path segments:', pathSegments);
         const projectIndex = pathSegments.findIndex(segment => segment === 'progetti');
         if (projectIndex !== -1 && pathSegments[projectIndex + 1]) {
             const potentialSlug = pathSegments[projectIndex + 1];
             if (potentialSlug !== 'project.html') {
+                console.log('🔍 [DEBUG] Found slug via path:', potentialSlug);
                 return potentialSlug.replace('.html', '');
             }
         }
         
+        console.log('🔍 [DEBUG] No slug found in URL');
         return null;
     }
     
@@ -78,12 +100,14 @@ class ProjectLoader {
      * Load project data
      */
     async loadProject(slug) {
+        console.log('🔍 [DEBUG] Loading project:', slug);
+        
         try {
             this.isLoading = true;
             
             // Check cache first
             if (this.cache.has(slug)) {
-                console.log(`[ProjectLoader] Loading from cache: ${slug}`);
+                console.log('🔍 [DEBUG] Loading from cache:', slug);
                 const cachedData = this.cache.get(slug);
                 await this.renderProject(cachedData);
                 return;
@@ -91,18 +115,24 @@ class ProjectLoader {
             
             // Dynamic import with proper error handling and no cache hacks
             const moduleUrl = new URL('../js/projects-data.js', window.location.href);
+            console.log('🔍 [DEBUG] Module URL:', moduleUrl.href);
+            
             const { getProject, getRelatedProjects } = await import(moduleUrl.href);
+            console.log('🔍 [DEBUG] Module imported successfully');
             
             // Get project data
             const projectData = getProject(slug);
+            console.log('🔍 [DEBUG] Project data:', projectData);
             
             if (!projectData) {
+                console.error('🔍 [DEBUG] Project not found in data:', slug);
                 this.handleError(`Project "${slug}" not found`, true);
                 return;
             }
             
             // Get related projects
             const relatedProjects = getRelatedProjects(slug, 4);
+            console.log('🔍 [DEBUG] Related projects:', relatedProjects);
             
             // Combine data
             const fullData = {
@@ -114,11 +144,12 @@ class ProjectLoader {
             this.cache.set(slug, fullData);
             
             // Render the project
+            console.log('🔍 [DEBUG] Rendering project...');
             await this.renderProject(fullData);
             
         } catch (error) {
+            console.error('🔍 [DEBUG] Load project error:', error);
             this.handleError('Failed to load project data', true);
-            console.error('Load project error:', error);
         } finally {
             this.isLoading = false;
         }
