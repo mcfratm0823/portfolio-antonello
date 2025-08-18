@@ -148,9 +148,6 @@ class ProjectLoader {
             // Render related projects
             this.renderRelatedProjects(projectData.relatedProjects);
             
-            // Initialize morphing title
-            this.initializeMorphingTitle(projectData.title);
-            
             // Log performance
             const loadTime = performance.now() - this.startTime;
             console.log(`[ProjectLoader] Project "${projectData.slug}" loaded in ${Math.round(loadTime)}ms`);
@@ -282,50 +279,34 @@ class ProjectLoader {
         const container = document.getElementById('related-projects-container');
         if (!container || !relatedProjects || relatedProjects.length === 0) return;
         
+        // Copy exact structure from working template
         const projectsHTML = relatedProjects.map((project, index) => `
-            <div class="project-slide" data-index="${index}">
-                <a href="./project.html?slug=${project.slug}" class="project-link">
-                    <div class="project-preview">
-                        <img src="${project.thumbnail}" alt="${project.title}" loading="lazy" width="1200" height="600">
-                        <div class="project-title-overlay">
-                            <h3>${project.title}</h3>
-                            <div class="project-meta">
-                                <span>${project.category.toUpperCase()}</span>
-                                <span>•</span>
-                                <span>${project.year}</span>
+                    <div class="project-slide" data-index="${index}">
+                        <a href="./project.html?slug=${project.slug}" class="project-link">
+                            <div class="project-preview">
+                                <img src="${project.thumbnail}" alt="${project.title}" loading="lazy" width="1200" height="600">
+                                <div class="project-title-overlay">
+                                    <h3>${project.title.toUpperCase()}</h3>
+                                    <div class="project-meta">
+                                        <span>${project.category.toUpperCase()}</span>
+                                        <span>•</span>
+                                        <span>${project.year}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="project-info">
+                                <h3 class="project-title">${project.title.toUpperCase()}</h3>
+                                <div class="project-meta">
+                                    <span>${project.category.toUpperCase()}</span>
+                                    <span>•</span>
+                                    <span>${project.year}</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    <div class="project-info">
-                        <h3 class="project-title">${project.title}</h3>
-                        <div class="project-meta">
-                            <span>${project.category.toUpperCase()}</span>
-                            <span>•</span>
-                            <span>${project.year}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
         `).join('');
         
         container.innerHTML = projectsHTML;
-    }
-    
-    /**
-     * Initialize morphing title for black section
-     */
-    initializeMorphingTitle(projectTitle) {
-        const morphingTitleEl = document.getElementById('morphing-title');
-        if (!morphingTitleEl) return;
-        
-        // Set the project title as morphing text
-        morphingTitleEl.textContent = projectTitle.toUpperCase();
-        
-        // Make it visible with smooth transition
-        setTimeout(() => {
-            morphingTitleEl.style.transition = 'opacity 0.5s ease';
-            morphingTitleEl.style.opacity = '1';
-        }, 500);
     }
     
     /**
