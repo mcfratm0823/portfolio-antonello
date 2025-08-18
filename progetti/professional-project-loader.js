@@ -139,14 +139,14 @@ class ProjectLoader {
             // Render content blocks
             this.renderContent(projectData);
             
-            // Render images
-            await this.renderImages(projectData);
+            // Show content immediately (progressive loading)
+            this.showContent();
+            
+            // Load images asynchronously without blocking
+            this.renderImages(projectData);
             
             // Render related projects
             this.renderRelatedProjects(projectData.relatedProjects);
-            
-            // Hide loading and show content
-            this.showContent();
             
             // Log performance
             const loadTime = performance.now() - this.startTime;
@@ -224,32 +224,27 @@ class ProjectLoader {
     }
     
     /**
-     * Render images with lazy loading and error handling
+     * Render images with progressive lazy loading (non-blocking)
      */
-    async renderImages(projectData) {
-        const promises = [];
-        
-        // Hero image
+    renderImages(projectData) {
+        // Hero image - load immediately but don't block
         const heroImg = document.getElementById('hero-img');
         if (heroImg && projectData.hero_image) {
-            promises.push(this.loadImage(heroImg, projectData.hero_image, `${projectData.title} Hero`));
+            this.loadImage(heroImg, projectData.hero_image, `${projectData.title} Hero`);
         }
         
-        // Gallery images
+        // Gallery images - load progressively
         if (projectData.gallery_images && projectData.gallery_images.length >= 2) {
             const galleryImg1 = document.getElementById('gallery-img-1');
             const galleryImg2 = document.getElementById('gallery-img-2');
             
             if (galleryImg1) {
-                promises.push(this.loadImage(galleryImg1, projectData.gallery_images[0], `${projectData.title} Gallery 1`));
+                this.loadImage(galleryImg1, projectData.gallery_images[0], `${projectData.title} Gallery 1`);
             }
             if (galleryImg2) {
-                promises.push(this.loadImage(galleryImg2, projectData.gallery_images[1], `${projectData.title} Gallery 2`));
+                this.loadImage(galleryImg2, projectData.gallery_images[1], `${projectData.title} Gallery 2`);
             }
         }
-        
-        // Wait for all images to load
-        await Promise.allSettled(promises);
     }
     
     /**
