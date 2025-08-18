@@ -350,7 +350,7 @@ body::-webkit-scrollbar,
     width: 490px;   /* Stesse dimensioni della foto */
     height: 280px;  /* Stesse dimensioni della foto */
     overflow: hidden;
-    display: none; /* Nascosto di default, verrà mostrato da JS se necessario */
+    display: block; /* Visibile di default */
 }
 
 #hero-video {
