@@ -1,98 +1,14 @@
-// Progetti hardcoded dal CMS - Updated 2025-01-18
-const STATIC_PROJECTS = [
-    {
-        id: 1,
-        title: "Cafè 124",
-        slug: "cafe-124",
-        category: "digital",
-        thumbnail: "https://picsum.photos/1200/600?random=201",
-        year: "2024",
-        featured: true,
-        order: 1
-    },
-    {
-        id: 2,
-        title: "PROGETTO DUE",
-        slug: "progetto-due",
-        category: "brand",
-        thumbnail: "https://picsum.photos/1200/600?random=301",
-        year: "2024",
-        featured: false,
-        order: 2
-    },
-    {
-        id: 3,
-        title: "PROGETTO TRE",
-        slug: "progetto-tre",
-        category: "web",
-        thumbnail: "https://picsum.photos/1200/600?random=401",
-        year: "2024",
-        featured: false,
-        order: 8
-    },
-    {
-        id: 4,
-        title: "PROGETTO QUATTRO",
-        slug: "progetto-quattro",
-        category: "print",
-        thumbnail: "https://picsum.photos/1200/600?random=501",
-        year: "2024",
-        featured: false,
-        order: 5
-    },
-    {
-        id: 5,
-        title: "PROGETTO CINQUE",
-        slug: "progetto-cinque",
-        category: "digital",
-        thumbnail: "https://picsum.photos/1200/600?random=601",
-        year: "2024",
-        featured: true,
-        order: 9
-    },
-    {
-        id: 6,
-        title: "PROGETTO SEI",
-        slug: "progetto-sei",
-        category: "brand",
-        thumbnail: "https://picsum.photos/1200/600?random=701",
-        year: "2024",
-        featured: false,
-        order: 6
-    },
-    {
-        id: 7,
-        title: "PROGETTO SETTE",
-        slug: "progetto-sette",
-        category: "web",
-        thumbnail: "https://picsum.photos/1200/600?random=801",
-        year: "2024",
-        featured: true,
-        order: 7
-    },
-    {
-        id: 8,
-        title: "PROGETTO OTTO",
-        slug: "progetto-otto",
-        category: "print",
-        thumbnail: "https://picsum.photos/1200/600?random=901",
-        year: "2024",
-        featured: true,
-        order: 4
-    },
-    {
-        id: 9,
-        title: "PROGETTO NOVE",
-        slug: "progetto-nove",
-        category: "digital",
-        thumbnail: "https://picsum.photos/1200/600?random=1001",
-        year: "2024",
-        featured: false,
-        order: 3
-    }
-];
+/**
+ * Portfolio Static Data - Professional Implementation
+ * Uses centralized data layer for consistency and maintainability
+ * @author Senior Developer  
+ * @version 2.0.0
+ */
 
-// Filtri hardcoded
+// Import project data from centralized data layer
+import { getAllProjects, getProjectsByCategory } from './projects-data.js';
+
+// Professional filter configuration
 const STATIC_FILTERS = [
     { name: "ALL", value: "all" },
     { name: "DIGITAL", value: "digital" },
@@ -101,30 +17,132 @@ const STATIC_FILTERS = [
     { name: "PRINT", value: "print" }
 ];
 
-// Carica i progetti statici quando la pagina è pronta
+/**
+ * Professional Portfolio Initializer
+ */
+class PortfolioInitializer {
+    constructor() {
+        this.initialized = false;
+        this.projects = [];
+        this.currentFilter = 'all';
+        
+        this.init();
+    }
+    
+    /**
+     * Initialize portfolio system
+     */
+    async init() {
+        if (this.initialized) {
+            console.warn('[PortfolioInitializer] Already initialized');
+            return;
+        }
+        
+        try {
+            // Load projects from centralized data
+            this.projects = getAllProjects();
+            
+            // Initialize filters
+            this.initializeFilters();
+            
+            // Load and render projects
+            this.renderProjects();
+            
+            this.initialized = true;
+            console.log('[PortfolioInitializer] Successfully initialized with', this.projects.length, 'projects');
+            
+        } catch (error) {
+            console.error('[PortfolioInitializer] Failed to initialize:', error);
+        }
+    }
+    
+    /**
+     * Initialize filter system
+     */
+    initializeFilters() {
+        const filtersContainer = document.getElementById('filters');
+        if (!filtersContainer) return;
+        
+        const filtersHTML = STATIC_FILTERS.map((filter, index) => 
+            `<div class="filter-item ${index === 0 ? 'active' : ''}" data-filter="${filter.value}">${filter.name}</div>`
+        ).join('');
+        
+        filtersContainer.innerHTML = filtersHTML;
+        
+        // Add event listeners
+        this.attachFilterListeners();
+    }
+    
+    /**
+     * Attach filter event listeners
+     */
+    attachFilterListeners() {
+        const filters = document.querySelectorAll('.filter-item');
+        
+        filters.forEach(filter => {
+            filter.addEventListener('click', (e) => {
+                // Update active state
+                filters.forEach(f => f.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Filter projects
+                const filterValue = e.target.dataset.filter;
+                this.filterProjects(filterValue);
+            });
+        });
+    }
+    
+    /**
+     * Filter projects by category
+     */
+    filterProjects(category) {
+        this.currentFilter = category;
+        
+        try {
+            const filteredProjects = getProjectsByCategory(category);
+            this.renderProjects(filteredProjects);
+        } catch (error) {
+            console.error('[PortfolioInitializer] Filter error:', error);
+        }
+    }
+    
+    /**
+     * Render projects using existing portfolio system
+     */
+    renderProjects(projectsToRender = null) {
+        const projects = projectsToRender || this.projects;
+        
+        // Use existing renderProjects function if available
+        if (window.renderProjects && typeof window.renderProjects === 'function') {
+            // Convert data format to match existing expectations
+            const formattedProjects = projects.map(project => ({
+                id: project.id,
+                title: project.title,
+                slug: project.slug,
+                category: project.category,
+                thumbnail: project.thumbnail,
+                year: project.year,
+                featured: project.featured
+            }));
+            
+            window.renderProjects(formattedProjects);
+        } else {
+            console.warn('[PortfolioInitializer] renderProjects function not available');
+        }
+    }
+}
+
+/**
+ * Initialize when DOM is ready and we're on portfolio page
+ */
 document.addEventListener('DOMContentLoaded', function() {
     const isPortfolioPage = window.location.pathname.includes('portfolio');
     
     if (isPortfolioPage) {
-        // Carica i filtri
-        const filtersContainer = document.getElementById('filters');
-        if (filtersContainer) {
-            filtersContainer.innerHTML = STATIC_FILTERS.map((filter, index) => 
-                `<div class="filter-item ${index === 0 ? 'active' : ''}" data-filter="${filter.value}">${filter.name}</div>`
-            ).join('');
-            
-            // Inizializza i filtri
-            if (window.initializeFilters) {
-                window.initializeFilters();
-            }
-        }
-        
-        // Ordina i progetti per order
-        const sortedProjects = [...STATIC_PROJECTS].sort((a, b) => a.order - b.order);
-        
-        // Carica i progetti
-        if (window.renderProjects) {
-            window.renderProjects(sortedProjects);
-        }
+        // Initialize professional portfolio system
+        window.__PORTFOLIO_INITIALIZER__ = new PortfolioInitializer();
     }
 });
+
+// Export for debugging and external access
+export { STATIC_FILTERS, PortfolioInitializer };

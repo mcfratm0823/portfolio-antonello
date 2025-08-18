@@ -854,7 +854,7 @@ window.renderProjects = function(projects) {
     const projectsHTML = projects.map((project, index) => {
         // Usa la thumbnail del progetto se disponibile
         const imageUrl = project.thumbnail || project.image || `https://picsum.photos/400/550?random=${project.id}`;
-        const projectUrl = project.slug ? `./progetti/${project.slug}.html` : '#';
+        const projectUrl = project.slug ? `./progetti/project.html?slug=${project.slug}` : '#';
         
         return `
             <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}">
