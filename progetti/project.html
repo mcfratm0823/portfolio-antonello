@@ -47,10 +47,20 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Prevent flash of underlying content */
+        body {
+            background: #fff;
+            overflow: hidden; /* Prevent scroll during load */
+        }
+        
+        body.loaded {
+            overflow: auto;
+        }
     </style>
 
     <!-- WHITE CONTAINER - Contenuto Bianco -->
-    <div id="white-container" style="opacity: 0; transition: opacity 0.5s ease;">
+    <div id="white-container" style="opacity: 0; transition: opacity 0.3s ease; background: #fff; position: relative; z-index: 100;">
         <!-- Main Content -->
         <main id="main-content">
             
@@ -108,7 +118,7 @@
 
     
     <!-- BLACK CONTAINER - Contenuto Nero -->
-    <div id="black-container" style="opacity: 0; transition: opacity 0.5s ease;">
+    <div id="black-container" style="opacity: 0; transition: opacity 0.3s ease; background: #000; position: relative; z-index: 99;">
         <!-- Left Info - Fixed Element Outside Gallery -->
         <div id="left-info">
             <div id="bottom-text-container">

@@ -338,23 +338,26 @@ class ProjectLoader {
             clearTimeout(this.loadingTimeout);
         }
         
+        // Enable scrolling
+        document.body.classList.add('loaded');
+        
         if (loadingEl) {
             loadingEl.style.opacity = '0';
             setTimeout(() => {
                 loadingEl.style.display = 'none';
-            }, 300);
+            }, 200);
         }
         
         if (whiteContainer) {
             setTimeout(() => {
                 whiteContainer.style.opacity = '1';
-            }, 100);
+            }, 50);
         }
         
         if (blackContainer) {
             setTimeout(() => {
                 blackContainer.style.opacity = '1';
-            }, 200);
+            }, 100);
         }
     }
     
