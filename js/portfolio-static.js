@@ -1,4 +1,4 @@
-// Progetti hardcoded dal CMS
+// Progetti hardcoded dal CMS - Updated 2025-01-18
 const STATIC_PROJECTS = [
     {
         id: 1,
