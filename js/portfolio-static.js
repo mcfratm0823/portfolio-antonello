@@ -5,8 +5,8 @@
  * @version 2.0.0
  */
 
-// Import project data from centralized data layer
-import { getAllProjects, getProjectsByCategory } from './projects-data.js';
+// Import project data from centralized data layer  
+import { getAllProjects, getProjectsByCategory } from './projects-data.js?v=4';
 
 // Professional filter configuration
 const STATIC_FILTERS = [
