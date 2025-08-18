@@ -7,8 +7,8 @@ const STATIC_PROJECTS = [
         category: "digital",
         thumbnail: "https://picsum.photos/1200/600?random=201",
         year: "2024",
-        featured: false,
-        order: 9
+        featured: true,
+        order: 1
     },
     {
         id: 2,
@@ -48,7 +48,7 @@ const STATIC_PROJECTS = [
         thumbnail: "https://picsum.photos/1200/600?random=601",
         year: "2024",
         featured: true,
-        order: 1
+        order: 9
     },
     {
         id: 6,
