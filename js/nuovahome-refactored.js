@@ -154,6 +154,11 @@ class NuovaHomeInitializer {
                             if (navbar) {
                                 navbar.classList.add('visible');
                             }
+                            // Start video after preloader is gone
+                            const heroVideo = document.getElementById('hero-video');
+                            if (heroVideo) {
+                                heroVideo.play();
+                            }
                         }
                     });
                 }
