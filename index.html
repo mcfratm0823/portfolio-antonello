@@ -17,7 +17,6 @@
     <link rel="dns-prefetch" href="https://unpkg.com">
     
     <!-- Preload critical fonts to prevent CLS -->
-    <link rel="preload" href="./fonts/NeueHaasGrotDispRound-55Roman-Web.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="./fonts/PPNeueMontreal-Bold.woff2" as="font" type="font/woff2" crossorigin>
     
@@ -135,8 +134,8 @@
             
             <!-- Central Video -->
             <div id="center-video">
-                <video id="hero-video" autoplay muted loop width="1920" height="1080">
-                    <source src="hero-video.mp4" type="video/mp4">
+                <video id="hero-video" autoplay muted loop playsinline width="1920" height="1080">
+                    <source src="./img/uploads/intro.mp4" type="video/mp4">
                 </video>
             </div>
             
