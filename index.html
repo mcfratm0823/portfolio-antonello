@@ -54,16 +54,16 @@
         #hero-section { contain: layout style; }
         .selected_work_item { contain: layout; }
         
-        /* Critical mobile photo fix */
+        /* Critical mobile video fix */
         @media (max-width: 1023px) {
-            #center-photo {
+            #center-video {
                 height: 190px !important;
                 max-height: 190px !important;
                 min-height: unset !important;
             }
-            #center-photo img {
+            #center-video video {
                 height: 100% !important;
-                aspect-ratio: unset !important;
+                object-fit: cover !important;
             }
         }
     </style>
@@ -136,11 +136,6 @@
                 <video id="hero-video" autoplay muted loop playsinline width="1920" height="1080">
                     <source src="./img/uploads/intro.mp4" type="video/mp4">
                 </video>
-            </div>
-            
-            <!-- Centered Rectangle with Random Photo -->
-            <div id="center-photo">
-                <img src="./img/placeholder.svg" alt="Random Photo" width="400" height="250">
             </div>
             
         </section>

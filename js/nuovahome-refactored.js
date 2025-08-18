@@ -168,12 +168,11 @@ class NuovaHomeInitializer {
         // Only apply animation on desktop/landscape tablets
         if (window.innerWidth < 1024) return;
         
-        const centerPhoto = document.getElementById('center-photo');
         const centerVideo = document.getElementById('center-video');
         const visualTitle = document.getElementById('antonello-title');
         const designerTitle = document.getElementById('guarnieri-title');
         
-        if (!centerPhoto && !centerVideo) return;
+        if (!centerVideo) return;
         
         // Register ScrollTrigger plugin
         gsap.registerPlugin(ScrollTrigger);
@@ -189,14 +188,8 @@ class NuovaHomeInitializer {
         // Create timeline for photo animation
         const photoTimeline = gsap.timeline({ paused: true });
         
-        // Define the animation
+        // Define the animation - only for video now
         photoTimeline
-            .to(centerPhoto, {
-                width: getFullScreenDimensions().width,
-                height: getFullScreenDimensions().height,
-                duration: 1,
-                ease: "power3.inOut"
-            }, 0)
             .to(centerVideo, {
                 width: getFullScreenDimensions().width,
                 height: getFullScreenDimensions().height,
