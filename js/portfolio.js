@@ -470,7 +470,7 @@ class CMSDataSource extends PortfolioDataSource {
             });
             return await response.json();
         } catch (error) {
-            console.error('Error fetching projects from CMS:', error);
+            // Error fetching projects from CMS
             throw error;
         }
     }
@@ -491,7 +491,7 @@ class CMSDataSource extends PortfolioDataSource {
             });
             return await response.json();
         } catch (error) {
-            console.error('Error fetching categories from CMS:', error);
+            // Error fetching categories from CMS
             throw error;
         }
     }
@@ -598,7 +598,7 @@ class StaticPortfolio {
             // Se i filtri sono già stati caricati dal CMS, non sovrascriverli
             const filtersContainer = document.getElementById('filters');
             if (!filtersContainer || filtersContainer.children.length > 0) {
-                console.log('Filters already loaded from CMS, skipping generation');
+                // Filters already loaded from CMS, skipping generation
                 return;
             }
             
@@ -616,7 +616,7 @@ class StaticPortfolio {
             // Update filters in DOM
             filtersContainer.innerHTML = filtersHTML;
         } catch (error) {
-            console.error('Error generating filters:', error);
+            // Error generating filters
         }
     }
     
@@ -759,7 +759,7 @@ if (!window.__PORTFOLIO_INIT_REGISTERED__) {
     document.addEventListener('DOMContentLoaded', function() {
         // Previeni inizializzazioni multiple
         if (window.__PORTFOLIO_INITIALIZED__) {
-            console.warn('[Portfolio] Already initialized, skipping');
+            // Portfolio already initialized, skipping
             return;
         }
         window.__PORTFOLIO_INITIALIZED__ = true;

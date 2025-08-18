@@ -34,7 +34,7 @@ class PortfolioInitializer {
      */
     async init() {
         if (this.initialized) {
-            console.warn('[PortfolioInitializer] Already initialized');
+            // PortfolioInitializer already initialized
             return;
         }
         
@@ -49,10 +49,10 @@ class PortfolioInitializer {
             this.renderProjects();
             
             this.initialized = true;
-            console.log('[PortfolioInitializer] Successfully initialized with', this.projects.length, 'projects');
+            // PortfolioInitializer successfully initialized
             
         } catch (error) {
-            console.error('[PortfolioInitializer] Failed to initialize:', error);
+            // PortfolioInitializer failed to initialize
         }
     }
     
@@ -102,7 +102,7 @@ class PortfolioInitializer {
             const filteredProjects = getProjectsByCategory(category);
             this.renderProjects(filteredProjects);
         } catch (error) {
-            console.error('[PortfolioInitializer] Filter error:', error);
+            // PortfolioInitializer filter error
         }
     }
     
@@ -127,7 +127,7 @@ class PortfolioInitializer {
             
             window.renderProjects(formattedProjects);
         } else {
-            console.warn('[PortfolioInitializer] renderProjects function not available');
+            // PortfolioInitializer renderProjects function not available
         }
     }
 }

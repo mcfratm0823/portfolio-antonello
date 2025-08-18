@@ -8,7 +8,7 @@
 
 // Prevent multiple initializations
 if (window.__APP_INITIALIZED__) {
-    console.warn('[App] Application already initialized, skipping');
+    // Application already initialized, skipping
 } else {
     window.__APP_INITIALIZED__ = true;
     
@@ -18,7 +18,7 @@ if (window.__APP_INITIALIZED__) {
         const debug = window.location.search.includes('debug=true');
         
         if (debug) {
-            console.log('[App] Starting application bootstrap...');
+            // Starting application bootstrap...
         }
         
         try {
@@ -35,7 +35,7 @@ if (window.__APP_INITIALIZED__) {
             for (const dep of coreDependencies) {
                 if (!window[dep.global]) {
                     missingDeps.push(dep);
-                    console.error(`[App] Missing core dependency: ${dep.name} (${dep.global})`);
+                    // Missing core dependency
                 }
             }
             
@@ -44,22 +44,18 @@ if (window.__APP_INITIALIZED__) {
             }
             
             if (debug) {
-                console.log('[App] All core dependencies loaded');
+                // All core dependencies loaded
             }
             
             // Phase 2: Initialize application
             await window.APP_INITIALIZER.initialize();
             
             if (debug) {
-                console.log('[App] Application initialized successfully');
+                // Application initialized successfully
                 
                 // Log performance metrics
                 const state = window.APP_STATE.get();
-                console.log('[App] Performance Metrics:', {
-                    initTime: state.initialization.endTime - state.initialization.startTime,
-                    modules: state.initialization.modules.size,
-                    errors: state.performance.errors.length
-                });
+                // Performance metrics logged
             }
             
             // Phase 3: Notify ready
@@ -74,7 +70,7 @@ if (window.__APP_INITIALIZED__) {
             }));
             
         } catch (error) {
-            console.error('[App] Fatal initialization error:', error);
+            // Fatal initialization error
             
             // Show error to user
             document.body.innerHTML = `

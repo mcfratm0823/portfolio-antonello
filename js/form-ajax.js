@@ -4,7 +4,7 @@ function handleFormSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
     
-    console.log('handleFormSubmit chiamato per:', e.target.getAttribute('name'));
+    // Handle form submit
     
     const form = e.target;
     const formData = new FormData(form);
@@ -22,14 +22,14 @@ function handleFormSubmit(e) {
         body: new URLSearchParams(formData).toString()
     })
     .then(() => {
-        console.log('Form inviato con successo!');
+        // Form sent successfully
         
         // Successo - mostra il messaggio personalizzato
         if (window.navbarInstance && window.navbarInstance.showSuccessMessage) {
-            console.log('Chiamando showSuccessMessage da navbarInstance');
+            // Calling showSuccessMessage from navbarInstance
             window.navbarInstance.showSuccessMessage();
         } else {
-            console.log('navbarInstance non disponibile, creo messaggio diretto');
+            // navbarInstance not available, creating direct message
             // Fallback: crea il messaggio direttamente
             showSuccessMessageDirect();
         }
@@ -44,7 +44,7 @@ function handleFormSubmit(e) {
         }
     })
     .catch((error) => {
-        console.error('Errore:', error);
+        // Error occurred
         alert('Si è verificato un errore. Riprova.');
         
         // Riabilita il bottone
@@ -62,7 +62,7 @@ function initializeFormAjax() {
         // Rimuovi listener esistenti per evitare duplicati
         form.removeEventListener('submit', handleFormSubmit);
         form.addEventListener('submit', handleFormSubmit);
-        console.log('Form AJAX inizializzato per:', form.getAttribute('name'));
+        // Form AJAX initialized
     });
 }
 
@@ -70,7 +70,7 @@ function initializeFormAjax() {
 document.addEventListener('submit', function(e) {
     const form = e.target;
     if (form.hasAttribute('data-netlify')) {
-        console.log('Intercettato submit del form:', form.getAttribute('name'));
+        // Form submit intercepted
         handleFormSubmit(e);
     }
 }, true); // Usa capture phase
@@ -84,7 +84,7 @@ if (document.readyState === 'loading') {
 
 // Re-inizializza quando i form vengono creati dinamicamente
 window.addEventListener('formCreated', () => {
-    console.log('Evento formCreated ricevuto');
+    // formCreated event received
     setTimeout(initializeFormAjax, 100);
 });
 

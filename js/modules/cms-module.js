@@ -33,7 +33,7 @@ class CMSModule {
     async initialize() {
         if (this.initialized) {
             if (this.debug) {
-                console.log('[CMSModule] Already initialized');
+                // CMSModule already initialized
             }
             return;
         }
@@ -44,7 +44,7 @@ class CMSModule {
         }
         
         if (this.debug) {
-            console.log('[CMSModule] Initializing...');
+            // CMSModule initializing
         }
         
         try {
@@ -72,11 +72,11 @@ class CMSModule {
             this.initialized = true;
             
             if (this.debug) {
-                console.log('[CMSModule] Initialization complete');
+                // CMSModule initialization complete
             }
             
         } catch (error) {
-            console.error('[CMSModule] Initialization failed:', error);
+            // CMSModule initialization failed
             throw error;
         }
     }
@@ -106,7 +106,7 @@ class CMSModule {
             this.updateHomepageDOM(data);
             
         } catch (error) {
-            console.error('[CMSModule] Error loading homepage data:', error);
+            // CMSModule error loading homepage data
             // Fallback to inline data if available
             this.loadInlinePageData();
         }
@@ -132,7 +132,7 @@ class CMSModule {
                     }));
                 
                 if (this.debug) {
-                    console.log('[CMSModule] Loaded inline projects:', this.projectsData.length);
+                    // CMSModule loaded inline projects
                 }
             } else {
                 // Carica da file JSON
@@ -157,7 +157,7 @@ class CMSModule {
             }
             
         } catch (error) {
-            console.error('[CMSModule] Error loading projects:', error);
+            // CMSModule error loading projects
             window.APP_EVENT_BUS.emit('data:error', {
                 type: 'projects',
                 error
@@ -177,7 +177,7 @@ class CMSModule {
                 this.filtersData = JSON.parse(filtersDataElement.textContent);
                 
                 if (this.debug) {
-                    console.log('[CMSModule] Loaded inline filters:', this.filtersData);
+                    // CMSModule loaded inline filters
                 }
             } else {
                 // Genera filtri dai progetti
@@ -205,7 +205,7 @@ class CMSModule {
             this.renderFilters();
             
         } catch (error) {
-            console.error('[CMSModule] Error loading filters:', error);
+            // CMSModule error loading filters
         }
     }
     
@@ -255,7 +255,7 @@ class CMSModule {
             }
             
         } catch (error) {
-            console.error('[CMSModule] Error loading project detail:', error);
+            // CMSModule error loading project detail
             // Redirect to 404 or show error
             window.location.href = '/404.html';
         }
@@ -278,7 +278,7 @@ class CMSModule {
                 });
                 
             } catch (error) {
-                console.error('[CMSModule] Error parsing inline page data:', error);
+                // CMSModule error parsing inline page data
             }
         }
     }
@@ -303,7 +303,7 @@ class CMSModule {
                 if (video && videoElement && data.hero.center_media) {
                     video.src = data.hero.center_media;
                     videoElement.load();
-                    videoElement.play().catch(e => console.log('Autoplay blocked:', e));
+                    videoElement.play().catch(e => {}); // Autoplay blocked
                 }
             } else if (data.hero.center_media_type === 'image' && centerPhoto) {
                 centerPhoto.style.display = 'block';
@@ -356,7 +356,7 @@ class CMSModule {
     renderProjects() {
         if (!this.projectsData || this.projectsData.length === 0) {
             if (this.debug) {
-                console.log('[CMSModule] No projects to render');
+                // CMSModule no projects to render
             }
             return;
         }

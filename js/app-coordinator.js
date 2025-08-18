@@ -21,7 +21,7 @@
          */
         registerModule(moduleName) {
             window.__APP_STATE__.modulesLoaded.add(moduleName);
-            console.log(`[AppCoordinator] Module registered: ${moduleName}`);
+            // AppCoordinator module registered
         },
         
         /**
@@ -36,7 +36,7 @@
          */
         setCMSReady() {
             window.__APP_STATE__.cmsDataReady = true;
-            console.log('[AppCoordinator] CMS data ready');
+            // AppCoordinator CMS data ready
         },
         
         /**
@@ -51,12 +51,12 @@
          */
         init() {
             if (window.__APP_STATE__.initialized) {
-                console.log('[AppCoordinator] App already initialized, skipping');
+                // AppCoordinator app already initialized, skipping
                 return;
             }
             
             window.__APP_STATE__.initialized = true;
-            console.log('[AppCoordinator] App initialization started');
+            // AppCoordinator app initialization started
             
             // Aggiungi listener per debug
             if (window.location.search.includes('debug=true')) {
@@ -68,13 +68,13 @@
          * Modalità debug per tracciare il flusso
          */
         enableDebugMode() {
-            console.log('[AppCoordinator] Debug mode enabled');
+            // AppCoordinator debug mode enabled
             
             // Log di tutti i DOMContentLoaded
             const originalAddEventListener = document.addEventListener;
             document.addEventListener = function(event, handler, options) {
                 if (event === 'DOMContentLoaded') {
-                    console.log('[AppCoordinator Debug] DOMContentLoaded listener added:', handler.name || 'anonymous');
+                    // AppCoordinator Debug DOMContentLoaded listener added
                 }
                 return originalAddEventListener.call(this, event, handler, options);
             };

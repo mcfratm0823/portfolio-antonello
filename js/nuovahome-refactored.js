@@ -39,13 +39,13 @@ class NuovaHomeInitializer {
      */
     async initialize() {
         if (this.initialized) {
-            if (this.debug) console.log('[NuovaHome] Already initialized');
+            if (this.debug) {} // NuovaHome already initialized
             return;
         }
         
         this.initialized = true;
         
-        if (this.debug) console.log('[NuovaHome] Starting initialization...');
+        if (this.debug) {} // NuovaHome starting initialization
         
         // Track module init if available
         if (window.trackModuleInit) {
@@ -62,7 +62,7 @@ class NuovaHomeInitializer {
         this.initFooterAnimation();
         this.initServicesAccordion();
         
-        if (this.debug) console.log('[NuovaHome] Initialization complete');
+        if (this.debug) {} // NuovaHome initialization complete
     }
     
     /**

@@ -20,7 +20,7 @@ class ModuleRegistry {
     register(name, factory, options = {}) {
         if (this.modules.has(name)) {
             if (this.debug) {
-                console.warn(`[ModuleRegistry] Module "${name}" already registered, skipping`);
+                // ModuleRegistry module already registered, skipping
             }
             return;
         }
@@ -39,7 +39,7 @@ class ModuleRegistry {
         });
         
         if (this.debug) {
-            console.log(`[ModuleRegistry] Module registered: ${name}`, options);
+            // ModuleRegistry module registered
         }
         
         // Emit event
@@ -63,7 +63,7 @@ class ModuleRegistry {
         // Se in fase di inizializzazione, attendi
         if (this.initializing.has(name)) {
             if (this.debug) {
-                console.log(`[ModuleRegistry] Module "${name}" already initializing, waiting...`);
+                // ModuleRegistry module already initializing, waiting
             }
             // Attendi che l'inizializzazione completi
             await this.waitForInitialization(name);
@@ -77,7 +77,7 @@ class ModuleRegistry {
         }
         
         if (this.debug) {
-            console.log(`[ModuleRegistry] Initializing module: ${name}`);
+            // ModuleRegistry initializing module
         }
         
         // Segna come in inizializzazione
@@ -87,7 +87,7 @@ class ModuleRegistry {
             // Inizializza dipendenze prima
             if (module.dependencies.length > 0) {
                 if (this.debug) {
-                    console.log(`[ModuleRegistry] Initializing dependencies for ${name}:`, module.dependencies);
+                    // ModuleRegistry initializing dependencies
                 }
                 
                 await Promise.all(
@@ -105,7 +105,7 @@ class ModuleRegistry {
             this.initializing.delete(name);
             
             if (this.debug) {
-                console.log(`[ModuleRegistry] Module initialized: ${name} (${initTime.toFixed(2)}ms)`);
+                // ModuleRegistry module initialized
             }
             
             // Emit event
@@ -123,7 +123,7 @@ class ModuleRegistry {
             // Rimuovi da initializing in caso di errore
             this.initializing.delete(name);
             
-            console.error(`[ModuleRegistry] Failed to initialize module "${name}":`, error);
+            // ModuleRegistry failed to initialize module
             
             // Emit error event
             if (window.APP_EVENT_BUS) {
@@ -168,7 +168,7 @@ class ModuleRegistry {
         });
         
         if (this.debug) {
-            console.log('[ModuleRegistry] Initializing all modules in order:', moduleNames);
+            // ModuleRegistry initializing all modules in order
         }
         
         const results = new Map();
@@ -178,7 +178,7 @@ class ModuleRegistry {
                 const instance = await this.initialize(name);
                 results.set(name, instance);
             } catch (error) {
-                console.error(`[ModuleRegistry] Failed to initialize module "${name}", continuing...`);
+                // ModuleRegistry failed to initialize module, continuing
                 results.set(name, null);
             }
         }
@@ -218,13 +218,9 @@ class ModuleRegistry {
      * Debug: mostra tutti i moduli
      */
     debugModules() {
-        console.log('[ModuleRegistry] Registered modules:');
+        // ModuleRegistry Registered modules:
         this.modules.forEach((module, name) => {
-            console.log(`  ${name}:`, {
-                initialized: this.initialized.has(name),
-                dependencies: module.dependencies,
-                priority: module.priority
-            });
+            // Module info
         });
     }
 }

@@ -49,7 +49,7 @@ class HomepageModule {
     async initialize() {
         if (this.initialized) {
             if (this.debug) {
-                console.log('[HomepageModule] Already initialized');
+                // HomepageModule already initialized
             }
             return;
         }
@@ -60,7 +60,7 @@ class HomepageModule {
         }
         
         if (this.debug) {
-            console.log('[HomepageModule] Initializing...');
+            // HomepageModule initializing
         }
         
         try {
@@ -70,7 +70,7 @@ class HomepageModule {
             
             if (!isHomepage) {
                 if (this.debug) {
-                    console.log('[HomepageModule] Not on homepage, skipping initialization');
+                    // HomepageModule not on homepage, skipping initialization
                 }
                 return;
             }
@@ -87,14 +87,14 @@ class HomepageModule {
             this.initialized = true;
             
             if (this.debug) {
-                console.log('[HomepageModule] Initialization complete');
+                // HomepageModule initialization complete
             }
             
             // Emit event
             window.APP_EVENT_BUS.emit('homepage:initialized');
             
         } catch (error) {
-            console.error('[HomepageModule] Initialization failed:', error);
+            // HomepageModule initialization failed
             throw error;
         }
     }
@@ -784,7 +784,7 @@ class HomepageModule {
             if (video && videoElement && data.hero.center_media) {
                 video.src = data.hero.center_media;
                 videoElement.load();
-                videoElement.play().catch(e => console.log('Autoplay blocked:', e));
+                videoElement.play().catch(e => {}); // Autoplay blocked
             }
         } else if (data.hero.center_media_type === 'image' && centerPhoto) {
             centerPhoto.style.display = 'block';

@@ -38,7 +38,7 @@ class EventBus {
         this.sortListeners(event);
         
         if (this.debug) {
-            console.log(`[EventBus] Listener registered for: ${event}`);
+            // EventBus listener registered
         }
     }
     
@@ -68,7 +68,7 @@ class EventBus {
         const timestamp = Date.now();
         
         if (this.debug) {
-            console.log(`[EventBus] Emitting: ${event}`, data);
+            // EventBus emitting event
         }
         
         // Log event history
@@ -82,7 +82,7 @@ class EventBus {
                 try {
                     callback(data);
                 } catch (error) {
-                    console.error(`[EventBus] Error in once listener for ${event}:`, error);
+                    // EventBus error in once listener
                 }
             });
         }
@@ -94,7 +94,7 @@ class EventBus {
                 try {
                     callback(data);
                 } catch (error) {
-                    console.error(`[EventBus] Error in listener for ${event}:`, error);
+                    // EventBus error in listener
                 }
             });
         }
@@ -142,13 +142,13 @@ class EventBus {
      * Debug: mostra tutti gli eventi registrati
      */
     debugEvents() {
-        console.log('[EventBus] Registered events:');
+        // EventBus Registered events:
         this.events.forEach((listeners, event) => {
-            console.log(`  ${event}: ${listeners.length} listeners`);
+            // Event listeners count
         });
-        console.log('[EventBus] Once events:');
+        // EventBus Once events:
         this.onceEvents.forEach((listeners, event) => {
-            console.log(`  ${event}: ${listeners.length} listeners`);
+            // Event listeners count
         });
     }
 }

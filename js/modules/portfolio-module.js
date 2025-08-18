@@ -48,7 +48,7 @@ class PortfolioModule {
     async initialize() {
         if (this.initialized) {
             if (this.debug) {
-                console.log('[PortfolioModule] Already initialized');
+                // PortfolioModule already initialized
             }
             return;
         }
@@ -59,7 +59,7 @@ class PortfolioModule {
         }
         
         if (this.debug) {
-            console.log('[PortfolioModule] Initializing...');
+            // PortfolioModule initializing
         }
         
         try {
@@ -67,7 +67,7 @@ class PortfolioModule {
             const isPortfolioPage = window.location.pathname.includes('portfolio');
             if (!isPortfolioPage) {
                 if (this.debug) {
-                    console.log('[PortfolioModule] Not on portfolio page, skipping initialization');
+                    // PortfolioModule not on portfolio page, skipping initialization
                 }
                 return;
             }
@@ -76,7 +76,7 @@ class PortfolioModule {
             const projects = window.APP_STATE.get('data.projects');
             if (!projects || projects.length === 0) {
                 if (this.debug) {
-                    console.log('[PortfolioModule] Waiting for projects to load...');
+                    // PortfolioModule waiting for projects to load
                 }
                 
                 // Attendi evento di caricamento progetti
@@ -92,11 +92,11 @@ class PortfolioModule {
             this.initialized = true;
             
             if (this.debug) {
-                console.log('[PortfolioModule] Initialization complete');
+                // PortfolioModule initialization complete
             }
             
         } catch (error) {
-            console.error('[PortfolioModule] Initialization failed:', error);
+            // PortfolioModule initialization failed
             throw error;
         }
     }
@@ -109,14 +109,14 @@ class PortfolioModule {
         // Previeni inizializzazioni multiple
         if (this.projectStack || this.filterSystem) {
             if (this.debug) {
-                console.log('[PortfolioModule] Components already initialized');
+                // PortfolioModule components already initialized
             }
             return;
         }
         
         // Verifica che le classi siano disponibili
         if (!window.ProjectStack || !window.FilterSystem) {
-            console.error('[PortfolioModule] Required classes not found');
+            // PortfolioModule required classes not found
             return;
         }
         
@@ -131,7 +131,7 @@ class PortfolioModule {
                         window.projectStackInstance = this.projectStack;
                         
                         if (this.debug) {
-                            console.log('[PortfolioModule] ProjectStack initialized');
+                            // PortfolioModule ProjectStack initialized
                         }
                     } else {
                         this.projectStack = window.projectStackInstance;
@@ -144,7 +144,7 @@ class PortfolioModule {
                         window.filterSystemInstance = this.filterSystem;
                         
                         if (this.debug) {
-                            console.log('[PortfolioModule] FilterSystem initialized');
+                            // PortfolioModule FilterSystem initialized
                         }
                     } else {
                         this.filterSystem = window.filterSystemInstance;
@@ -164,7 +164,7 @@ class PortfolioModule {
                     resolve();
                     
                 } catch (error) {
-                    console.error('[PortfolioModule] Error initializing components:', error);
+                    // PortfolioModule error initializing components
                     resolve(); // Risolvi comunque per non bloccare
                 }
             });

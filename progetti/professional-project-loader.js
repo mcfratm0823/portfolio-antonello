@@ -22,7 +22,7 @@ class ProjectLoader {
      * Initialize the loader
      */
     async init() {
-        console.log('🔍 ProjectLoader init:', window.location.search);
+        // ProjectLoader init
         
         try {
             this.showLoading();
@@ -36,7 +36,7 @@ class ProjectLoader {
             await this.loadProject(slug);
             
         } catch (error) {
-            console.error('🔍 Init error:', error);
+            // ProjectLoader init error
             this.handleError('Failed to initialize project loader', true);
         }
     }
@@ -94,7 +94,7 @@ class ProjectLoader {
             const projectData = getProject(slug);
             
             if (!projectData) {
-                console.error('🔍 Project not found:', slug);
+                // ProjectLoader project not found
                 this.handleError(`Project "${slug}" not found`, true);
                 return;
             }
@@ -115,7 +115,7 @@ class ProjectLoader {
             await this.renderProject(fullData);
             
         } catch (error) {
-            console.error('🔍 Load error:', error);
+            // ProjectLoader load error
             this.handleError('Failed to load project data', true);
         } finally {
             this.isLoading = false;
@@ -150,7 +150,7 @@ class ProjectLoader {
             
             // Log performance
             const loadTime = performance.now() - this.startTime;
-            console.log(`[ProjectLoader] Project "${projectData.slug}" loaded in ${Math.round(loadTime)}ms`);
+            // ProjectLoader project loaded
             
         } catch (error) {
             this.handleError('Failed to render project', false);
@@ -261,7 +261,7 @@ class ProjectLoader {
             };
             
             img.onerror = () => {
-                console.warn(`Failed to load image: ${src}`);
+                // Failed to load image
                 // Fallback to placeholder
                 imgElement.src = `https://picsum.photos/1200/600?random=${Math.floor(Math.random() * 1000)}`;
                 imgElement.alt = `${alt} (placeholder)`;
@@ -366,7 +366,7 @@ class ProjectLoader {
      * Handle errors professionally
      */
     handleError(message, shouldRedirect = false) {
-        console.error(`[ProjectLoader] ${message}`);
+        // ProjectLoader error
         
         if (shouldRedirect) {
             // Show error message briefly before redirect

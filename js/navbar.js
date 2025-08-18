@@ -744,7 +744,7 @@ class Navbar {
     init() {
         // Prevent double initialization
         if (this.initialized) {
-            console.warn('Navbar already initialized');
+            // Navbar already initialized
             return;
         }
         this.initialized = true;
@@ -917,7 +917,7 @@ class Navbar {
             const form = document.getElementById('menu-contact-form');
             if (form && window.handleFormSubmit) {
                 form.addEventListener('submit', window.handleFormSubmit);
-                console.log('AJAX handler aggiunto al form del menu');
+                // AJAX handler aggiunto al form del menu
             }
         }, 100);
     }

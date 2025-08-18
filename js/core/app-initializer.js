@@ -39,14 +39,14 @@ class AppInitializer {
         // Previeni inizializzazioni multiple
         if (this.initialized) {
             if (this.debug) {
-                console.warn('[AppInitializer] Already initialized, skipping');
+                // AppInitializer already initialized, skipping
             }
             return this.initPromise;
         }
         
         if (this.initPromise) {
             if (this.debug) {
-                console.log('[AppInitializer] Initialization already in progress, waiting...');
+                // AppInitializer initialization already in progress, waiting
             }
             return this.initPromise;
         }
@@ -58,7 +58,7 @@ class AppInitializer {
             await this.initPromise;
             this.initialized = true;
         } catch (error) {
-            console.error('[AppInitializer] Initialization failed:', error);
+            // AppInitializer initialization failed
             window.APP_STATE.set('initialization.status', 'error');
             throw error;
         }
@@ -74,7 +74,7 @@ class AppInitializer {
         const startTime = performance.now();
         
         if (this.debug) {
-            console.log('[AppInitializer] Starting application initialization...');
+            // AppInitializer starting application initialization
         }
         
         // Imposta stato iniziale
@@ -103,14 +103,14 @@ class AppInitializer {
             const totalTime = performance.now() - startTime;
             
             if (this.debug) {
-                console.log(`[AppInitializer] Initialization completed in ${totalTime.toFixed(2)}ms`);
+                // AppInitializer initialization completed
             }
             
             // Emit complete event
             window.APP_EVENT_BUS.emit('app:initialized', { totalTime });
             
         } catch (error) {
-            console.error('[AppInitializer] Critical initialization error:', error);
+            // AppInitializer critical initialization error
             window.APP_EVENT_BUS.emit('app:error', { error, phase: 'initialization' });
             throw error;
         }
@@ -122,7 +122,7 @@ class AppInitializer {
      */
     async registerCoreModules() {
         if (this.debug) {
-            console.log('[AppInitializer] Registering core modules...');
+            // AppInitializer registering core modules
         }
         
         // Constants loader
@@ -161,7 +161,7 @@ class AppInitializer {
     async waitForDOM() {
         if (document.readyState === 'loading') {
             if (this.debug) {
-                console.log('[AppInitializer] Waiting for DOM...');
+                // AppInitializer waiting for DOM
             }
             
             await new Promise(resolve => {
@@ -174,7 +174,7 @@ class AppInitializer {
         }
         
         if (this.debug) {
-            console.log('[AppInitializer] DOM ready');
+            // AppInitializer DOM ready
         }
     }
     
@@ -189,7 +189,7 @@ class AppInitializer {
         const isProjectDetailPage = path.includes('project-detail');
         
         if (this.debug) {
-            console.log('[AppInitializer] Registering page modules for:', path);
+            // AppInitializer registering page modules
         }
         
         // CMS Loader - sempre presente
@@ -213,7 +213,7 @@ class AppInitializer {
                             });
                             return data;
                         } catch (error) {
-                            console.error('[CMSLoader] Error parsing page data:', error);
+                            // CMSLoader error parsing page data
                         }
                     }
                     return null;
@@ -341,21 +341,21 @@ class AppInitializer {
      */
     async initializeModules() {
         if (this.debug) {
-            console.log('[AppInitializer] Initializing all modules...');
+            // AppInitializer initializing all modules
         }
         
         try {
             const results = await window.MODULE_REGISTRY.initializeAll();
             
             if (this.debug) {
-                console.log('[AppInitializer] Module initialization results:', results);
+                // AppInitializer module initialization results
             }
             
             // Store module instances
             this.modules = results;
             
         } catch (error) {
-            console.error('[AppInitializer] Module initialization failed:', error);
+            // AppInitializer module initialization failed
             throw error;
         }
     }
@@ -366,7 +366,7 @@ class AppInitializer {
      */
     async finalSetup() {
         if (this.debug) {
-            console.log('[AppInitializer] Performing final setup...');
+            // AppInitializer performing final setup
         }
         
         // Setup global error handling
