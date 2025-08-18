@@ -7,8 +7,6 @@
 import { TIMING, BREAKPOINTS, SIZES, Z_INDEX, ANIMATIONS } from '../config/constants.js';
 import { FormValidator } from '../utils/formValidator.js';
 import { ImageLoader } from '../utils/imageLoader.js';
-import { SmartImagePreloader } from '../utils/smartImagePreloader.js';
-import { PortfolioLazyLoader } from '../utils/portfolioLazyLoader.js';
 import { ErrorHandler, fetchWithRetry } from '../utils/errorHandler.js';
 import { PerformanceMonitor } from '../utils/performanceMonitor.js';
 import { CLSOptimizer } from '../utils/clsOptimizer.js';
@@ -24,8 +22,6 @@ export {
     ANIMATIONS,
     FormValidator,
     ImageLoader,
-    SmartImagePreloader,
-    PortfolioLazyLoader,
     ErrorHandler,
     fetchWithRetry,
     PerformanceMonitor
@@ -61,15 +57,6 @@ function initializeCore() {
             window.imageLoader.init();
         }
         
-        // Initialize smart preloader
-        if (!window.smartImagePreloader) {
-            window.smartImagePreloader = new SmartImagePreloader();
-        }
-        
-        // Initialize portfolio lazy loader
-        if (!window.portfolioLazyLoader) {
-            window.portfolioLazyLoader = new PortfolioLazyLoader();
-        }
     } catch (error) {
         // Fallback nel caso errorHandler non sia ancora disponibile
         console.error('Failed to initialize core components:', error);
