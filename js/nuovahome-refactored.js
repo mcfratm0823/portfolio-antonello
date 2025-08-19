@@ -52,6 +52,9 @@ class NuovaHomeInitializer {
             window.trackModuleInit('NuovaHome');
         }
         
+        // Initialize video first to prevent autoplay issues
+        this.initHeroVideo();
+        
         // Initialize all features
         this.initFooterForm();
         this.initPreloader();
@@ -63,6 +66,21 @@ class NuovaHomeInitializer {
         this.initServicesAccordion();
         
         if (this.debug) {} // NuovaHome initialization complete
+    }
+    
+    /**
+     * Initialize hero video to prevent autoplay race condition
+     */
+    initHeroVideo() {
+        const heroVideo = document.getElementById('hero-video');
+        if (heroVideo) {
+            // Ensure video is paused and at beginning
+            heroVideo.pause();
+            heroVideo.currentTime = 0;
+            
+            // Remove any loading state
+            heroVideo.load();
+        }
     }
     
     /**
@@ -102,7 +120,7 @@ class NuovaHomeInitializer {
             // Skip preloader animation
             preloader.style.display = 'none';
             gsap.set(mainContent, { opacity: 1 });
-            // Ensure video plays from start
+            // Start video immediately when skipping preloader
             if (heroVideo) {
                 heroVideo.currentTime = 0;
                 heroVideo.play().catch(() => {});
@@ -112,12 +130,6 @@ class NuovaHomeInitializer {
         
         // Mark preloader as shown
         sessionStorage.setItem('preloaderShown', 'true');
-        
-        // Pause video during preloader and reset to beginning
-        if (heroVideo) {
-            heroVideo.pause();
-            heroVideo.currentTime = 0;
-        }
         
         // Initial state
         gsap.set(mainContent, { opacity: 0, willChange: 'opacity' });
