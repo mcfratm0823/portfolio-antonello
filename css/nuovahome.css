@@ -351,6 +351,7 @@ body::-webkit-scrollbar,
     height: 280px;  /* Stesse dimensioni della foto */
     overflow: hidden;
     display: block; /* Visibile di default */
+    background-color: #000; /* Prevent flash while video loads */
 }
 
 #hero-video {

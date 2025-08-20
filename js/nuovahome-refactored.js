@@ -52,7 +52,7 @@ class NuovaHomeInitializer {
             window.trackModuleInit('NuovaHome');
         }
         
-        // Initialize video first to prevent autoplay issues
+        // Initialize video control before preloader
         this.initHeroVideo();
         
         // Initialize all features
@@ -69,18 +69,50 @@ class NuovaHomeInitializer {
     }
     
     /**
-     * Initialize hero video to prevent autoplay race condition
+     * Initialize hero video and prevent autoplay
      */
     initHeroVideo() {
         const heroVideo = document.getElementById('hero-video');
-        if (heroVideo) {
-            // Ensure video is paused and at beginning
-            heroVideo.pause();
+        if (!heroVideo) return;
+        
+        // Block video completely until needed
+        heroVideo.style.display = 'none';
+        heroVideo.pause();
+        
+        // Force video to load first frame
+        heroVideo.load();
+        
+        // When metadata is loaded, ensure we're at frame 0
+        heroVideo.addEventListener('loadedmetadata', () => {
             heroVideo.currentTime = 0;
-            
-            // Remove any loading state
-            heroVideo.load();
-        }
+            heroVideo.pause();
+        }, { once: true });
+        
+        // Store reference for later
+        this.heroVideo = heroVideo;
+    }
+    
+    /**
+     * Start hero video playback
+     */
+    startHeroVideo() {
+        if (!this.heroVideo) return;
+        
+        // Force complete reload before showing
+        const src = this.heroVideo.currentSrc;
+        this.heroVideo.src = '';
+        this.heroVideo.load();
+        this.heroVideo.src = src;
+        
+        // Wait for video to be ready after reload
+        this.heroVideo.addEventListener('loadeddata', () => {
+            // Now show and play
+            this.heroVideo.style.display = 'block';
+            this.heroVideo.currentTime = 0;
+            this.heroVideo.play().catch(err => {
+                if (this.debug) console.warn('Video autoplay blocked:', err);
+            });
+        }, { once: true });
     }
     
     /**
@@ -120,16 +152,26 @@ class NuovaHomeInitializer {
             // Skip preloader animation
             preloader.style.display = 'none';
             gsap.set(mainContent, { opacity: 1 });
+            
             // Start video immediately when skipping preloader
-            if (heroVideo) {
-                heroVideo.currentTime = 0;
-                heroVideo.play().catch(() => {});
+            this.startHeroVideo();
+            
+            // Show navbar
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                navbar.classList.add('visible');
             }
+            
             return;
         }
         
         // Mark preloader as shown
         sessionStorage.setItem('preloaderShown', 'true');
+        
+        // Calcola quanto tempo del video corrisponde al preloader
+        const preloaderDuration = window.CONSTANTS?.TIMING?.PRELOADER_DURATION || 2500;
+        
+        // Il video parte comunque con il timer di initHeroVideo
         
         // Initial state
         gsap.set(mainContent, { opacity: 0, willChange: 'opacity' });
@@ -156,13 +198,7 @@ class NuovaHomeInitializer {
             gsap.to(mainContent, {
                 opacity: 1,
                 duration: 0.3,
-                ease: "power2.out",
-                onStart: () => {
-                    // Start video when content becomes visible
-                    if (heroVideo) {
-                        heroVideo.play().catch(() => {});
-                    }
-                }
+                ease: "power2.out"
             });
             
             // Move texts to the right first
@@ -172,6 +208,9 @@ class NuovaHomeInitializer {
                 duration: 0.6,
                 ease: "power2.in",
                 onComplete: () => {
+                    // Start video right before preloader slides down
+                    this.startHeroVideo();
+                    
                     // Then slide preloader down to reveal white content
                     gsap.to(preloader, {
                         y: '100vh',
@@ -485,17 +524,17 @@ class NuovaHomeInitializer {
                 preventOverlaps: "selectedWork"
             });
             
-            // Hover effect desktop
-            if (isDesktop && elements.box && elements.boxImg) {
-                const hoverTimeline = gsap.timeline({ paused: true });
-                hoverTimeline.to(elements.boxImg, {
-                    opacity: 0,
-                    ease: "expo.inOut"
-                });
-                
-                elements.box.addEventListener("mouseenter", () => hoverTimeline.play());
-                elements.box.addEventListener("mouseleave", () => hoverTimeline.reverse());
-            }
+            // Hover effect desktop - DISABLED
+            // if (isDesktop && elements.box && elements.boxImg) {
+            //     const hoverTimeline = gsap.timeline({ paused: true });
+            //     hoverTimeline.to(elements.boxImg, {
+            //         opacity: 0,
+            //         ease: "expo.inOut"
+            //     });
+            //     
+            //     elements.box.addEventListener("mouseenter", () => hoverTimeline.play());
+            //     elements.box.addEventListener("mouseleave", () => hoverTimeline.reverse());
+            // }
         });
     }
     
@@ -847,30 +886,43 @@ class NuovaHomeInitializer {
     }
 }
 
-// Create and export initializer
-const nuovaHomeInitializer = new NuovaHomeInitializer();
+// Wrap in IIFE to allow return
+(() => {
+    // Prevent multiple initializations with global flag
+    if (window.__nuovaHomeInitialized) {
+        console.warn('NuovaHome already initialized, skipping...');
+        return;
+    }
+    window.__nuovaHomeInitialized = true;
 
-// Register with module registry if available
-if (window.MODULE_REGISTRY) {
-    window.MODULE_REGISTRY.register('nuovaHome', async () => {
-        await nuovaHomeInitializer.initialize();
-        return nuovaHomeInitializer;
-    }, {
-        priority: 30,
-        dependencies: ['constants']
-    });
-} else {
-    // Fallback for standalone use
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            nuovaHomeInitializer.initialize();
+    // Create and export initializer
+    const nuovaHomeInitializer = new NuovaHomeInitializer();
+
+    // Register with module registry if available
+    if (window.MODULE_REGISTRY) {
+        window.MODULE_REGISTRY.register('nuovaHome', async () => {
+            await nuovaHomeInitializer.initialize();
+            return nuovaHomeInitializer;
+        }, {
+            priority: 30,
+            dependencies: ['constants']
         });
     } else {
-        nuovaHomeInitializer.initialize();
+        // Fallback for standalone use ONLY if no module registry
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                nuovaHomeInitializer.initialize();
+            });
+        } else {
+            nuovaHomeInitializer.initialize();
+        }
     }
-}
 
-// Export for modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = NuovaHomeInitializer;
-}
+    // Export for modules
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = NuovaHomeInitializer;
+    }
+    
+    // Make available globally
+    window.nuovaHomeInitializer = nuovaHomeInitializer;
+})();
