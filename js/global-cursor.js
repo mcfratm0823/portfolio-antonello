@@ -32,6 +32,10 @@ class GlobalCursor {
      * @returns {void}
      */
     init() {
+        // Remove any existing cursors first
+        const existingCursors = document.querySelectorAll('.custom-cursor, .cursor-text');
+        existingCursors.forEach(el => el.remove());
+        
         // Create cursor element
         this.cursor = document.createElement('div');
         this.cursor.className = 'custom-cursor';
