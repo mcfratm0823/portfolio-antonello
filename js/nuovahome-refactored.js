@@ -179,37 +179,37 @@ class NuovaHomeInitializer {
         
         // Function to start preloader animation
         const startPreloaderAnimation = () => {
-            // Animate preloader text
+            // Animate preloader text - reduced delays for faster appearance
             gsap.to(preloaderLeft, {
-                autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
-                duration: 1.0,
+                autoAlpha: 1,
+                duration: 0.8,
                 ease: "power3.out",
-                delay: 0.2
+                delay: 0.1 // Reduced from 0.2
             });
             
             gsap.to(preloaderRight, {
-                autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
-                duration: 1.0,
+                autoAlpha: 1,
+                duration: 0.8,
                 ease: "power3.out",
-                delay: 0.4
+                delay: 0.2 // Reduced from 0.4
             });
         };
         
-        // Wait for specific font to load before starting animation
-        if (document.fonts && document.fonts.load) {
-            // Load the specific font weight we need for preloader
-            Promise.all([
-                document.fonts.load('500 25px Neue'),
-                document.fonts.load('500 17px Neue')
-            ]).then(() => {
+        // Simple font loading check with reasonable timeout
+        if (document.fonts && document.fonts.ready) {
+            // Set a maximum wait time
+            const fontTimeout = setTimeout(() => {
                 startPreloaderAnimation();
-            }).catch(() => {
-                // If font loading fails, start anyway after a delay
-                setTimeout(startPreloaderAnimation, 200);
+            }, 150); // Wait max 150ms for fonts
+            
+            // Start as soon as fonts are ready
+            document.fonts.ready.then(() => {
+                clearTimeout(fontTimeout);
+                startPreloaderAnimation();
             });
         } else {
-            // Fallback for browsers that don't support font loading API
-            setTimeout(startPreloaderAnimation, 200);
+            // No font loading API, start after short delay
+            setTimeout(startPreloaderAnimation, 150);
         }
         
         // Hide preloader and show main content after delay
