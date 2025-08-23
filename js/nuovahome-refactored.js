@@ -177,20 +177,40 @@ class NuovaHomeInitializer {
         gsap.set(mainContent, { opacity: 0, willChange: 'opacity' });
         gsap.set([preloaderLeft, preloaderRight], { autoAlpha: 0 }); // autoAlpha controls both opacity and visibility
         
-        // Animate preloader text
-        gsap.to(preloaderLeft, {
-            autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
-            duration: 1.0,
-            ease: "power3.out",
-            delay: 0.2
-        });
+        // Function to start preloader animation
+        const startPreloaderAnimation = () => {
+            // Animate preloader text
+            gsap.to(preloaderLeft, {
+                autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
+                duration: 1.0,
+                ease: "power3.out",
+                delay: 0.2
+            });
+            
+            gsap.to(preloaderRight, {
+                autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
+                duration: 1.0,
+                ease: "power3.out",
+                delay: 0.4
+            });
+        };
         
-        gsap.to(preloaderRight, {
-            autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
-            duration: 1.0,
-            ease: "power3.out",
-            delay: 0.4
-        });
+        // Wait for specific font to load before starting animation
+        if (document.fonts && document.fonts.load) {
+            // Load the specific font weight we need for preloader
+            Promise.all([
+                document.fonts.load('500 25px Neue'),
+                document.fonts.load('500 17px Neue')
+            ]).then(() => {
+                startPreloaderAnimation();
+            }).catch(() => {
+                // If font loading fails, start anyway after a delay
+                setTimeout(startPreloaderAnimation, 200);
+            });
+        } else {
+            // Fallback for browsers that don't support font loading API
+            setTimeout(startPreloaderAnimation, 200);
+        }
         
         // Hide preloader and show main content after delay
         setTimeout(() => {
