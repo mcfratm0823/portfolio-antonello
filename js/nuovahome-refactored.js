@@ -826,15 +826,23 @@ class NuovaHomeInitializer {
                 const imageHeight = this.clamp(210, window.innerWidth * 0.15, 270);
                 const relativeTop = headerRect.top - sectionRect.top + (headerRect.height / 2) - (imageHeight / 2);
                 
+                console.log('Showing image for:', item.querySelector('.service-name').textContent, 'URL:', imageUrl);
+                
                 if (!imageContainer.classList.contains('show')) {
                     imageContainer.style.top = relativeTop + 'px';
                 }
                 
-                const cachedImage = window.smartImagePreloader?.getCachedImage(imageUrl);
-                if (cachedImage) {
-                    serviceImage.src = cachedImage.src;
-                } else {
-                    serviceImage.src = imageUrl;
+                // Force image change by clearing src first
+                if (serviceImage.src !== imageUrl) {
+                    serviceImage.src = '';
+                    setTimeout(() => {
+                        const cachedImage = window.smartImagePreloader?.getCachedImage(imageUrl);
+                        if (cachedImage) {
+                            serviceImage.src = cachedImage.src;
+                        } else {
+                            serviceImage.src = imageUrl;
+                        }
+                    }, 10);
                 }
                 imageContainer.classList.add('show');
             };
