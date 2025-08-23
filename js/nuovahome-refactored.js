@@ -175,18 +175,18 @@ class NuovaHomeInitializer {
         
         // Initial state
         gsap.set(mainContent, { opacity: 0, willChange: 'opacity' });
-        gsap.set([preloaderLeft, preloaderRight], { opacity: 0 });
+        gsap.set([preloaderLeft, preloaderRight], { autoAlpha: 0 }); // autoAlpha controls both opacity and visibility
         
         // Animate preloader text
         gsap.to(preloaderLeft, {
-            opacity: 1,
+            autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
             duration: 1.0,
             ease: "power3.out",
             delay: 0.2
         });
         
         gsap.to(preloaderRight, {
-            opacity: 1,
+            autoAlpha: 1, // This will set both opacity: 1 and visibility: visible
             duration: 1.0,
             ease: "power3.out",
             delay: 0.4

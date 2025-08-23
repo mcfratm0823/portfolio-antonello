@@ -34,6 +34,13 @@
             font-display: block; /* Prevents text from showing until font loads */
         }
         
+        /* Hide preloader text until animation starts */
+        #preloader-left h1,
+        #preloader-right p {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
         /* Reserve space for navbar */
         body::before {
             content: '';
