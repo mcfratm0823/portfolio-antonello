@@ -117,15 +117,8 @@ class GlobalCursor {
      */
     setupMouseTracking() {
         let ticking = false;
-        let firstMove = true;
         
         document.addEventListener('mousemove', (e) => {
-            // On first mouse move, show the cursor
-            if (firstMove && this.cursor) {
-                this.cursor.classList.add('initialized');
-                firstMove = false;
-            }
-            
             if (!ticking) {
                 requestAnimationFrame(() => {
                     this.cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
@@ -145,6 +138,7 @@ class GlobalCursor {
     setupProjectHover() {
         // Use event delegation for better performance
         document.addEventListener('mouseover', (e) => {
+            // Only show "scopri" on portfolio page project cards
             const projectCard = e.target.closest('.project-card');
             if (projectCard) {
                 this.cursorText.style.opacity = '1';

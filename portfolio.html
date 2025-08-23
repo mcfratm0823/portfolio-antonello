@@ -42,7 +42,7 @@
             src: url(./fonts/PPNeueMontreal-Medium.woff2) format("woff2");
             font-weight: 500;
             font-style: normal;
-            font-display: optional; /* Usa il font solo se già in cache */
+            font-display: swap;
         }
         
         @font-face {
@@ -50,7 +50,7 @@
             src: url(./fonts/PPNeueMontreal-Bold.woff2) format("woff2");
             font-weight: 700;
             font-style: normal;
-            font-display: optional;
+            font-display: swap;
         }
         
         @font-face {
@@ -58,7 +58,7 @@
             src: url(./fonts/PPNeueMontreal-Regular.woff2) format("woff2");
             font-weight: 400;
             font-style: normal;
-            font-display: optional;
+            font-display: swap;
         }
         
         /* Critical CLS fixes */
@@ -93,11 +93,6 @@
     <link href="./css/portfolio.css" rel="stylesheet">
     <link href="./css/portfolio-links.css" rel="stylesheet">
     <script>
-        // Service Worker per font caching
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js');
-        }
-        
         // Data automatica
         document.addEventListener('DOMContentLoaded', function() {
             const dateElement = document.getElementById('current-date');

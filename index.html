@@ -91,11 +91,6 @@
     
     <!-- Check for ES6 module support -->
     <script>
-        // Service Worker per font caching
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js');
-        }
-        
         // Feature detection for ES6 modules
         function supportsModules() {
             const script = document.createElement('script');
