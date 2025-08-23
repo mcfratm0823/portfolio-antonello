@@ -117,8 +117,15 @@ class GlobalCursor {
      */
     setupMouseTracking() {
         let ticking = false;
+        let firstMove = true;
         
         document.addEventListener('mousemove', (e) => {
+            // On first mouse move, show the cursor
+            if (firstMove && this.cursor) {
+                this.cursor.classList.add('initialized');
+                firstMove = false;
+            }
+            
             if (!ticking) {
                 requestAnimationFrame(() => {
                     this.cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;

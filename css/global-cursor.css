@@ -26,9 +26,16 @@ button, button:hover,
     mix-blend-mode: difference;
     will-change: transform;
     backface-visibility: hidden;
-    top: 0;
-    left: 0;
+    top: -50px; /* Start off-screen */
+    left: -50px; /* Start off-screen */
     transform: translateZ(0);
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+/* Show cursor only when initialized */
+.custom-cursor.initialized {
+    opacity: 1;
 }
 
 /* Cursor text "Scopri" */
