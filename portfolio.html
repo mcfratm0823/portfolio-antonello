@@ -28,20 +28,52 @@
     <meta content="#dbdad9" name="msapplication-TileColor">
     <meta content="#dbdad9" name="theme-color">
     
-    <!-- Preload critical fonts -->
-    <link rel="preload" href="./fonts/NeueHaasGrotDispRound-55Roman-Web.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Preload critical fonts with highest priority -->
+    <link rel="preload" href="./fonts/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" href="./fonts/PPNeueMontreal-Bold.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
     <link rel="preload" href="./fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/NeueHaasGrotDispRound-55Roman-Web.woff2" as="font" type="font/woff2" crossorigin>
     
     <!-- Critical CSS inline to prevent CLS -->
     <style>
+        /* Critical font-face declarations for immediate loading */
+        @font-face {
+            font-family: Neue;
+            src: url(./fonts/PPNeueMontreal-Medium.woff2) format("woff2");
+            font-weight: 500;
+            font-style: normal;
+            font-display: block;
+        }
+        
+        @font-face {
+            font-family: Neue;
+            src: url(./fonts/PPNeueMontreal-Bold.woff2) format("woff2");
+            font-weight: 700;
+            font-style: normal;
+            font-display: block;
+        }
+        
+        @font-face {
+            font-family: Neue;
+            src: url(./fonts/PPNeueMontreal-Regular.woff2) format("woff2");
+            font-weight: 400;
+            font-style: normal;
+            font-display: block;
+        }
+        
         /* Critical CLS fixes */
-        body { margin: 0; overflow-x: hidden; }
+        body { 
+            margin: 0; 
+            overflow-x: hidden;
+            font-family: Neue, sans-serif;
+        }
         
         /* Stabilize text during font load */
         h1, h2, h3, p { 
             font-synthesis: none;
             text-rendering: optimizeLegibility;
             line-height: 1.2;
+            font-family: Neue, sans-serif;
         }
         
         /* Prevent layout shift on images */
