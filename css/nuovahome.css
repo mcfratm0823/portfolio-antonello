@@ -1064,7 +1064,7 @@ body::-webkit-scrollbar,
     pointer-events: none;
     z-index: 100;
     opacity: 0;
-    transition: none; /* Istantaneo */
+    transition: opacity 0.2s ease-out; /* Smooth fade in/out */
     will-change: transform, opacity;
 }
 
@@ -1073,7 +1073,7 @@ body::-webkit-scrollbar,
     height: 250px;
     object-fit: cover;
     filter: grayscale(0%);
-    transition: none; /* Istantaneo */
+    transition: none; /* Keep image changes instant */
 }
 
 .service-image.active {
@@ -2137,8 +2137,8 @@ body section#services-section.services-section .service-image-container {
     pointer-events: none !important;
     z-index: 9999 !important;
     opacity: 0 !important;
-    transition: opacity 0.3s ease !important;
-    will-change: opacity !important;
+    transition: opacity 0.15s ease-out !important;
+    will-change: opacity, top !important;
     transform: translateZ(0) !important;
 }
 

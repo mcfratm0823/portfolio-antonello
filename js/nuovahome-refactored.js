@@ -817,57 +817,93 @@ class NuovaHomeInitializer {
         
         if (!serviceItems.length || !imageContainer || !serviceImage || !servicesSection) return;
         
-        // Preload service images when approaching section
-        const serviceImageUrls = [];
+        // Track current image to prevent duplicate loads
+        let currentImageUrl = null;
+        let imageLoadTimeout = null;
+        
+        // Preload all service images
+        const imageCache = new Map();
+        const preloadPromises = [];
+        
         serviceItems.forEach(item => {
             const imageUrl = item.getAttribute('data-image');
-            if (imageUrl) serviceImageUrls.push(imageUrl);
+            if (imageUrl && imageUrl !== './img/placeholder.svg') {
+                const promise = new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        imageCache.set(imageUrl, true);
+                        resolve();
+                    };
+                    img.onerror = () => {
+                        if (this.debug) console.warn('Failed to preload service image:', imageUrl);
+                        resolve(); // Resolve anyway to not block
+                    };
+                    img.src = imageUrl;
+                });
+                preloadPromises.push(promise);
+            }
         });
         
-        if (window.smartImagePreloader && serviceImageUrls.length > 0) {
-            window.smartImagePreloader.observeAndPreload(
-                servicesSection,
-                serviceImageUrls,
-                {
-                    rootMargin: '300px',
-                    priority: 'high'
-                }
-            );
-        }
+        // Wait for all images to preload
+        Promise.all(preloadPromises).then(() => {
+            if (this.debug) {} // All service images preloaded
+        });
         
         // Setup accordion functionality
         serviceItems.forEach(item => {
-            const imageUrl = item.getAttribute('data-image');
+            const imageUrl = item.getAttribute('data-image') || './img/placeholder.svg';
             
             const showImage = () => {
+                // Clear any pending timeout
+                if (imageLoadTimeout) {
+                    clearTimeout(imageLoadTimeout);
+                    imageLoadTimeout = null;
+                }
+                
+                // Calculate position
                 const serviceHeader = item.querySelector('.service-header');
                 const headerRect = serviceHeader.getBoundingClientRect();
                 const sectionRect = servicesSection.getBoundingClientRect();
                 const imageHeight = this.clamp(210, window.innerWidth * 0.15, 270);
                 const relativeTop = headerRect.top - sectionRect.top + (headerRect.height / 2) - (imageHeight / 2);
                 
-                console.log('Showing image for:', item.querySelector('.service-name').textContent, 'URL:', imageUrl);
+                // Update position
+                imageContainer.style.top = relativeTop + 'px';
                 
-                if (!imageContainer.classList.contains('show')) {
-                    imageContainer.style.top = relativeTop + 'px';
-                }
-                
-                // Force image change by clearing src first
-                if (serviceImage.src !== imageUrl) {
-                    serviceImage.src = '';
-                    setTimeout(() => {
-                        const cachedImage = window.smartImagePreloader?.getCachedImage(imageUrl);
-                        if (cachedImage) {
-                            serviceImage.src = cachedImage.src;
-                        } else {
+                // Only update image if it's different
+                if (currentImageUrl !== imageUrl) {
+                    currentImageUrl = imageUrl;
+                    
+                    // Check if image is cached
+                    if (imageCache.has(imageUrl)) {
+                        // Image is preloaded, show immediately
+                        serviceImage.src = imageUrl;
+                        imageContainer.classList.add('show');
+                    } else {
+                        // Hide container while loading new image
+                        imageContainer.classList.remove('show');
+                        
+                        // Small delay to prevent flash
+                        imageLoadTimeout = setTimeout(() => {
                             serviceImage.src = imageUrl;
-                        }
-                    }, 10);
+                            // Add show class after a frame to ensure smooth transition
+                            requestAnimationFrame(() => {
+                                imageContainer.classList.add('show');
+                            });
+                        }, 50);
+                    }
+                } else {
+                    // Same image, just show container
+                    imageContainer.classList.add('show');
                 }
-                imageContainer.classList.add('show');
             };
             
             const hideImage = () => {
+                // Clear any pending timeout
+                if (imageLoadTimeout) {
+                    clearTimeout(imageLoadTimeout);
+                    imageLoadTimeout = null;
+                }
                 imageContainer.classList.remove('show');
             };
             
