@@ -32,10 +32,6 @@ class GlobalCursor {
      * @returns {void}
      */
     init() {
-        // Remove any existing cursors first
-        const existingCursors = document.querySelectorAll('.custom-cursor, .cursor-text');
-        existingCursors.forEach(el => el.remove());
-        
         // Create cursor element
         this.cursor = document.createElement('div');
         this.cursor.className = 'custom-cursor';
@@ -56,10 +52,8 @@ class GlobalCursor {
             z-index: 100002;
             opacity: 0;
             transition: opacity 0.2s ease;
-            top: 0;
-            left: 0;
-            margin: 0;
-            transform-origin: center center;
+            margin-left: 2px;
+            margin-top: -8px;
         `;
         document.body.appendChild(this.cursorText);
 
@@ -124,7 +118,7 @@ class GlobalCursor {
             if (!ticking) {
                 requestAnimationFrame(() => {
                     this.cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
-                    this.cursorText.style.transform = `translate(${e.clientX + 15}px, ${e.clientY - 10}px)`;
+                    this.cursorText.style.transform = `translate(${e.clientX + 6}px, ${e.clientY - 5}px)`;
                     ticking = false;
                 });
                 ticking = true;
