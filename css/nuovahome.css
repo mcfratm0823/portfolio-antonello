@@ -1072,7 +1072,7 @@ body::-webkit-scrollbar,
     width: 400px;
     height: 250px;
     object-fit: cover;
-    filter: grayscale(100%);
+    filter: grayscale(0%);
     transition: none; /* Istantaneo */
 }
 
