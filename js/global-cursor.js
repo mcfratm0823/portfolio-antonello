@@ -35,6 +35,8 @@ class GlobalCursor {
         // Create cursor element
         this.cursor = document.createElement('div');
         this.cursor.className = 'custom-cursor';
+        // Start cursor off-screen until we have a real position
+        this.cursor.style.transform = 'translate(-100px, -100px)';
         document.body.appendChild(this.cursor);
         
         // Create "Scopri" text element
