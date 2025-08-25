@@ -265,9 +265,9 @@ class FormHandler {
         this.setupFormValidation('footer');
         
         // Aggiungi gestione AJAX direttamente al form
-        const form = footerForm.querySelector('form[data-netlify="true"]');
-        if (form && window.handleFormSubmit) {
-            form.addEventListener('submit', window.handleFormSubmit);
+        const ajaxForm = footerForm.querySelector('form[data-netlify="true"]');
+        if (ajaxForm && window.handleFormSubmit) {
+            ajaxForm.addEventListener('submit', window.handleFormSubmit);
             // AJAX handler aggiunto al form del footer
         }
     }
