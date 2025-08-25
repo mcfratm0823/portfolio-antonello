@@ -26,9 +26,12 @@ button, button:hover,
     mix-blend-mode: difference;
     will-change: transform;
     backface-visibility: hidden;
-    top: 0;
-    left: 0;
+    /* Start cursor off-screen to prevent flash at 0,0 */
+    top: -100px;
+    left: -100px;
     transform: translateZ(0);
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 /* Cursor text "Scopri" */

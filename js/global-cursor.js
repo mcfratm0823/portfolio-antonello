@@ -35,8 +35,6 @@ class GlobalCursor {
         // Create cursor element
         this.cursor = document.createElement('div');
         this.cursor.className = 'custom-cursor';
-        // Start cursor off-screen until we have a real position
-        this.cursor.style.transform = 'translate(-100px, -100px)';
         document.body.appendChild(this.cursor);
         
         // Create "Scopri" text element
@@ -115,11 +113,19 @@ class GlobalCursor {
      */
     setupMouseTracking() {
         let ticking = false;
+        let firstMove = true;
         
         document.addEventListener('mousemove', (e) => {
+            // Show cursor on first mouse move
+            if (firstMove) {
+                this.cursor.style.opacity = '1';
+                firstMove = false;
+            }
+            
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    this.cursor.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
+                    this.cursor.style.top = `${e.clientY - 5}px`;
+                    this.cursor.style.left = `${e.clientX - 5}px`;
                     this.cursorText.style.transform = `translate(${e.clientX + 6}px, ${e.clientY - 5}px)`;
                     ticking = false;
                 });
