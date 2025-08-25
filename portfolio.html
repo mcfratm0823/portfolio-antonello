@@ -106,6 +106,12 @@
         });
     </script>
     <meta name="google" value="notranslate">
+    
+    <!-- Security: DOMPurify per sanitizzazione HTML (non attivo di default) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- SafeHTML Wrapper - Sistema di sanitizzazione progressivo -->
+    <script src="./utils/safeHTML.js"></script>
 </head>
 <body>
     <!-- Custom Cursor will be created dynamically by global-cursor.js -->

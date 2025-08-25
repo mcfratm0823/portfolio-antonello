@@ -171,33 +171,95 @@ class FormHandler {
             document.head.appendChild(style);
         }
 
-        // Sostituisci il contenuto con un form reale
-        const formHTML = `
-            <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                <input type="hidden" name="form-name" value="contact-menu">
-                <input type="hidden" name="bot-field">
-                <div class="footer-menu-item footer-form-title">${this.formData.form_title}</div>
-                <div class="footer-menu-item">
-                    <input type="text" name="nome" id="footer-nome" placeholder="${this.formData.name_placeholder}" required />
-                </div>
-                <div class="footer-menu-item">
-                    <input type="text" name="cognome" id="footer-cognome" placeholder="${this.formData.surname_placeholder}" required />
-                </div>
-                <div class="footer-menu-item">
-                    <input type="email" name="email" id="footer-email" placeholder="${this.formData.email_placeholder}" required />
-                </div>
-                <div class="footer-menu-item">
-                    <textarea name="messaggio" id="footer-messaggio" placeholder="${this.formData.message_placeholder}" required></textarea>
-                </div>
-                <div class="footer-menu-item">
-                    <button type="submit" id="footer-request-cta" style="background: none; border: none; cursor: pointer; width: 100%;">
-                        <div id="footer-request-text">${this.formData.button_text}</div>
-                    </button>
-                </div>
-            </form>
-        `;
-
-        footerForm.innerHTML = formHTML;
+        // Fix XSS: Crea form con DOM manipulation sicuro
+        const form = document.createElement('form');
+        form.name = 'contact-menu';
+        form.method = 'POST';
+        form.setAttribute('data-netlify', 'true');
+        form.setAttribute('netlify-honeypot', 'bot-field');
+        
+        // Hidden inputs
+        const formNameInput = document.createElement('input');
+        formNameInput.type = 'hidden';
+        formNameInput.name = 'form-name';
+        formNameInput.value = 'contact-menu';
+        form.appendChild(formNameInput);
+        
+        const botField = document.createElement('input');
+        botField.type = 'hidden';
+        botField.name = 'bot-field';
+        form.appendChild(botField);
+        
+        // Form title
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'footer-menu-item footer-form-title';
+        titleDiv.textContent = this.formData.form_title; // textContent è sicuro
+        form.appendChild(titleDiv);
+        
+        // Nome input
+        const nomeDiv = document.createElement('div');
+        nomeDiv.className = 'footer-menu-item';
+        const nomeInput = document.createElement('input');
+        nomeInput.type = 'text';
+        nomeInput.name = 'nome';
+        nomeInput.id = 'footer-nome';
+        nomeInput.placeholder = this.formData.name_placeholder; // setAttribute è sicuro
+        nomeInput.required = true;
+        nomeDiv.appendChild(nomeInput);
+        form.appendChild(nomeDiv);
+        
+        // Cognome input
+        const cognomeDiv = document.createElement('div');
+        cognomeDiv.className = 'footer-menu-item';
+        const cognomeInput = document.createElement('input');
+        cognomeInput.type = 'text';
+        cognomeInput.name = 'cognome';
+        cognomeInput.id = 'footer-cognome';
+        cognomeInput.placeholder = this.formData.surname_placeholder;
+        cognomeInput.required = true;
+        cognomeDiv.appendChild(cognomeInput);
+        form.appendChild(cognomeDiv);
+        
+        // Email input
+        const emailDiv = document.createElement('div');
+        emailDiv.className = 'footer-menu-item';
+        const emailInput = document.createElement('input');
+        emailInput.type = 'email';
+        emailInput.name = 'email';
+        emailInput.id = 'footer-email';
+        emailInput.placeholder = this.formData.email_placeholder;
+        emailInput.required = true;
+        emailDiv.appendChild(emailInput);
+        form.appendChild(emailDiv);
+        
+        // Messaggio textarea
+        const messaggioDiv = document.createElement('div');
+        messaggioDiv.className = 'footer-menu-item';
+        const messaggioTextarea = document.createElement('textarea');
+        messaggioTextarea.name = 'messaggio';
+        messaggioTextarea.id = 'footer-messaggio';
+        messaggioTextarea.placeholder = this.formData.message_placeholder;
+        messaggioTextarea.required = true;
+        messaggioDiv.appendChild(messaggioTextarea);
+        form.appendChild(messaggioDiv);
+        
+        // Submit button
+        const buttonDiv = document.createElement('div');
+        buttonDiv.className = 'footer-menu-item';
+        const button = document.createElement('button');
+        button.type = 'submit';
+        button.id = 'footer-request-cta';
+        button.style.cssText = 'background: none; border: none; cursor: pointer; width: 100%;';
+        const buttonText = document.createElement('div');
+        buttonText.id = 'footer-request-text';
+        buttonText.textContent = this.formData.button_text; // textContent è sicuro
+        button.appendChild(buttonText);
+        buttonDiv.appendChild(button);
+        form.appendChild(buttonDiv);
+        
+        // Pulisci e aggiungi il form
+        footerForm.textContent = ''; // Pulisci contenuto esistente
+        footerForm.appendChild(form);
 
         // Applica la validazione del form
         this.setupFormValidation('footer');

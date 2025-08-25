@@ -583,7 +583,13 @@ class StaticPortfolio {
     showLoading() {
         if (this.loadingMessage) {
             this.loadingMessage.style.display = 'block';
-            this.loadingMessage.innerHTML = '<p>Caricamento progetti...</p>';
+            
+            // Fix XSS: Usa createElement invece di innerHTML per contenuto statico
+            const p = document.createElement('p');
+            p.textContent = 'Caricamento progetti...';
+            this.loadingMessage.textContent = ''; // Pulisci contenuto esistente
+            this.loadingMessage.appendChild(p);
+            
         }
     }
     
@@ -680,7 +686,11 @@ class StaticPortfolio {
      */
     showNoProjects() {
         if (this.loadingMessage) {
-            this.loadingMessage.innerHTML = '<p>Nessun progetto trovato.</p>';
+            // Fix XSS: Usa createElement invece di innerHTML
+            const p = document.createElement('p');
+            p.textContent = 'Nessun progetto trovato.';
+            this.loadingMessage.textContent = ''; // Pulisci contenuto esistente
+            this.loadingMessage.appendChild(p);
         }
     }
     
@@ -692,7 +702,9 @@ class StaticPortfolio {
     showError(message = 'Errore nel caricamento progetti') {
         if (this.loadingMessage) {
             this.loadingMessage.style.display = 'block';
-            this.loadingMessage.innerHTML = `
+            
+            // Fix XSS: Usa safeReplace con sanitizzazione per contenuto con HTML
+            const errorHTML = `
                 <div style="
                     text-align: center;
                     padding: 40px 20px;
@@ -715,6 +727,17 @@ class StaticPortfolio {
                     ">Ricarica</button>
                 </div>
             `;
+            
+            // Usa safeReplace se disponibile, altrimenti innerHTML temporaneamente
+            if (window.safeReplace) {
+                window.safeReplace(this.loadingMessage, errorHTML, {
+                    context: 'portfolio-error-message',
+                    useTextContent: false
+                });
+            } else {
+                // Fallback temporaneo - TODO: rimuovere dopo test
+                this.loadingMessage.innerHTML = errorHTML;
+            }
         }
     }
     

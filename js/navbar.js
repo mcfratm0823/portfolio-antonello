@@ -736,7 +736,17 @@ class Navbar {
             existingNavbar.querySelector('.navbar-logo span').textContent = this.navigationData.logo.text;
             const menuTriggerSpan = existingNavbar.querySelector('.navbar-menu span');
             if (menuTriggerSpan) {
-                menuTriggerSpan.innerHTML = `${this.navigationData.menu_trigger.text}${this.navigationData.menu_trigger.show_arrow ? ` <img src="${this.assetPath}img/arrow.svg" alt="" class="navbar-arrow">` : ''}`;
+                // Fix XSS: Usa DOM manipulation per menu trigger
+                menuTriggerSpan.textContent = this.navigationData.menu_trigger.text;
+                
+                if (this.navigationData.menu_trigger.show_arrow) {
+                    const arrowImg = document.createElement('img');
+                    arrowImg.src = `${this.assetPath}img/arrow.svg`;
+                    arrowImg.alt = '';
+                    arrowImg.className = 'navbar-arrow';
+                    menuTriggerSpan.appendChild(document.createTextNode(' ')); // Spazio
+                    menuTriggerSpan.appendChild(arrowImg);
+                }
             }
         }
     }
@@ -758,11 +768,12 @@ class Navbar {
             // Ensure head exists
             const head = document.head || document.getElementsByTagName('head')[0];
             
-            // Use innerHTML as a more reliable method
+            // Fix XSS: Usa metodo sicuro per inserire CSS
             try {
-                styleElement.innerHTML = this.navbarCSS;
+                // Metodo moderno e sicuro
+                styleElement.textContent = this.navbarCSS;
             } catch (e) {
-                // Fallback for older browsers
+                // Fallback per browser vecchi
                 if (styleElement.styleSheet) {
                     styleElement.styleSheet.cssText = this.navbarCSS;
                 } else {
@@ -838,68 +849,164 @@ class Navbar {
             `<a href="${this.assetPath}${item.link}" class="menu-title">${item.name}</a>`
         ).join('\n');
         
-        const menuHTML = `
-            <div id="menu-overlay" class="menu-overlay">
-                
-                <!-- Close Button -->
-                <div id="close-menu">
-                    <span>${this.navigationData.menu_overlay.close_text}</span>
-                </div>
-                
-                <!-- Main Menu Container -->
-                <div id="menu-container">
-                    <!-- Left Side - Menu Items -->
-                    <div id="left-side">
-                        <form name="contact-menu" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="menu-contact-form">
-                            <input type="hidden" name="form-name" value="contact-menu">
-                            <input type="hidden" name="bot-field">
-                            <div id="left-menu">
-                                <div class="menu-item">${this.formData.form_title}</div>
-                                <div class="menu-item">
-                                    <input type="text" name="nome" id="nome" placeholder="${this.formData.name_placeholder}" />
-                                </div>
-                                <div class="menu-item">
-                                    <input type="text" name="cognome" id="cognome" placeholder="${this.formData.surname_placeholder}" />
-                                </div>
-                                <div class="menu-item">
-                                    <input type="email" name="email" id="email" placeholder="${this.formData.email_placeholder}" />
-                                </div>
-                                <div class="menu-item">
-                                    <textarea name="messaggio" id="messaggio" placeholder="${this.formData.message_placeholder}"></textarea>
-                                </div>
-                                <div class="menu-item">
-                                    <button type="submit" id="request-cta" style="background: none; border: none; cursor: pointer; width: 100%; text-align: left;">
-                                        <div id="request-text">${this.formData.button_text}</div>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        
-                        <!-- Bottom Left Info -->
-                        <div id="left-info">
-                            <div id="bottom-text-container">
-                                <div id="description">
-                                    <p>${footerDescription}</p>
-                                </div>
-                                <div id="right-info">
-                                    <p>${this.navigationData.menu_overlay.footer_website}</p>
-                                    <p>${this.navigationData.menu_overlay.footer_email}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Right Side - Navigation -->
-                    <div id="right-side">
-                        <div id="right-menu">
-                            ${menuItemsHTML}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+        // Fix XSS: Crea menu overlay con DOM manipulation sicuro
+        const menuOverlay = document.createElement('div');
+        menuOverlay.id = 'menu-overlay';
+        menuOverlay.className = 'menu-overlay';
         
-        document.body.insertAdjacentHTML('beforeend', menuHTML);
+        // Close Button
+        const closeMenu = document.createElement('div');
+        closeMenu.id = 'close-menu';
+        const closeSpan = document.createElement('span');
+        closeSpan.textContent = this.navigationData.menu_overlay.close_text;
+        closeMenu.appendChild(closeSpan);
+        menuOverlay.appendChild(closeMenu);
+        
+        // Main Menu Container
+        const menuContainer = document.createElement('div');
+        menuContainer.id = 'menu-container';
+        
+        // Left Side
+        const leftSide = document.createElement('div');
+        leftSide.id = 'left-side';
+        
+        // Form
+        const form = document.createElement('form');
+        form.name = 'contact-menu';
+        form.method = 'POST';
+        form.setAttribute('data-netlify', 'true');
+        form.setAttribute('netlify-honeypot', 'bot-field');
+        form.id = 'menu-contact-form';
+        
+        // Hidden inputs
+        const formNameInput = document.createElement('input');
+        formNameInput.type = 'hidden';
+        formNameInput.name = 'form-name';
+        formNameInput.value = 'contact-menu';
+        form.appendChild(formNameInput);
+        
+        const botField = document.createElement('input');
+        botField.type = 'hidden';
+        botField.name = 'bot-field';
+        form.appendChild(botField);
+        
+        // Left Menu
+        const leftMenu = document.createElement('div');
+        leftMenu.id = 'left-menu';
+        
+        // Form Title
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'menu-item';
+        titleDiv.textContent = this.formData.form_title;
+        leftMenu.appendChild(titleDiv);
+        
+        // Nome input
+        const nomeDiv = document.createElement('div');
+        nomeDiv.className = 'menu-item';
+        const nomeInput = document.createElement('input');
+        nomeInput.type = 'text';
+        nomeInput.name = 'nome';
+        nomeInput.id = 'nome';
+        nomeInput.placeholder = this.formData.name_placeholder;
+        nomeDiv.appendChild(nomeInput);
+        leftMenu.appendChild(nomeDiv);
+        
+        // Cognome input
+        const cognomeDiv = document.createElement('div');
+        cognomeDiv.className = 'menu-item';
+        const cognomeInput = document.createElement('input');
+        cognomeInput.type = 'text';
+        cognomeInput.name = 'cognome';
+        cognomeInput.id = 'cognome';
+        cognomeInput.placeholder = this.formData.surname_placeholder;
+        cognomeDiv.appendChild(cognomeInput);
+        leftMenu.appendChild(cognomeDiv);
+        
+        // Email input
+        const emailDiv = document.createElement('div');
+        emailDiv.className = 'menu-item';
+        const emailInput = document.createElement('input');
+        emailInput.type = 'email';
+        emailInput.name = 'email';
+        emailInput.id = 'email';
+        emailInput.placeholder = this.formData.email_placeholder;
+        emailDiv.appendChild(emailInput);
+        leftMenu.appendChild(emailDiv);
+        
+        // Messaggio textarea
+        const messaggioDiv = document.createElement('div');
+        messaggioDiv.className = 'menu-item';
+        const messaggioTextarea = document.createElement('textarea');
+        messaggioTextarea.name = 'messaggio';
+        messaggioTextarea.id = 'messaggio';
+        messaggioTextarea.placeholder = this.formData.message_placeholder;
+        messaggioDiv.appendChild(messaggioTextarea);
+        leftMenu.appendChild(messaggioDiv);
+        
+        // Submit button
+        const buttonDiv = document.createElement('div');
+        buttonDiv.className = 'menu-item';
+        const button = document.createElement('button');
+        button.type = 'submit';
+        button.id = 'request-cta';
+        button.style.cssText = 'background: none; border: none; cursor: pointer; width: 100%; text-align: left;';
+        const buttonText = document.createElement('div');
+        buttonText.id = 'request-text';
+        buttonText.textContent = this.formData.button_text;
+        button.appendChild(buttonText);
+        buttonDiv.appendChild(button);
+        leftMenu.appendChild(buttonDiv);
+        
+        form.appendChild(leftMenu);
+        leftSide.appendChild(form);
+        
+        // Bottom Left Info
+        const leftInfo = document.createElement('div');
+        leftInfo.id = 'left-info';
+        
+        const bottomTextContainer = document.createElement('div');
+        bottomTextContainer.id = 'bottom-text-container';
+        
+        const description = document.createElement('div');
+        description.id = 'description';
+        const descP = document.createElement('p');
+        descP.textContent = footerDescription; // Usa textContent per sicurezza
+        description.appendChild(descP);
+        bottomTextContainer.appendChild(description);
+        
+        const rightInfo = document.createElement('div');
+        rightInfo.id = 'right-info';
+        const websiteP = document.createElement('p');
+        websiteP.textContent = this.navigationData.menu_overlay.footer_website;
+        rightInfo.appendChild(websiteP);
+        const emailP = document.createElement('p');
+        emailP.textContent = this.navigationData.menu_overlay.footer_email;
+        rightInfo.appendChild(emailP);
+        bottomTextContainer.appendChild(rightInfo);
+        
+        leftInfo.appendChild(bottomTextContainer);
+        leftSide.appendChild(leftInfo);
+        menuContainer.appendChild(leftSide);
+        
+        // Right Side - Navigation
+        const rightSide = document.createElement('div');
+        rightSide.id = 'right-side';
+        const rightMenu = document.createElement('div');
+        rightMenu.id = 'right-menu';
+        
+        // Per il menu HTML, usa safeHTML se disponibile
+        if (window.safeHTML) {
+            rightMenu.innerHTML = window.safeHTML(menuItemsHTML, 'navbar-menu-items');
+        } else {
+            // Fallback temporaneo
+            rightMenu.innerHTML = menuItemsHTML;
+        }
+        
+        rightSide.appendChild(rightMenu);
+        menuContainer.appendChild(rightSide);
+        
+        menuOverlay.appendChild(menuContainer);
+        document.body.appendChild(menuOverlay);
         
         // Setup close button
         const closeBtn = document.getElementById('close-menu');
@@ -1046,14 +1153,17 @@ class Navbar {
             transition: transform 0.3s ease;
         `;
         
-        successDiv.innerHTML = `
-            <h2 style="font-family: Neue; font-size: 3rem; margin: 0 0 1rem 0; font-weight: 400; letter-spacing: -0.02em;">
-                ${this.formData.success_message}
-            </h2>
-            <p style="font-family: Neue; font-size: 1rem; opacity: 0.7; margin: 0;">
-                Ti risponderò al più presto
-            </p>
-        `;
+        // Fix XSS: Crea contenuto messaggio di successo in modo sicuro
+        const h2 = document.createElement('h2');
+        h2.style.cssText = 'font-family: Neue; font-size: 3rem; margin: 0 0 1rem 0; font-weight: 400; letter-spacing: -0.02em;';
+        h2.textContent = this.formData.success_message;
+        
+        const p = document.createElement('p');
+        p.style.cssText = 'font-family: Neue; font-size: 1rem; opacity: 0.7; margin: 0;';
+        p.textContent = 'Ti risponderò al più presto';
+        
+        successDiv.appendChild(h2);
+        successDiv.appendChild(p);
         
         overlay.appendChild(successDiv);
         document.body.appendChild(overlay);
