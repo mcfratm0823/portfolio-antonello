@@ -819,33 +819,27 @@ class NuovaHomeInitializer {
         let currentImageUrl = null;
         let imageLoadTimeout = null;
         
-        // Preload all service images
+        // Image cache for loaded images only
         const imageCache = new Map();
-        const preloadPromises = [];
         
-        serviceItems.forEach(item => {
-            const imageUrl = item.getAttribute('data-image');
-            if (imageUrl && imageUrl !== './img/placeholder.svg') {
-                const promise = new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        imageCache.set(imageUrl, true);
-                        resolve();
-                    };
-                    img.onerror = () => {
-                        if (this.debug) console.warn('Failed to preload service image:', imageUrl);
-                        resolve(); // Resolve anyway to not block
-                    };
-                    img.src = imageUrl;
-                });
-                preloadPromises.push(promise);
+        // Function to preload single image on demand
+        const preloadImage = (imageUrl) => {
+            if (imageCache.has(imageUrl)) {
+                return Promise.resolve();
             }
-        });
-        
-        // Wait for all images to preload
-        Promise.all(preloadPromises).then(() => {
-            if (this.debug) {} // All service images preloaded
-        });
+            
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    imageCache.set(imageUrl, true);
+                    resolve();
+                };
+                img.onerror = () => {
+                    resolve(); // Resolve anyway to not block
+                };
+                img.src = imageUrl;
+            });
+        };
         
         // Setup accordion functionality
         serviceItems.forEach(item => {
@@ -874,21 +868,18 @@ class NuovaHomeInitializer {
                     
                     // Check if image is cached
                     if (imageCache.has(imageUrl)) {
-                        // Image is preloaded, show immediately
+                        // Image is cached, show immediately
                         serviceImage.src = imageUrl;
                         imageContainer.classList.add('show');
                     } else {
-                        // Hide container while loading new image
-                        imageContainer.classList.remove('show');
-                        
-                        // Small delay to prevent flash
-                        imageLoadTimeout = setTimeout(() => {
-                            serviceImage.src = imageUrl;
-                            // Add show class after a frame to ensure smooth transition
-                            requestAnimationFrame(() => {
+                        // Load image on demand
+                        preloadImage(imageUrl).then(() => {
+                            // Check if still hovering on same item
+                            if (currentImageUrl === imageUrl) {
+                                serviceImage.src = imageUrl;
                                 imageContainer.classList.add('show');
-                            });
-                        }, 50);
+                            }
+                        });
                     }
                 } else {
                     // Same image, just show container
