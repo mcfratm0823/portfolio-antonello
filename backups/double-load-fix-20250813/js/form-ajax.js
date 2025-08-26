@@ -4,7 +4,6 @@ function handleFormSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
     
-    console.log('handleFormSubmit chiamato per:', e.target.getAttribute('name'));
     
     const form = e.target;
     const formData = new FormData(form);
@@ -22,14 +21,11 @@ function handleFormSubmit(e) {
         body: new URLSearchParams(formData).toString()
     })
     .then(() => {
-        console.log('Form inviato con successo!');
         
         // Successo - mostra il messaggio personalizzato
         if (window.navbarInstance && window.navbarInstance.showSuccessMessage) {
-            console.log('Chiamando showSuccessMessage da navbarInstance');
             window.navbarInstance.showSuccessMessage();
         } else {
-            console.log('navbarInstance non disponibile, creo messaggio diretto');
             // Fallback: crea il messaggio direttamente
             showSuccessMessageDirect();
         }
@@ -62,7 +58,6 @@ function initializeFormAjax() {
         // Rimuovi listener esistenti per evitare duplicati
         form.removeEventListener('submit', handleFormSubmit);
         form.addEventListener('submit', handleFormSubmit);
-        console.log('Form AJAX inizializzato per:', form.getAttribute('name'));
     });
 }
 
@@ -70,7 +65,6 @@ function initializeFormAjax() {
 document.addEventListener('submit', function(e) {
     const form = e.target;
     if (form.hasAttribute('data-netlify')) {
-        console.log('Intercettato submit del form:', form.getAttribute('name'));
         handleFormSubmit(e);
     }
 }, true); // Usa capture phase
@@ -84,7 +78,6 @@ if (document.readyState === 'loading') {
 
 // Re-inizializza quando i form vengono creati dinamicamente
 window.addEventListener('formCreated', () => {
-    console.log('Evento formCreated ricevuto');
     setTimeout(initializeFormAjax, 100);
 });
 

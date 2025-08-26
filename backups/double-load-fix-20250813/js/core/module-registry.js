@@ -39,7 +39,6 @@ class ModuleRegistry {
         });
         
         if (this.debug) {
-            console.log(`[ModuleRegistry] Module registered: ${name}`, options);
         }
         
         // Emit event
@@ -63,7 +62,6 @@ class ModuleRegistry {
         // Se in fase di inizializzazione, attendi
         if (this.initializing.has(name)) {
             if (this.debug) {
-                console.log(`[ModuleRegistry] Module "${name}" already initializing, waiting...`);
             }
             // Attendi che l'inizializzazione completi
             await this.waitForInitialization(name);
@@ -77,7 +75,6 @@ class ModuleRegistry {
         }
         
         if (this.debug) {
-            console.log(`[ModuleRegistry] Initializing module: ${name}`);
         }
         
         // Segna come in inizializzazione
@@ -87,7 +84,6 @@ class ModuleRegistry {
             // Inizializza dipendenze prima
             if (module.dependencies.length > 0) {
                 if (this.debug) {
-                    console.log(`[ModuleRegistry] Initializing dependencies for ${name}:`, module.dependencies);
                 }
                 
                 await Promise.all(
@@ -105,7 +101,6 @@ class ModuleRegistry {
             this.initializing.delete(name);
             
             if (this.debug) {
-                console.log(`[ModuleRegistry] Module initialized: ${name} (${initTime.toFixed(2)}ms)`);
             }
             
             // Emit event
@@ -168,7 +163,6 @@ class ModuleRegistry {
         });
         
         if (this.debug) {
-            console.log('[ModuleRegistry] Initializing all modules in order:', moduleNames);
         }
         
         const results = new Map();
@@ -218,9 +212,7 @@ class ModuleRegistry {
      * Debug: mostra tutti i moduli
      */
     debugModules() {
-        console.log('[ModuleRegistry] Registered modules:');
         this.modules.forEach((module, name) => {
-            console.log(`  ${name}:`, {
                 initialized: this.initialized.has(name),
                 dependencies: module.dependencies,
                 priority: module.priority

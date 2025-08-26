@@ -18,7 +18,6 @@ if (window.__APP_INITIALIZED__) {
         const debug = window.location.search.includes('debug=true');
         
         if (debug) {
-            console.log('[App] Starting application bootstrap...');
         }
         
         try {
@@ -44,18 +43,15 @@ if (window.__APP_INITIALIZED__) {
             }
             
             if (debug) {
-                console.log('[App] All core dependencies loaded');
             }
             
             // Phase 2: Initialize application
             await window.APP_INITIALIZER.initialize();
             
             if (debug) {
-                console.log('[App] Application initialized successfully');
                 
                 // Log performance metrics
                 const state = window.APP_STATE.get();
-                console.log('[App] Performance Metrics:', {
                     initTime: state.initialization.endTime - state.initialization.startTime,
                     modules: state.initialization.modules.size,
                     errors: state.performance.errors.length

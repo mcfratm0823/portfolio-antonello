@@ -135,13 +135,11 @@
         }
         
         if (issues.length === 0) {
-            console.log('✅ No double loading detected!');
         } else {
             console.error('❌ Double loading issues found:');
             issues.forEach(issue => console.error(`  - ${issue}`));
         }
         
-        console.log('\n📊 Full Statistics:');
         console.table({
             'Preloader Animations': window.__LOAD_TRACKER__.preloader.animations,
             'Homepage Data Loads': window.__LOAD_TRACKER__.cms.dataLoads,

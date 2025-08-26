@@ -206,7 +206,6 @@ class FormHandler {
         const form = footerForm.querySelector('form[data-netlify="true"]');
         if (form && window.handleFormSubmit) {
             form.addEventListener('submit', window.handleFormSubmit);
-            console.log('AJAX handler aggiunto al form del footer');
         }
     }
 

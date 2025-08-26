@@ -32,7 +32,6 @@
                 originalAddEventListener.call(document, 'DOMContentLoaded', function() {
                     if (window.__NUOVAHOME_INITIALIZED__) return;
                     
-                    console.log('[NuovaHomeWrapper] Executing nuovahome initializations...');
                     
                     // Esegui tutti i listener salvati
                     blockedListeners.forEach(({ listener, options }) => {
@@ -49,7 +48,6 @@
                     // Ripristina addEventListener originale
                     document.addEventListener = originalAddEventListener;
                     
-                    console.log('[NuovaHomeWrapper] Initialization complete');
                 }, options);
             }
             

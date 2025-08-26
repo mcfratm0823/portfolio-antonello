@@ -917,7 +917,6 @@ class Navbar {
             const form = document.getElementById('menu-contact-form');
             if (form && window.handleFormSubmit) {
                 form.addEventListener('submit', window.handleFormSubmit);
-                console.log('AJAX handler aggiunto al form del menu');
             }
         }, 100);
     }

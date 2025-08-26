@@ -29,7 +29,6 @@ class TemplateGenerator {
     loadMasterTemplate() {
         try {
             this.masterTemplate = readFileSync(this.templatePath, 'utf8');
-            console.log('✅ Master template loaded');
         } catch (error) {
             console.error('❌ Failed to load master template:', error);
             throw error;
@@ -134,7 +133,6 @@ class TemplateGenerator {
      * Generate all project files
      */
     generateAllProjects() {
-        console.log('🚀 Starting professional template generation...');
 
         this.loadMasterTemplate();
 
@@ -149,15 +147,12 @@ class TemplateGenerator {
                 const outputPath = join(this.outputDir, `${project.slug}.html`);
                 writeFileSync(outputPath, html, 'utf8');
                 
-                console.log(`✅ Generated: ${project.slug}.html`);
                 successCount++;
             } catch (error) {
                 console.error(`❌ Failed to generate ${project.slug}.html:`, error);
             }
         });
 
-        console.log(`\n🎉 Template generation complete!`);
-        console.log(`📊 Generated ${successCount}/${allProjects.length} files successfully`);
     }
 }
 

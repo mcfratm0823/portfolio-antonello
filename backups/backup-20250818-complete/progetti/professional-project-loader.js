@@ -22,7 +22,6 @@ class ProjectLoader {
      * Initialize the loader
      */
     async init() {
-        console.log('🔍 ProjectLoader init:', window.location.search);
         
         try {
             this.showLoading();
@@ -150,7 +149,6 @@ class ProjectLoader {
             
             // Log performance
             const loadTime = performance.now() - this.startTime;
-            console.log(`[ProjectLoader] Project "${projectData.slug}" loaded in ${Math.round(loadTime)}ms`);
             
         } catch (error) {
             this.handleError('Failed to render project', false);

@@ -197,5 +197,3 @@ function getRelatedProjects(currentSlug, allProjects, limit = 4) {
         .slice(0, limit);
 }
 
-console.log('📋 Professional Template Generator Ready');
-console.log('💡 Now manually create each file using the generateProjectTemplate function');

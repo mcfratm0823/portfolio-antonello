@@ -33,7 +33,6 @@ class CMSModule {
     async initialize() {
         if (this.initialized) {
             if (this.debug) {
-                console.log('[CMSModule] Already initialized');
             }
             return;
         }
@@ -44,7 +43,6 @@ class CMSModule {
         }
         
         if (this.debug) {
-            console.log('[CMSModule] Initializing...');
         }
         
         try {
@@ -72,7 +70,6 @@ class CMSModule {
             this.initialized = true;
             
             if (this.debug) {
-                console.log('[CMSModule] Initialization complete');
             }
             
         } catch (error) {
@@ -132,7 +129,6 @@ class CMSModule {
                     }));
                 
                 if (this.debug) {
-                    console.log('[CMSModule] Loaded inline projects:', this.projectsData.length);
                 }
             } else {
                 // Carica da file JSON
@@ -177,7 +173,6 @@ class CMSModule {
                 this.filtersData = JSON.parse(filtersDataElement.textContent);
                 
                 if (this.debug) {
-                    console.log('[CMSModule] Loaded inline filters:', this.filtersData);
                 }
             } else {
                 // Genera filtri dai progetti
@@ -303,7 +298,6 @@ class CMSModule {
                 if (video && videoElement && data.hero.center_media) {
                     video.src = data.hero.center_media;
                     videoElement.load();
-                    videoElement.play().catch(e => console.log('Autoplay blocked:', e));
                 }
             } else if (data.hero.center_media_type === 'image' && centerPhoto) {
                 centerPhoto.style.display = 'block';
@@ -356,7 +350,6 @@ class CMSModule {
     renderProjects() {
         if (!this.projectsData || this.projectsData.length === 0) {
             if (this.debug) {
-                console.log('[CMSModule] No projects to render');
             }
             return;
         }

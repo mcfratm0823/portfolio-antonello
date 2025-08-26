@@ -49,7 +49,6 @@ class HomepageModule {
     async initialize() {
         if (this.initialized) {
             if (this.debug) {
-                console.log('[HomepageModule] Already initialized');
             }
             return;
         }
@@ -60,7 +59,6 @@ class HomepageModule {
         }
         
         if (this.debug) {
-            console.log('[HomepageModule] Initializing...');
         }
         
         try {
@@ -70,7 +68,6 @@ class HomepageModule {
             
             if (!isHomepage) {
                 if (this.debug) {
-                    console.log('[HomepageModule] Not on homepage, skipping initialization');
                 }
                 return;
             }
@@ -87,7 +84,6 @@ class HomepageModule {
             this.initialized = true;
             
             if (this.debug) {
-                console.log('[HomepageModule] Initialization complete');
             }
             
             // Emit event
@@ -784,7 +780,6 @@ class HomepageModule {
             if (video && videoElement && data.hero.center_media) {
                 video.src = data.hero.center_media;
                 videoElement.load();
-                videoElement.play().catch(e => console.log('Autoplay blocked:', e));
             }
         } else if (data.hero.center_media_type === 'image' && centerPhoto) {
             centerPhoto.style.display = 'block';

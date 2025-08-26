@@ -448,7 +448,6 @@ class PerformanceMonitor {
         // Log in development
         if (window.location.hostname === 'localhost') {
             const emoji = rating === 'good' ? '✅' : rating === 'needs-improvement' ? '⚠️' : '❌';
-            console.log(`${emoji} ${name}: ${value.toFixed(2)}ms (${rating})`);
         }
     }
     

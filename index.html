@@ -427,6 +427,8 @@
     
     <!-- Module-based loading (modern browsers) -->
     <script type="module">
+        import './js/lifecycle-manager.js';  // Memory leak prevention
+        import './js/global-cursor.js';  // Cursore globale con cleanup
         import './js/form-ajax.js';  // Carica prima form-ajax
         import './js/main.js';
         import './js/nuovahome-refactored.js';
@@ -434,6 +436,7 @@
     </script>
     
     <!-- Fallback for browsers without module support -->
+    <script nomodule src="./js/lifecycle-manager.js"></script>
     <script nomodule src="./config/constants.js"></script>
     <script nomodule src="./utils/formValidator.js"></script>
     <script nomodule src="./utils/imageLoader.js"></script>

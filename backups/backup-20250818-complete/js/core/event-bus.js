@@ -38,7 +38,6 @@ class EventBus {
         this.sortListeners(event);
         
         if (this.debug) {
-            console.log(`[EventBus] Listener registered for: ${event}`);
         }
     }
     
@@ -68,7 +67,6 @@ class EventBus {
         const timestamp = Date.now();
         
         if (this.debug) {
-            console.log(`[EventBus] Emitting: ${event}`, data);
         }
         
         // Log event history
@@ -142,13 +140,9 @@ class EventBus {
      * Debug: mostra tutti gli eventi registrati
      */
     debugEvents() {
-        console.log('[EventBus] Registered events:');
         this.events.forEach((listeners, event) => {
-            console.log(`  ${event}: ${listeners.length} listeners`);
         });
-        console.log('[EventBus] Once events:');
         this.onceEvents.forEach((listeners, event) => {
-            console.log(`  ${event}: ${listeners.length} listeners`);
         });
     }
 }

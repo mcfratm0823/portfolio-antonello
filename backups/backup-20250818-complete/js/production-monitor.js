@@ -96,7 +96,6 @@
     // Auto-report after 10 seconds if in debug mode
     if (window.location.search.includes('monitor=true')) {
         setTimeout(function() {
-            console.log('[Monitor] Production Metrics:', window.getProductionMetrics());
         }, 10000);
     }
     

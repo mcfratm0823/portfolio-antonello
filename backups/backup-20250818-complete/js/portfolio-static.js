@@ -49,7 +49,6 @@ class PortfolioInitializer {
             this.renderProjects();
             
             this.initialized = true;
-            console.log('[PortfolioInitializer] Successfully initialized with', this.projects.length, 'projects');
             
         } catch (error) {
             console.error('[PortfolioInitializer] Failed to initialize:', error);

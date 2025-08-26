@@ -61,7 +61,6 @@ async function loadCMSData() {
         
         // Se siamo sulla homepage, aggiorna i contenuti homepage
         if (!isPortfolioPage && pageData.hero) {
-            console.log('Tagline originale:', pageData.hero.tagline);
             updateElement('#antonello-title h1', pageData.hero.title_left);
             updateElement('#guarnieri-title h1', pageData.hero.title_right);
             updateElement('#left-text p', pageData.hero.name_text);
@@ -72,7 +71,6 @@ async function loadCMSData() {
             const centerVideo = document.querySelector('#center-video');
             
             if (pageData.hero.center_media_type === 'video' && centerVideo) {
-                console.log('Mostrando video:', pageData.hero.center_media);
                 centerVideo.style.display = 'block';
                 if (centerPhoto) centerPhoto.style.display = 'none';
                 const video = centerVideo.querySelector('video source');
@@ -81,7 +79,6 @@ async function loadCMSData() {
                     video.src = pageData.hero.center_media;
                     videoElement.load(); // Ricarica il video con il nuovo source
                     // Assicuriamoci che il video parta
-                    videoElement.play().catch(e => console.log('Autoplay bloccato:', e));
                 }
             } else if (centerPhoto) {
                 centerPhoto.style.display = 'block';
@@ -173,7 +170,6 @@ function updateElement(selector, value, attribute = 'textContent') {
                 .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')  // **text** → <b>text</b>
                 .replace(/\*(.+?)\*/g, '<em>$1</em>')    // *text* → <em>text</em>
                 .replace(/\n/g, '<br>');                 // newlines → <br>
-            console.log('HTML processato:', html);
             element.innerHTML = html;
         } else {
             element[attribute] = value;
@@ -204,7 +200,6 @@ async function loadProjects() {
                        project.category;
             });
             
-            console.log(`Progetti validi: ${validProjects.length} su ${data.projects.length}`);
             window.renderProjects(validProjects);
         }
     } catch (error) {

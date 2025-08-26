@@ -20,7 +20,6 @@
                 if (preloader.id === 'preloader') {
                     if (preloader.style.display === 'none' && !window.__PRELOADER_STATE__.hidden) {
                         window.__PRELOADER_STATE__.hidden = true;
-                        console.log('[PreloaderGuard] Preloader hidden');
                     }
                 }
             }
@@ -95,7 +94,6 @@
     const originalSetItem = sessionStorage.setItem;
     sessionStorage.setItem = function(key, value) {
         if (key === 'preloaderShown' && sessionStorage.getItem(key) === 'true') {
-            console.log('[PreloaderGuard] Preloader already marked as shown, skipping');
             return;
         }
         return originalSetItem.apply(this, arguments);

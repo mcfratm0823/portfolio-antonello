@@ -43,5 +43,3 @@ projects.sort((a, b) => a.id - b.id);
 const outputPath = path.join(dataDir, 'projects.json');
 fs.writeFileSync(outputPath, JSON.stringify({ projects }, null, 2));
 
-console.log(`✅ Generato projects.json con ${projects.length} progetti`);
-console.log('Progetti inclusi:', projects.map(p => p.title).join(', '));

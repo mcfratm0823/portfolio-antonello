@@ -57,7 +57,6 @@
         
         // Conta duplicati
         const executions = window.__INIT_TRACKER__.events.filter(e => e.type === 'DOMContentLoaded executed');
-        console.log(`Total DOMContentLoaded executions: ${executions.length}`);
         
         if (executions.length > 1) {
             console.warn('⚠️ Multiple DOMContentLoaded executions detected!');

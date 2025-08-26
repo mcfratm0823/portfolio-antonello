@@ -48,7 +48,6 @@ class PortfolioModule {
     async initialize() {
         if (this.initialized) {
             if (this.debug) {
-                console.log('[PortfolioModule] Already initialized');
             }
             return;
         }
@@ -59,7 +58,6 @@ class PortfolioModule {
         }
         
         if (this.debug) {
-            console.log('[PortfolioModule] Initializing...');
         }
         
         try {
@@ -67,7 +65,6 @@ class PortfolioModule {
             const isPortfolioPage = window.location.pathname.includes('portfolio');
             if (!isPortfolioPage) {
                 if (this.debug) {
-                    console.log('[PortfolioModule] Not on portfolio page, skipping initialization');
                 }
                 return;
             }
@@ -76,7 +73,6 @@ class PortfolioModule {
             const projects = window.APP_STATE.get('data.projects');
             if (!projects || projects.length === 0) {
                 if (this.debug) {
-                    console.log('[PortfolioModule] Waiting for projects to load...');
                 }
                 
                 // Attendi evento di caricamento progetti
@@ -92,7 +88,6 @@ class PortfolioModule {
             this.initialized = true;
             
             if (this.debug) {
-                console.log('[PortfolioModule] Initialization complete');
             }
             
         } catch (error) {
@@ -109,7 +104,6 @@ class PortfolioModule {
         // Previeni inizializzazioni multiple
         if (this.projectStack || this.filterSystem) {
             if (this.debug) {
-                console.log('[PortfolioModule] Components already initialized');
             }
             return;
         }
@@ -131,7 +125,6 @@ class PortfolioModule {
                         window.projectStackInstance = this.projectStack;
                         
                         if (this.debug) {
-                            console.log('[PortfolioModule] ProjectStack initialized');
                         }
                     } else {
                         this.projectStack = window.projectStackInstance;
@@ -144,7 +137,6 @@ class PortfolioModule {
                         window.filterSystemInstance = this.filterSystem;
                         
                         if (this.debug) {
-                            console.log('[PortfolioModule] FilterSystem initialized');
                         }
                     } else {
                         this.filterSystem = window.filterSystemInstance;

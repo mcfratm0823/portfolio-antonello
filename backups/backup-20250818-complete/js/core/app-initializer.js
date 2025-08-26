@@ -46,7 +46,6 @@ class AppInitializer {
         
         if (this.initPromise) {
             if (this.debug) {
-                console.log('[AppInitializer] Initialization already in progress, waiting...');
             }
             return this.initPromise;
         }
@@ -74,7 +73,6 @@ class AppInitializer {
         const startTime = performance.now();
         
         if (this.debug) {
-            console.log('[AppInitializer] Starting application initialization...');
         }
         
         // Imposta stato iniziale
@@ -103,7 +101,6 @@ class AppInitializer {
             const totalTime = performance.now() - startTime;
             
             if (this.debug) {
-                console.log(`[AppInitializer] Initialization completed in ${totalTime.toFixed(2)}ms`);
             }
             
             // Emit complete event
@@ -122,7 +119,6 @@ class AppInitializer {
      */
     async registerCoreModules() {
         if (this.debug) {
-            console.log('[AppInitializer] Registering core modules...');
         }
         
         // Constants loader
@@ -161,7 +157,6 @@ class AppInitializer {
     async waitForDOM() {
         if (document.readyState === 'loading') {
             if (this.debug) {
-                console.log('[AppInitializer] Waiting for DOM...');
             }
             
             await new Promise(resolve => {
@@ -174,7 +169,6 @@ class AppInitializer {
         }
         
         if (this.debug) {
-            console.log('[AppInitializer] DOM ready');
         }
     }
     
@@ -189,7 +183,6 @@ class AppInitializer {
         const isProjectDetailPage = path.includes('project-detail');
         
         if (this.debug) {
-            console.log('[AppInitializer] Registering page modules for:', path);
         }
         
         // CMS Loader - sempre presente
@@ -341,14 +334,12 @@ class AppInitializer {
      */
     async initializeModules() {
         if (this.debug) {
-            console.log('[AppInitializer] Initializing all modules...');
         }
         
         try {
             const results = await window.MODULE_REGISTRY.initializeAll();
             
             if (this.debug) {
-                console.log('[AppInitializer] Module initialization results:', results);
             }
             
             // Store module instances
@@ -366,7 +357,6 @@ class AppInitializer {
      */
     async finalSetup() {
         if (this.debug) {
-            console.log('[AppInitializer] Performing final setup...');
         }
         
         // Setup global error handling

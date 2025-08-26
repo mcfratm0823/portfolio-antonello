@@ -369,7 +369,6 @@ class StaticDataSource extends PortfolioDataSource {
                     url: `./progetti/${project.slug}.html`,
                     status: 'published'
                 }));
-                console.log('[Portfolio] Loaded', this.staticProjects.length, 'projects from projects-data.js');
             }
         } catch (error) {
             console.warn('[Portfolio] Could not load projects-data.js, using fallback data:', error.message);
@@ -618,7 +617,6 @@ class StaticPortfolio {
                 try {
                     await this.generateFilters(projects);
                 } catch (filterError) {
-                    console.log('[Portfolio] Filters generation skipped:', filterError.message);
                 }
                 
                 // Render projects regardless of filters
@@ -669,7 +667,6 @@ class StaticPortfolio {
             const filtersContainer = document.getElementById('filters');
             if (!filtersContainer) {
                 // No filters container found, skipping filter generation
-                console.log('[Portfolio] Filters container not found, skipping filters');
                 return;
             }
             

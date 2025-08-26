@@ -215,7 +215,6 @@ class SmartImagePreloader {
             removed++;
         }
         
-        // Removed console.log for production
     }
     
     /**

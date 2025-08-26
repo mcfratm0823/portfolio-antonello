@@ -598,7 +598,6 @@ class StaticPortfolio {
             // Se i filtri sono già stati caricati dal CMS, non sovrascriverli
             const filtersContainer = document.getElementById('filters');
             if (!filtersContainer || filtersContainer.children.length > 0) {
-                console.log('Filters already loaded from CMS, skipping generation');
                 return;
             }
             

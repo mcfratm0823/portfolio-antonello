@@ -16,8 +16,6 @@
         sanitizationCalls++;
         
         // Log per debugging
-        console.log(`[SafeHTML Call #${sanitizationCalls}] Context: ${context}`);
-        console.log('[SafeHTML] Original HTML length:', html.length);
         
         // Per ora ritorna HTML non modificato
         return html;
@@ -43,11 +41,9 @@
             if (useTextContent) {
                 // Caso sicuro: solo testo
                 element.textContent = newContent;
-                console.log(`[SafeReplace] Used textContent for: ${context}`);
             } else {
                 // Caso HTML: usa wrapper (per ora non sanitizza)
                 element.innerHTML = window.safeHTML(newContent, context);
-                console.log(`[SafeReplace] Used innerHTML with safeHTML for: ${context}`);
             }
             
             // Se fornito, esegui test
@@ -86,11 +82,9 @@
         // Sostituisci la funzione wrapper con DOMPurify attivo
         window.safeHTML = function(html, context = 'unknown') {
             sanitizationCalls++;
-            console.log(`[SafeHTML Call #${sanitizationCalls}] Context: ${context} - SANITIZING`);
             return DOMPurify.sanitize(html, finalConfig);
         };
         
-        console.log('[SafeHTML] DOMPurify ACTIVATED with config:', finalConfig);
         return true;
     };
     
@@ -102,8 +96,6 @@
             return;
         }
         
-        console.log('[TestSanitization] Testing element:', selector);
-        console.log('[TestSanitization] Original content:', element.innerHTML);
         
         // Test con HTML pericoloso
         const result = window.safeReplace(element, testHTML, {
@@ -114,16 +106,13 @@
             }
         });
         
-        console.log('[TestSanitization] Test result:', result ? 'PASSED' : 'FAILED');
     };
     
-    console.log('[SafeHTML] Wrapper loaded - Phase 1 (logging only)');
     
     // AUTO-ATTIVAZIONE dopo 2 secondi (per dare tempo a DOMPurify di caricarsi)
     setTimeout(() => {
         if (typeof DOMPurify !== 'undefined') {
             window.activateDOMPurify();
-            console.log('[SafeHTML] ✅ Protezione automatica ATTIVATA');
         } else {
             console.warn('[SafeHTML] ⚠️ DOMPurify non trovato - protezione non attiva');
         }

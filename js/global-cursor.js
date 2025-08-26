@@ -21,8 +21,20 @@ class GlobalCursor {
         /** @type {number} Posizione Y corrente del mouse */
         this.mouseY = 0;
         
-        /** @type {boolean} Flag per throttling animazioni */
-        this.isMoving = false;
+        /** @type {boolean} Flag per MutationObserver repositioning */
+        this.isRepositioning = false;
+        
+        /** @type {Array} Array di tutti gli event listener per cleanup */
+        this.eventListeners = [];
+        
+        /** @type {MutationObserver|null} Observer per DOM changes */
+        this.mutationObserver = null;
+        
+        /** @type {number|null} Timeout ID per scroll optimization */
+        this.scrollTimeout = null;
+        
+        /** @type {HTMLDivElement|null} Elemento DOM del testo cursore */
+        this.cursorText = null;
         
         this.init();
     }
@@ -72,11 +84,10 @@ class GlobalCursor {
 
     setupMutationObserver() {
         // Watch for DOM changes and keep cursor on top
-        let isRepositioning = false;
         
-        const observer = new MutationObserver((mutations) => {
+        this.mutationObserver = new MutationObserver((mutations) => {
             // Skip if we're already repositioning or if cursor was the only change
-            if (isRepositioning) return;
+            if (this.isRepositioning) return;
             
             // Check if any mutation is NOT about the cursor
             const hasNonCursorChanges = mutations.some(mutation => {
@@ -91,16 +102,16 @@ class GlobalCursor {
             
             // Only reposition if there were non-cursor changes
             if (hasNonCursorChanges && this.cursor && this.cursor.parentNode === document.body) {
-                isRepositioning = true;
+                this.isRepositioning = true;
                 document.body.appendChild(this.cursor);
                 // Reset flag after a microtask to avoid immediate re-triggering
                 Promise.resolve().then(() => {
-                    isRepositioning = false;
+                    this.isRepositioning = false;
                 });
             }
         });
 
-        observer.observe(document.body, {
+        this.mutationObserver.observe(document.body, {
             childList: true,
             subtree: false
         });
@@ -115,7 +126,7 @@ class GlobalCursor {
         let ticking = false;
         let firstMove = true;
         
-        document.addEventListener('mousemove', (e) => {
+        const mouseMoveHandler = (e) => {
             // Show cursor on first mouse move
             if (firstMove) {
                 this.cursor.style.opacity = '1';
@@ -131,7 +142,10 @@ class GlobalCursor {
                 });
                 ticking = true;
             }
-        });
+        };
+        
+        document.addEventListener('mousemove', mouseMoveHandler);
+        this.eventListeners.push({ element: document, event: 'mousemove', handler: mouseMoveHandler });
     }
 
     /**
@@ -141,20 +155,28 @@ class GlobalCursor {
      */
     setupProjectHover() {
         // Use event delegation for better performance
-        document.addEventListener('mouseover', (e) => {
+        const mouseOverHandler = (e) => {
             // Only show "scopri" on portfolio page project cards
             const projectCard = e.target.closest('.project-card');
             if (projectCard) {
                 this.cursorText.style.opacity = '1';
             }
-        });
+        };
         
-        document.addEventListener('mouseout', (e) => {
+        const mouseOutHandler = (e) => {
             const projectCard = e.target.closest('.project-card');
             if (projectCard && !e.relatedTarget?.closest('.project-card')) {
                 this.cursorText.style.opacity = '0';
             }
-        });
+        };
+        
+        document.addEventListener('mouseover', mouseOverHandler);
+        document.addEventListener('mouseout', mouseOutHandler);
+        
+        this.eventListeners.push(
+            { element: document, event: 'mouseover', handler: mouseOverHandler },
+            { element: document, event: 'mouseout', handler: mouseOutHandler }
+        );
     }
 
     /**
@@ -163,16 +185,57 @@ class GlobalCursor {
      * @returns {void}
      */
     setupScrollOptimization() {
-        let scrollTimeout;
-        
-        window.addEventListener('scroll', () => {
+        const scrollHandler = () => {
             document.body.classList.add('is-scrolling');
             
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = setTimeout(() => {
                 document.body.classList.remove('is-scrolling');
             }, 150);
-        }, { passive: true });
+        };
+        
+        window.addEventListener('scroll', scrollHandler, { passive: true });
+        this.eventListeners.push({ element: window, event: 'scroll', handler: scrollHandler, options: { passive: true } });
+    }
+
+    /**
+     * Pulisce completamente il cursore e rimuove tutti i listener
+     * @returns {void}
+     */
+    destroy() {
+        
+        // Rimuovi tutti gli event listener
+        this.eventListeners.forEach(({ element, event, handler, options }) => {
+            element.removeEventListener(event, handler, options);
+        });
+        this.eventListeners = [];
+        
+        // Disconnetti mutation observer
+        if (this.mutationObserver) {
+            this.mutationObserver.disconnect();
+            this.mutationObserver = null;
+        }
+        
+        // Cancella timeout
+        if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = null;
+        }
+        
+        // Rimuovi elementi DOM
+        if (this.cursor && this.cursor.parentNode) {
+            this.cursor.remove();
+            this.cursor = null;
+        }
+        
+        if (this.cursorText && this.cursorText.parentNode) {
+            this.cursorText.remove();
+            this.cursorText = null;
+        }
+        
+        // Reset instance
+        globalCursorInstance = null;
+        
     }
 }
 
@@ -198,11 +261,25 @@ if (!window.__GLOBAL_CURSOR_INITIALIZED__) {
         document.addEventListener('DOMContentLoaded', () => {
             if (!window.__GLOBAL_CURSOR_INITIALIZED__) {
                 window.__GLOBAL_CURSOR_INITIALIZED__ = true;
-                initializeGlobalCursor();
+                const cursor = initializeGlobalCursor();
+                
+                // Registra con LifecycleManager se disponibile
+                if (window.lifecycleManager) {
+                    window.lifecycleManager.register('global-cursor', cursor, () => {
+                        cursor.destroy();
+                    });
+                }
             }
         });
     } else {
         window.__GLOBAL_CURSOR_INITIALIZED__ = true;
-        initializeGlobalCursor();
+        const cursor = initializeGlobalCursor();
+        
+        // Registra con LifecycleManager se disponibile
+        if (window.lifecycleManager) {
+            window.lifecycleManager.register('global-cursor', cursor, () => {
+                cursor.destroy();
+            });
+        }
     }
 }

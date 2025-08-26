@@ -89,7 +89,6 @@ class AppState {
         target[lastKey] = value;
         
         if (this.debug) {
-            console.log(`[AppState] Updated ${path}:`, oldValue, '->', value);
         }
         
         // Notifica subscribers
@@ -196,7 +195,6 @@ class AppState {
             const totalTime = this.state.initialization.endTime - this.state.initialization.startTime;
             
             if (this.debug) {
-                console.log(`[AppState] All modules ready in ${totalTime}ms`);
                 this.debugModuleStatus();
             }
             
@@ -242,9 +240,7 @@ class AppState {
      * Debug stato moduli
      */
     debugModuleStatus() {
-        console.log('[AppState] Module Status:');
         this.state.initialization.modules.forEach((state, name) => {
-            console.log(`  ${name}: ${state.status}${state.error ? ' (ERROR)' : ''}`);
         });
     }
     
