@@ -5,6 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audi - ANTONELLO GUARNIERI ® VISUAL DESIGNER</title>
     
+    <!-- Font preloading for faster initial render -->
+    <link rel="preload" href="../fonts/ABCGaisyr-Book.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/ABCGaisyr-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/ABCGaisyr-Black.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Inline critical font-face to prevent FOUT -->
+    <style>
+        @font-face {
+            font-family: 'ABC Gaisyr';
+            src: url('../fonts/ABCGaisyr-Book.woff2') format('woff2'),
+                 url('../fonts/ABCGaisyr-Book.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ABC Gaisyr';
+            src: url('../fonts/ABCGaisyr-Bold.woff2') format('woff2'),
+                 url('../fonts/ABCGaisyr-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'ABC Gaisyr';
+            src: url('../fonts/ABCGaisyr-Black.woff2') format('woff2'),
+                 url('../fonts/ABCGaisyr-Black.woff') format('woff');
+            font-weight: 900;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        /* Prevent layout shift by setting font-family early */
+        body {
+            font-family: 'ABC Gaisyr', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+    </style>
+    
     <!-- Global styles -->
     <link href="../css/global-cursor.css" rel="stylesheet">
     <link href="./project-detail.css" rel="stylesheet">
