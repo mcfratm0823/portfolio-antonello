@@ -75,17 +75,19 @@ class NuovaHomeInitializer {
         const heroVideo = document.getElementById('hero-video');
         if (!heroVideo) return;
         
-        // Block video completely until needed
-        heroVideo.style.display = 'none';
+        // Keep video visible but paused - show first frame as poster
         heroVideo.pause();
+        heroVideo.muted = true; // Ensure muted for autoplay
         
-        // Force video to load first frame
+        // Load video and seek to first frame
         heroVideo.load();
         
-        // When metadata is loaded, ensure we're at frame 0
-        heroVideo.addEventListener('loadedmetadata', () => {
-            heroVideo.currentTime = 0;
+        // When we have enough data, show first frame
+        heroVideo.addEventListener('loadeddata', () => {
+            heroVideo.currentTime = 0.1; // Slightly offset to ensure frame is loaded
             heroVideo.pause();
+            // Force a paint to ensure first frame is visible
+            heroVideo.style.opacity = '1';
         }, { once: true });
         
         // Store reference for later
@@ -98,21 +100,17 @@ class NuovaHomeInitializer {
     startHeroVideo() {
         if (!this.heroVideo) return;
         
-        // Force complete reload before showing
-        const src = this.heroVideo.currentSrc;
-        this.heroVideo.src = '';
-        this.heroVideo.load();
-        this.heroVideo.src = src;
+        // Reset to beginning and ensure visibility
+        this.heroVideo.currentTime = 0;
+        this.heroVideo.style.opacity = '1';
         
-        // Wait for video to be ready after reload
-        this.heroVideo.addEventListener('loadeddata', () => {
-            // Now show and play
-            this.heroVideo.style.display = 'block';
-            this.heroVideo.currentTime = 0;
+        // Small delay to ensure smooth transition after preloader
+        setTimeout(() => {
             this.heroVideo.play().catch(err => {
+                // Fallback: if autoplay is blocked, just ensure video is visible
                 if (this.debug) console.warn('Video autoplay blocked:', err);
             });
-        }, { once: true });
+        }, 100);
     }
     
     /**
