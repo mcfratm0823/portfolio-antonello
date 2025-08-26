@@ -347,33 +347,8 @@ class StaticDataSource extends PortfolioDataSource {
     constructor() {
         super();
         
-        // Import real projects data
-        this.loadRealProjects();
-    }
-    
-    /**
-     * Load real projects from projects-data.js
-     * @private
-     */
-    async loadRealProjects() {
-        try {
-            const module = await import('./projects-data.js');
-            if (module.getAllProjects) {
-                // Convert from projects-data format to portfolio format
-                const projects = module.getAllProjects();
-                this.staticProjects = projects.map((project, index) => ({
-                    id: project.slug || project.id,
-                    title: project.title.toUpperCase(),
-                    category: project.category,
-                    image: project.thumbnail || `https://picsum.photos/600/400?random=${index + 1}`,
-                    url: `./progetti/${project.slug}.html`,
-                    status: 'published'
-                }));
-                console.log('[Portfolio] Loaded', this.staticProjects.length, 'projects from projects-data.js');
-            }
-        } catch (error) {
-            console.warn('[Portfolio] Could not load projects-data.js, using fallback data:', error.message);
-            this.staticProjects = [
+        /** @type {Array<{id: number, title: string, category: string, image: string, status: string}>} Static project data */
+        this.staticProjects = [
             {
                 id: 1,
                 title: "AI Fashion Designer",
@@ -438,7 +413,6 @@ class StaticDataSource extends PortfolioDataSource {
                 status: "published"
             }
         ];
-        }
     }
     
     /**
@@ -447,11 +421,8 @@ class StaticDataSource extends PortfolioDataSource {
      * @returns {Promise<Array<Object>>} Promise resolving to array of projects
      */
     async getProjects() {
-        // Wait for real projects to load if not already loaded
-        if (!this.staticProjects || this.staticProjects.length === 0) {
-            await this.loadRealProjects();
-        }
-        return Promise.resolve(this.staticProjects || []);
+        // Simulate async behavior for consistency with future CMS
+        return Promise.resolve(this.staticProjects);
     }
     
     /**
@@ -614,14 +585,10 @@ class StaticPortfolio {
             const projects = await this.dataSource.getProjects();
             
             if (projects && projects.length > 0) {
-                // Try to generate filters, but don't fail if filters don't exist
-                try {
-                    await this.generateFilters(projects);
-                } catch (filterError) {
-                    console.log('[Portfolio] Filters generation skipped:', filterError.message);
-                }
+                // Generate filters based on projects
+                await this.generateFilters(projects);
                 
-                // Render projects regardless of filters
+                // Render projects
                 this.renderProjects(projects);
             } else {
                 this.showNoProjects();
@@ -727,20 +694,14 @@ class StaticPortfolio {
             const safeTitle = this.sanitizeForAttribute(project.title);
             const safeTitleHTML = this.sanitizeForHTML(project.title);
             
-            // Use project url if available, otherwise build from id
-            const projectUrl = project.url || `./progetti/${safeId}.html`;
-            const safeUrl = this.sanitizeForAttribute(projectUrl);
-            
             return `
                 <div class="project-card" data-project-id="${safeId}" data-category="${safeCategory}" data-index="${index}" data-title="${safeTitle}">
-                    <a href="${safeUrl}" class="project-link" style="text-decoration: none; display: block; width: 100%; height: 100%;">
-                        <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
-                            <img src="${project.image || `https://picsum.photos/400/550?random=${randomId}`}" alt="${safeTitle}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-                            <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
-                                <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${safeTitleHTML}</h3>
-                            </div>
+                    <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
+                        <img src="https://picsum.photos/400/550?random=${randomId}" alt="${safeTitle}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
+                            <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${safeTitleHTML}</h3>
                         </div>
-                    </a>
+                    </div>
                 </div>
             `;
         }).join('');
