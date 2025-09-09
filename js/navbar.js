@@ -19,6 +19,16 @@ class Navbar {
         const pathDepth = window.location.pathname.split('/').filter(p => p).length - 1;
         this.assetPath = pathDepth > 0 ? '../'.repeat(pathDepth) : './';
         
+        // Arrays to store event listeners and timeouts for cleanup
+        this.eventListeners = [];
+        this.timeouts = [];
+        this.animationFrames = [];
+        
+        // Store references to DOM elements that need cleanup
+        this.menuOverlay = null;
+        this.mouseThrottleTimer = null;
+        this.formValidatorInstance = null;
+        
         // Store navigation data
         this.navigationData = {
             logo: { text: "0823®", link: "index.html" },
@@ -53,20 +63,22 @@ class Navbar {
         };
         
         // Throttled mouse tracking for better performance
-        let mouseThrottleTimer = null;
-        document.addEventListener('mousemove', (e) => {
+        const mouseMoveHandler = (e) => {
             // Update immediately for current values
             this.currentMouseX = e.clientX;
             this.currentMouseY = e.clientY;
             
             // Throttle any expensive operations
-            if (!mouseThrottleTimer) {
-                mouseThrottleTimer = setTimeout(() => {
-                    mouseThrottleTimer = null;
+            if (!this.mouseThrottleTimer) {
+                this.mouseThrottleTimer = setTimeout(() => {
+                    this.mouseThrottleTimer = null;
                     // Any expensive mouse-related operations would go here
                 }, 16); // ~60fps
             }
-        });
+        };
+        
+        document.addEventListener('mousemove', mouseMoveHandler);
+        this.eventListeners.push({ element: document, event: 'mousemove', handler: mouseMoveHandler });
         
         this.navbarHTML = `
             <nav id="navbar">
@@ -805,17 +817,21 @@ class Navbar {
         // Menu trigger - open overlay menu
         const menuTrigger = document.getElementById('menu-trigger');
         if (menuTrigger) {
-            menuTrigger.addEventListener('click', () => {
+            const menuClickHandler = () => {
                 this.openMenuOverlay();
-            });
+            };
+            menuTrigger.addEventListener('click', menuClickHandler);
+            this.eventListeners.push({ element: menuTrigger, event: 'click', handler: menuClickHandler });
         }
 
         // Logo click - go to homepage
         const logoElement = document.querySelector('.navbar-logo');
         if (logoElement) {
-            logoElement.addEventListener('click', () => {
+            const logoClickHandler = () => {
                 window.location.href = this.assetPath + 'index.html';
-            });
+            };
+            logoElement.addEventListener('click', logoClickHandler);
+            this.eventListeners.push({ element: logoElement, event: 'click', handler: logoClickHandler });
         }
     }
     
@@ -1008,25 +1024,31 @@ class Navbar {
         menuOverlay.appendChild(menuContainer);
         document.body.appendChild(menuOverlay);
         
+        // Store reference
+        this.menuOverlay = menuOverlay;
+        
         // Setup close button
         const closeBtn = document.getElementById('close-menu');
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
+            const closeHandler = () => {
                 this.closeMenuOverlay();
-            });
+            };
+            closeBtn.addEventListener('click', closeHandler);
+            this.eventListeners.push({ element: closeBtn, event: 'click', handler: closeHandler });
         }
         
         // Setup form functionality
         this.setupMenuForm();
         
         // Aggiungi gestione AJAX direttamente al form
-        setTimeout(() => {
+        const formSetupTimeout = setTimeout(() => {
             const form = document.getElementById('menu-contact-form');
             if (form && window.handleFormSubmit) {
                 form.addEventListener('submit', window.handleFormSubmit);
-                // AJAX handler aggiunto al form del menu
+                this.eventListeners.push({ element: form, event: 'submit', handler: window.handleFormSubmit });
             }
         }, 100);
+        this.timeouts.push(formSetupTimeout);
     }
     
     closeMenuOverlay() {
@@ -1035,6 +1057,7 @@ class Navbar {
             // Remove immediately without animation
             menuOverlay.remove();
             document.body.style.overflow = ''; // Restore scrolling
+            this.menuOverlay = null;
         }
     }
     
@@ -1088,7 +1111,7 @@ class Navbar {
             
             // Use unified FormValidator if available
             if (typeof FormValidator !== 'undefined') {
-                new FormValidator({
+                this.formValidatorInstance = new FormValidator({
                     fields: [nomeInput, cognomeInput, emailInput, messaggioInput],
                     submitButton: requestCta,
                     validateOnInit: false // Menu starts empty, no need for initial check
@@ -1112,6 +1135,13 @@ class Navbar {
                 cognomeInput.addEventListener('input', checkFormCompletion);
                 emailInput.addEventListener('input', checkFormCompletion);
                 messaggioInput.addEventListener('input', checkFormCompletion);
+                
+                // Store event listeners for cleanup
+                this.eventListeners.push({ element: nomeInput, event: 'input', handler: checkFormCompletion });
+                this.eventListeners.push({ element: cognomeInput, event: 'input', handler: checkFormCompletion });
+                this.eventListeners.push({ element: emailInput, event: 'input', handler: checkFormCompletion });
+                this.eventListeners.push({ element: messaggioInput, event: 'input', handler: checkFormCompletion });
+                
                 checkFormCompletion();
             }
         }
@@ -1175,11 +1205,58 @@ class Navbar {
         });
         
         // Rimuovi dopo 5 secondi
-        setTimeout(() => {
+        const fadeTimeout = setTimeout(() => {
             overlay.style.opacity = '0';
             successDiv.style.transform = 'scale(0.9)';
-            setTimeout(() => overlay.remove(), 300);
+            const removeTimeout = setTimeout(() => overlay.remove(), 300);
+            this.timeouts.push(removeTimeout);
         }, 5000);
+        
+        this.timeouts.push(fadeTimeout);
+    }
+    
+    /**
+     * Destroy method for cleanup
+     */
+    destroy() {
+        // Remove all event listeners
+        this.eventListeners.forEach(({ element, event, handler }) => {
+            element.removeEventListener(event, handler);
+        });
+        this.eventListeners = [];
+        
+        // Clear all timeouts
+        this.timeouts.forEach(timeout => clearTimeout(timeout));
+        this.timeouts = [];
+        
+        // Cancel animation frames
+        this.animationFrames.forEach(frame => cancelAnimationFrame(frame));
+        this.animationFrames = [];
+        
+        // Clear mouse throttle timer
+        if (this.mouseThrottleTimer) {
+            clearTimeout(this.mouseThrottleTimer);
+            this.mouseThrottleTimer = null;
+        }
+        
+        // Remove menu overlay if exists
+        if (this.menuOverlay) {
+            this.menuOverlay.remove();
+            this.menuOverlay = null;
+        }
+        
+        // Destroy FormValidator if exists
+        if (this.formValidatorInstance && typeof this.formValidatorInstance.destroy === 'function') {
+            this.formValidatorInstance.destroy();
+        }
+        this.formValidatorInstance = null;
+        
+        // Clear global references
+        if (window.navbarInstance === this) {
+            window.navbarInstance = null;
+        }
+        
+        navbarInstance = null;
     }
 }
 
@@ -1191,6 +1268,13 @@ function initializeNavbar() {
         navbarInstance.init();
         // Rendi navbarInstance disponibile globalmente
         window.navbarInstance = navbarInstance;
+        
+        // Register with LifecycleManager if available
+        if (typeof window !== 'undefined' && window.lifecycleManager) {
+            window.lifecycleManager.register('navbar', navbarInstance, () => {
+                navbarInstance.destroy();
+            });
+        }
     } else {
     }
 }
