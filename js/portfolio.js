@@ -292,21 +292,6 @@ class FilterSystem {
             }
         });
     }
-}
-
-/**
- * Update the current date display
- * @returns {void}
- */
-function updateDate() {
-    const dateElement = document.getElementById('current-date');
-    if (dateElement) {
-        const today = new Date();
-        const day = String(today.getDate()).padStart(2, '0');
-        const month = String(today.getMonth() + 1).padStart(2, '0');
-        const year = String(today.getFullYear()).slice(-2);
-        dateElement.textContent = `${day}/${month}/${year}`;
-    }
     
     /**
      * Destroy method for cleanup
@@ -322,6 +307,21 @@ function updateDate() {
         // Clear DOM references
         this.filters = null;
         this.projects = null;
+    }
+}
+
+/**
+ * Update the current date display
+ * @returns {void}
+ */
+function updateDate() {
+    const dateElement = document.getElementById('current-date');
+    if (dateElement) {
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = String(today.getFullYear()).slice(-2);
+        dateElement.textContent = `${day}/${month}/${year}`;
     }
 }
 
