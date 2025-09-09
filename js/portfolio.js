@@ -17,6 +17,12 @@ class ProjectStack {
         /** @type {NodeListOf<HTMLElement>} Project card elements */
         this.projects = document.querySelectorAll('.project-card');
         
+        /** @type {Array} Event listeners to cleanup */
+        this.eventListeners = [];
+        
+        /** @type {Array} Timeouts to cleanup */
+        this.timeouts = [];
+        
         /** @type {string[]} Available positions in the circular layout */
         this.circlePositions = [
             'position-center',    // 0
@@ -84,9 +90,10 @@ class ProjectStack {
         this.currentOffset = (this.currentOffset + 1) % this.circlePositions.length;
         this.positionProjects();
         
-        setTimeout(() => {
+        const rotateTimeout = setTimeout(() => {
             this.isRotating = false;
         }, 800); // Tempo della transizione CSS
+        this.timeouts.push(rotateTimeout);
     }
 
     /**
@@ -101,9 +108,10 @@ class ProjectStack {
         this.currentOffset = (this.currentOffset - 1 + this.circlePositions.length) % this.circlePositions.length;
         this.positionProjects();
         
-        setTimeout(() => {
+        const rotateTimeout = setTimeout(() => {
             this.isRotating = false;
         }, 800); // Tempo della transizione CSS
+        this.timeouts.push(rotateTimeout);
     }
 
     /**
@@ -136,9 +144,10 @@ class ProjectStack {
             // Blocca immediatamente per 1.5 secondi
             isScrollBlocked = true;
             
-            setTimeout(() => {
+            const scrollBlockTimeout = setTimeout(() => {
                 isScrollBlocked = false;
             }, 1500);
+            this.timeouts.push(scrollBlockTimeout);
             
             if (e.deltaY > 0) {
                 this.rotateDown();
@@ -155,14 +164,15 @@ class ProjectStack {
         // Use only the standard 'wheel' event - it's supported by all modern browsers
         // Remove redundant listeners for better performance
         document.addEventListener('wheel', handleWheel, { passive: false });
+        this.eventListeners.push({ element: document, event: 'wheel', handler: handleWheel, options: { passive: false } });
 
         // Touch navigation
         let startY = 0;
-        document.addEventListener('touchstart', (e) => {
+        const touchStartHandler = (e) => {
             startY = e.touches[0].clientY;
-        });
-
-        document.addEventListener('touchend', (e) => {
+        };
+        
+        const touchEndHandler = (e) => {
             const endY = e.changedTouches[0].clientY;
             const diffY = startY - endY;
             const threshold = 50;
@@ -176,7 +186,33 @@ class ProjectStack {
                     this.rotateUp();
                 }
             }
+        };
+        
+        document.addEventListener('touchstart', touchStartHandler);
+        document.addEventListener('touchend', touchEndHandler);
+        
+        this.eventListeners.push({ element: document, event: 'touchstart', handler: touchStartHandler });
+        this.eventListeners.push({ element: document, event: 'touchend', handler: touchEndHandler });
+    }
+    
+    /**
+     * Destroy method for cleanup
+     * @returns {void}
+     */
+    destroy() {
+        // Remove all event listeners
+        this.eventListeners.forEach(({ element, event, handler, options }) => {
+            element.removeEventListener(event, handler, options);
         });
+        this.eventListeners = [];
+        
+        // Clear all timeouts
+        this.timeouts.forEach(timeout => clearTimeout(timeout));
+        this.timeouts = [];
+        
+        // Clear DOM references
+        this.projects = null;
+        this.wheelHandler = null;
     }
 }
 
@@ -196,6 +232,9 @@ class FilterSystem {
         /** @type {NodeListOf<HTMLElement>} Project card elements */
         this.projects = document.querySelectorAll('.project-card');
         
+        /** @type {Array} Event listeners to cleanup */
+        this.eventListeners = [];
+        
         this.init();
     }
 
@@ -213,9 +252,11 @@ class FilterSystem {
      */
     addEventListeners() {
         this.filters.forEach(filter => {
-            filter.addEventListener('click', () => {
+            const clickHandler = () => {
                 this.handleFilterClick(filter);
-            });
+            };
+            filter.addEventListener('click', clickHandler);
+            this.eventListeners.push({ element: filter, event: 'click', handler: clickHandler });
         });
     }
 
@@ -265,6 +306,22 @@ function updateDate() {
         const month = String(today.getMonth() + 1).padStart(2, '0');
         const year = String(today.getFullYear()).slice(-2);
         dateElement.textContent = `${day}/${month}/${year}`;
+    }
+    
+    /**
+     * Destroy method for cleanup
+     * @returns {void}
+     */
+    destroy() {
+        // Remove all event listeners
+        this.eventListeners.forEach(({ element, event, handler }) => {
+            element.removeEventListener(event, handler);
+        });
+        this.eventListeners = [];
+        
+        // Clear DOM references
+        this.filters = null;
+        this.projects = null;
     }
 }
 
@@ -546,6 +603,9 @@ class StaticPortfolio {
         
         /** @type {?FilterSystem} Filter system instance */
         this.filterSystem = null;
+        
+        /** @type {Array} Event listeners to cleanup */
+        this.eventListeners = [];
         
         // Initialize data source based on configuration
         this.dataSource = this.initializeDataSource();
@@ -860,6 +920,34 @@ class StaticPortfolio {
             }
         });
     }
+    
+    /**
+     * Destroy method for cleanup
+     * @returns {void}
+     */
+    destroy() {
+        // Destroy child components
+        if (this.projectStack) {
+            this.projectStack.destroy();
+            this.projectStack = null;
+        }
+        
+        if (this.filterSystem) {
+            this.filterSystem.destroy();
+            this.filterSystem = null;
+        }
+        
+        // Remove event listeners
+        this.eventListeners.forEach(({ element, event, handler }) => {
+            element.removeEventListener(event, handler);
+        });
+        this.eventListeners = [];
+        
+        // Clear DOM references
+        this.projectsContainer = null;
+        this.loadingMessage = null;
+        this.dataSource = null;
+    }
 }
 
 
@@ -881,6 +969,16 @@ if (!window.__PORTFOLIO_INIT_REGISTERED__) {
         if (!isPortfolioPage) {
             // Initialize Static Portfolio solo per altre pagine
             const staticPortfolio = new StaticPortfolio();
+            
+            // Store globally for lifecycle management
+            window.__STATIC_PORTFOLIO_INSTANCE__ = staticPortfolio;
+            
+            // Register with LifecycleManager if available
+            if (typeof window !== 'undefined' && window.lifecycleManager) {
+                window.lifecycleManager.register('portfolio', staticPortfolio, () => {
+                    staticPortfolio.destroy();
+                });
+            }
         }
         
         updateDate();
