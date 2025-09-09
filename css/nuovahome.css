@@ -118,7 +118,7 @@ img {
 
 /* Service images aspect ratio */
 .service-image {
-    aspect-ratio: 4 / 3;
+    /* aspect-ratio: 4 / 3; */ /* Disabilitato per evitare conflitti */
     object-fit: cover;
 }
 
