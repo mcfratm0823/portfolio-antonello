@@ -1072,7 +1072,7 @@ body::-webkit-scrollbar,
 
 .service-image {
     width: 400px;
-    height: 250px;
+    height: auto; /* Let aspect-ratio handle height */
     object-fit: cover;
     filter: grayscale(0%);
     transition: none; /* Keep image changes instant */
