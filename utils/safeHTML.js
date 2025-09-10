@@ -116,7 +116,7 @@
     setTimeout(() => {
         if (typeof DOMPurify !== 'undefined') {
             window.isDOMPurifyActive = window.activateDOMPurify();
-            console.log('[SafeHTML] ✅ DOMPurify attivato con successo');
+            // Log rimosso per produzione - DOMPurify attivo
         } else {
             console.warn('[SafeHTML] ⚠️ DOMPurify non trovato - protezione non attiva');
         }

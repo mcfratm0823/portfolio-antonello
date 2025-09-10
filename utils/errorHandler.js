@@ -357,9 +357,9 @@ class ErrorHandler {
      * Invia errore a servizio di monitoring (es: Sentry, LogRocket)
      */
     sendToMonitoring(error) {
-        // TODO: Implementare quando avrai un servizio di monitoring
-        // Per ora, salva in un endpoint custom
-        if (window.fetch) {
+        // Monitoring disabilitato in produzione fino a setup servizio dedicato
+        // Endpoint placeholder per future integrazioni (Sentry, LogRocket, etc)
+        if (window.fetch && window.location.hostname === 'localhost') {
             fetch('/api/errors', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
