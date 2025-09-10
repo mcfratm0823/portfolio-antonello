@@ -1,0 +1,8 @@
+ 60K	dist/js/main.mrfUhPhB.js
+ 36K	dist/css/main.DhIf3tYJ.css
+ 28K	dist/js/portfolio.hnMmTVc6.js
+ 28K	dist/js/main.Bq4ypWWs.js
+ 12K	dist/js/projects-data.D_FHcSjB.js
+ 12K	dist/css/portfolio.BdEE5yWj.css
+4,0K	dist/js/success.6F3hq9O7.js
+4,0K	dist/css/main.Dz0HGd0R.css

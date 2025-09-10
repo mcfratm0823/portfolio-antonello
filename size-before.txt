@@ -1,0 +1,10 @@
+ 52K	js/navbar.js
+ 52K	css/nuovahome.css
+ 40K	js/portfolio.js
+ 36K	js/nuovahome-refactored.js
+ 16K	js/projects-data.js
+ 16K	js/form-handler.js
+ 16K	css/portfolio.css
+ 12K	js/global-cursor.js
+8,0K	js/portfolio-static.js
+8,0K	js/lifecycle-manager.js
