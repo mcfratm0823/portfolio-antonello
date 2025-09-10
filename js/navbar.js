@@ -53,7 +53,7 @@ class Navbar {
             email_placeholder: "EMAIL",
             message_placeholder: "Scrivi qui la tua richiesta",
             button_text: "CONTATTAMI",
-            recipient_email: "antonelloguarnieri6@gmail.com",
+            recipient_email: this.getRecipientEmail(),
             success_message: "Grazie! Il tuo messaggio è stato inviato.",
             error_message: "Ops! Qualcosa è andato storto. Riprova.",
             form_integration: {
@@ -761,6 +761,13 @@ class Navbar {
                 }
             }
         }
+    }
+    
+    // Metodo per ottenere email offuscata
+    getRecipientEmail() {
+        // Email offuscata in base64 per evitare scraping
+        const encoded = 'YW50b25lbGxvZ3Vhcm5pZXJpNkBnbWFpbC5jb20=';
+        return atob(encoded);
     }
 
     init() {
