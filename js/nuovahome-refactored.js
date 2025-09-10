@@ -768,7 +768,7 @@ class NuovaHomeInitializer {
         const words = textContent.split('<br>');
         
         // Clear original content
-        footerText.innerHTML = '';
+        footerText.textContent = '';
         
         words.forEach((word, wordIndex) => {
             const wordSpan = document.createElement('div');

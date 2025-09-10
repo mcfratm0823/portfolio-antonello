@@ -243,13 +243,29 @@ class ErrorHandler {
         // Crea notifica
         const notification = document.createElement('div');
         notification.className = 'error-notification';
-        notification.innerHTML = `
-            <div class="error-notification-content">
-                <span class="error-notification-message">${message}</span>
-                ${action ? `<button class="error-notification-action">${action.text}</button>` : ''}
-                <button class="error-notification-close">×</button>
-            </div>
-        `;
+        
+        // Fix XSS: Usa DOM sicuro per contenuto dinamico
+        const content = document.createElement('div');
+        content.className = 'error-notification-content';
+        
+        const messageSpan = document.createElement('span');
+        messageSpan.className = 'error-notification-message';
+        messageSpan.textContent = message;
+        content.appendChild(messageSpan);
+        
+        if (action) {
+            const actionBtn = document.createElement('button');
+            actionBtn.className = 'error-notification-action';
+            actionBtn.textContent = action.text;
+            content.appendChild(actionBtn);
+        }
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'error-notification-close';
+        closeBtn.textContent = '×';
+        content.appendChild(closeBtn);
+        
+        notification.appendChild(content);
         
         // Stili inline per evitare dipendenze CSS
         notification.style.cssText = `
@@ -296,16 +312,17 @@ class ErrorHandler {
         `;
         document.head.appendChild(style);
         
-        // Event handlers
-        const closeBtn = notification.querySelector('.error-notification-close');
+        // Event handlers - già aggiunti direttamente agli elementi
         closeBtn.onclick = () => notification.remove();
         
         if (action) {
-            const actionBtn = notification.querySelector('.error-notification-action');
-            actionBtn.onclick = () => {
-                action.callback();
-                notification.remove();
-            };
+            const actionBtn = content.querySelector('.error-notification-action');
+            if (actionBtn) {
+                actionBtn.onclick = () => {
+                    action.callback();
+                    notification.remove();
+                };
+            }
         }
         
         // Aggiungi al DOM

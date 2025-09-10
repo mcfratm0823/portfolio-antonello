@@ -804,7 +804,14 @@ class StaticPortfolio {
         
         // Insert projects into container
         if (this.projectsContainer) {
-            this.projectsContainer.innerHTML = projectsHTML;
+            // Fix XSS: Usa safeHTML per template HTML con contenuto dinamico
+            if (window.safeHTML) {
+                this.projectsContainer.innerHTML = window.safeHTML(projectsHTML, 'portfolio-projects');
+            } else {
+                // Fallback: usa innerHTML ma con avviso
+                console.warn('[Portfolio] safeHTML not available, using innerHTML directly');
+                this.projectsContainer.innerHTML = projectsHTML;
+            }
         }
         
         // Initialize stack and filter system after projects are loaded
@@ -851,7 +858,7 @@ class StaticPortfolio {
         if (this.loadingMessage) {
             this.loadingMessage.style.display = 'block';
             
-            // Fix XSS: Usa safeReplace con sanitizzazione per contenuto con HTML
+            // Fix XSS: Usa safeHTML per contenuto con HTML e dati dinamici
             const errorHTML = `
                 <div style="
                     text-align: center;
@@ -876,15 +883,14 @@ class StaticPortfolio {
                 </div>
             `;
             
-            // Usa safeReplace se disponibile, altrimenti innerHTML temporaneamente
-            if (window.safeReplace) {
-                window.safeReplace(this.loadingMessage, errorHTML, {
-                    context: 'portfolio-error-message',
-                    useTextContent: false
-                });
+            // Usa safeHTML per protezione XSS
+            if (window.safeHTML) {
+                this.loadingMessage.innerHTML = window.safeHTML(errorHTML, 'portfolio-error-message');
             } else {
-                // Fallback temporaneo - TODO: rimuovere dopo test
-                this.loadingMessage.innerHTML = errorHTML;
+                // Fallback con escape manuale del messaggio
+                const safeMessage = this.sanitizeForHTML(message);
+                const safeErrorHTML = errorHTML.replace('${message}', safeMessage);
+                this.loadingMessage.innerHTML = safeErrorHTML;
             }
         }
     }
@@ -1080,7 +1086,13 @@ window.renderProjects = function(projects) {
     }).join('');
     
     // Inserisci i progetti nel container
-    projectsContainer.innerHTML = projectsHTML;
+    // Fix XSS: Usa safeHTML per template con dati dinamici
+    if (window.safeHTML) {
+        projectsContainer.innerHTML = window.safeHTML(projectsHTML, 'portfolio-cms-projects');
+    } else {
+        console.warn('[Portfolio] safeHTML not available for CMS projects');
+        projectsContainer.innerHTML = projectsHTML;
+    }
     
     // Reinizializza i componenti dopo il caricamento dei progetti
     requestAnimationFrame(() => {

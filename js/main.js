@@ -62,7 +62,8 @@ function initializeCore() {
         console.error('Failed to initialize core components:', error);
         
         // Mostra messaggio all'utente
-        document.body.innerHTML = `
+        // Fix XSS: Usa safeHTML per template HTML
+        const errorHTML = `
             <div style="display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; text-align: center; padding: 20px;">
                 <div>
                     <h1>Oops! Qualcosa è andato storto</h1>
@@ -73,6 +74,13 @@ function initializeCore() {
                 </div>
             </div>
         `;
+        
+        if (window.safeHTML) {
+            document.body.innerHTML = window.safeHTML(errorHTML, 'main-error');
+        } else {
+            // Fallback sicuro: contenuto statico senza dati dinamici
+            document.body.innerHTML = errorHTML;
+        }
     }
 }
 

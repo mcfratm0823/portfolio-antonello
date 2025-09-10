@@ -67,7 +67,13 @@ class PortfolioInitializer {
             `<div class="filter-item ${index === 0 ? 'active' : ''}" data-filter="${filter.value}">${filter.name}</div>`
         ).join('');
         
-        filtersContainer.innerHTML = filtersHTML;
+        // Fix XSS: Usa safeHTML per template HTML dei filtri
+        if (window.safeHTML) {
+            filtersContainer.innerHTML = window.safeHTML(filtersHTML, 'portfolio-static-filters');
+        } else {
+            console.warn('[PortfolioStatic] safeHTML not available for filters');
+            filtersContainer.innerHTML = filtersHTML;
+        }
         
         // Add event listeners
         this.attachFilterListeners();

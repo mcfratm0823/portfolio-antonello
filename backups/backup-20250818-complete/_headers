@@ -1,9 +1,0 @@
-# Disabilita cache per i file JSON del CMS
-/_data/*
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
-
-# Cache normale per altri file
-/*
-  Cache-Control: public, max-age=3600

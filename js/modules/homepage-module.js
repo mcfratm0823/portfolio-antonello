@@ -705,7 +705,7 @@ class HomepageModule {
         const textContent = footerText.innerHTML;
         const words = textContent.split('<br>');
         
-        footerText.innerHTML = '';
+        footerText.textContent = '';
         
         words.forEach(word => {
             const wordSpan = document.createElement('div');

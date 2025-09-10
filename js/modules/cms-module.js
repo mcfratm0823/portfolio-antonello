@@ -345,7 +345,13 @@ class CMSModule {
         // Testo
         const contentElement = document.querySelector('.project-content');
         if (contentElement && project.content) {
-            contentElement.innerHTML = project.content;
+            // Fix XSS: Usa safeHTML per contenuto dinamico dal CMS
+            if (window.safeHTML) {
+                contentElement.innerHTML = window.safeHTML(project.content, 'cms-project-content');
+            } else {
+                console.warn('[CMS] safeHTML not available for project content');
+                contentElement.innerHTML = project.content;
+            }
         }
     }
     
@@ -387,7 +393,13 @@ class CMSModule {
                 `;
             }).join('');
             
-            container.innerHTML = projectsHTML;
+            // Fix XSS: Usa safeHTML per template HTML con dati dinamici
+            if (window.safeHTML) {
+                container.innerHTML = window.safeHTML(projectsHTML, 'cms-render-projects');
+            } else {
+                console.warn('[CMS] safeHTML not available for projects rendering');
+                container.innerHTML = projectsHTML;
+            }
             
             // Emit event for other modules
             window.APP_EVENT_BUS.emit('projects:rendered', {
@@ -419,7 +431,13 @@ class CMSModule {
             filtersHTML += `<div class="filter-item" data-filter="${filter.value}">${filter.label}</div>`;
         });
         
-        container.innerHTML = filtersHTML;
+        // Fix XSS: Usa safeHTML per template HTML dei filtri
+        if (window.safeHTML) {
+            container.innerHTML = window.safeHTML(filtersHTML, 'cms-filters');
+        } else {
+            console.warn('[CMS] safeHTML not available for filters');
+            container.innerHTML = filtersHTML;
+        }
         
         // Inizializza event listeners
         if (window.initializeFilters) {

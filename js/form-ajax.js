@@ -126,14 +126,17 @@ function showSuccessMessageDirect() {
         transition: transform 0.3s ease;
     `;
     
-    successDiv.innerHTML = `
-        <h2 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 3rem; margin: 0 0 1rem 0; font-weight: 400; letter-spacing: -0.02em;">
-            Grazie! Il tuo messaggio è stato inviato.
-        </h2>
-        <p style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1rem; opacity: 0.7; margin: 0;">
-            Ti risponderò al più presto
-        </p>
-    `;
+    // Fix XSS: Usa DOM sicuro invece di innerHTML per contenuto statico
+    const h2 = document.createElement('h2');
+    h2.style.cssText = "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 3rem; margin: 0 0 1rem 0; font-weight: 400; letter-spacing: -0.02em;";
+    h2.textContent = 'Grazie! Il tuo messaggio è stato inviato.';
+    
+    const p = document.createElement('p');
+    p.style.cssText = "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 1rem; opacity: 0.7; margin: 0;";
+    p.textContent = 'Ti risponderò al più presto';
+    
+    successDiv.appendChild(h2);
+    successDiv.appendChild(p);
     
     overlay.appendChild(successDiv);
     document.body.appendChild(overlay);

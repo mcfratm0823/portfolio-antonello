@@ -73,7 +73,8 @@ if (window.__APP_INITIALIZED__) {
             // Fatal initialization error
             
             // Show error to user
-            document.body.innerHTML = `
+            // Fix XSS: Usa safeHTML per template con contenuto dinamico
+            const errorContent = `
                 <div style="
                     position: fixed;
                     top: 50%;
@@ -115,6 +116,23 @@ if (window.__APP_INITIALIZED__) {
                     ` : ''}
                 </div>
             `;
+            
+            if (window.safeHTML) {
+                document.body.innerHTML = window.safeHTML(errorContent, 'app-init-error');
+            } else {
+                // Fallback: escape manuale dell'errore
+                const safeError = String(error.stack || error.message).replace(/[<>&"']/g, function(match) {
+                    const escapeMap = {
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        '&': '&amp;',
+                        '"': '&quot;',
+                        "'": '&#x27;'
+                    };
+                    return escapeMap[match];
+                });
+                document.body.innerHTML = errorContent.replace('${error.stack || error.message}', safeError);
+            }
             
             // Report to error tracking if available
             if (window.APP_EVENT_BUS) {

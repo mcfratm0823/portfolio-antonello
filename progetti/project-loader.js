@@ -44,11 +44,20 @@ function updateProjectPage(data) {
     
     const projectMeta = document.getElementById('project-meta');
     if (projectMeta) {
-        projectMeta.innerHTML = `
-            <span>${data.category}</span>
-            <span>${data.year}</span>
-            <span>${data.client}</span>
-        `;
+        // Fix XSS: Usa DOM sicuro per contenuto dinamico
+        projectMeta.textContent = ''; // Pulisci contenuto esistente
+        
+        const categorySpan = document.createElement('span');
+        categorySpan.textContent = data.category;
+        projectMeta.appendChild(categorySpan);
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = data.year;
+        projectMeta.appendChild(yearSpan);
+        
+        const clientSpan = document.createElement('span');
+        clientSpan.textContent = data.client;
+        projectMeta.appendChild(clientSpan);
     }
     
     // Info block
@@ -133,11 +142,20 @@ function updateProjectSlide(slide, project) {
     
     const metas = slide.querySelectorAll('.project-meta');
     metas.forEach(meta => {
-        meta.innerHTML = `
-            <span>${project.category.toUpperCase()}</span>
-            <span>•</span>
-            <span>${project.year}</span>
-        `;
+        // Fix XSS: Usa DOM sicuro per contenuto dinamico
+        meta.textContent = ''; // Pulisci contenuto esistente
+        
+        const categorySpan = document.createElement('span');
+        categorySpan.textContent = project.category.toUpperCase();
+        meta.appendChild(categorySpan);
+        
+        const bulletSpan = document.createElement('span');
+        bulletSpan.textContent = '•';
+        meta.appendChild(bulletSpan);
+        
+        const yearSpan = document.createElement('span');
+        yearSpan.textContent = project.year;
+        meta.appendChild(yearSpan);
     });
 }
 

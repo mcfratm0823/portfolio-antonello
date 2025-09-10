@@ -109,12 +109,16 @@
     };
     
     
-    // AUTO-ATTIVAZIONE dopo 2 secondi (per dare tempo a DOMPurify di caricarsi)
+    // Flag per stato DOMPurify
+    window.isDOMPurifyActive = false;
+    
+    // AUTO-ATTIVAZIONE dopo 100ms (per dare tempo a DOMPurify di caricarsi)
     setTimeout(() => {
         if (typeof DOMPurify !== 'undefined') {
-            window.activateDOMPurify();
+            window.isDOMPurifyActive = window.activateDOMPurify();
+            console.log('[SafeHTML] ✅ DOMPurify attivato con successo');
         } else {
             console.warn('[SafeHTML] ⚠️ DOMPurify non trovato - protezione non attiva');
         }
-    }, 2000);
+    }, 100);
 })();

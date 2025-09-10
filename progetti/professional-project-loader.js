@@ -306,7 +306,13 @@ class ProjectLoader {
                     </div>
         `).join('');
         
-        container.innerHTML = projectsHTML;
+        // Fix XSS: Usa safeHTML per template HTML con dati dinamici
+        if (window.safeHTML) {
+            container.innerHTML = window.safeHTML(projectsHTML, 'project-loader-related');
+        } else {
+            console.warn('[ProjectLoader] safeHTML not available for related projects');
+            container.innerHTML = projectsHTML;
+        }
     }
     
     /**
@@ -372,13 +378,28 @@ class ProjectLoader {
             // Show error message briefly before redirect
             const loadingEl = document.getElementById('loading-state');
             if (loadingEl) {
-                loadingEl.innerHTML = `
-                    <div style="text-align: center;">
-                        <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
-                        <h2 style="font-family: sans-serif; color: #333; margin-bottom: 10px;">Progetto non trovato</h2>
-                        <p style="font-family: sans-serif; color: #666; margin-bottom: 20px;">Verrai reindirizzato alla pagina portfolio...</p>
-                    </div>
-                `;
+                // Fix XSS: Usa DOM sicuro per contenuto statico
+                loadingEl.textContent = ''; // Pulisci contenuto esistente
+                
+                const errorDiv = document.createElement('div');
+                errorDiv.style.textAlign = 'center';
+                
+                const iconDiv = document.createElement('div');
+                iconDiv.style.cssText = 'font-size: 48px; margin-bottom: 20px;';
+                iconDiv.textContent = '⚠️';
+                errorDiv.appendChild(iconDiv);
+                
+                const h2 = document.createElement('h2');
+                h2.style.cssText = 'font-family: sans-serif; color: #333; margin-bottom: 10px;';
+                h2.textContent = 'Progetto non trovato';
+                errorDiv.appendChild(h2);
+                
+                const p = document.createElement('p');
+                p.style.cssText = 'font-family: sans-serif; color: #666; margin-bottom: 20px;';
+                p.textContent = 'Verrai reindirizzato alla pagina portfolio...';
+                errorDiv.appendChild(p);
+                
+                loadingEl.appendChild(errorDiv);
             }
             
             // Redirect after 2 seconds
