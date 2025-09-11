@@ -1,6 +1,8 @@
 [build]
-  command = "npm run build"
-  publish = "dist"
+  # Nessun comando di build necessario per sito statico
+  command = "echo 'No build needed for static site'"
+  # Pubblica dalla root del progetto
+  publish = "."
 
 [[headers]]
   for = "/*"
