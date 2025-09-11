@@ -428,7 +428,7 @@ class StaticDataSource extends PortfolioDataSource {
                 }));
             }
         } catch (error) {
-            console.warn('[Portfolio] Could not load projects-data.js, using fallback data:', error.message);
+            // Silently use fallback data in production
             this.staticProjects = [
             {
                 id: 1,
@@ -634,17 +634,48 @@ class StaticPortfolio {
      * @returns {string} Sanitized string safe for attributes
      */
     sanitizeForAttribute(str) {
-        // Rimuove caratteri pericolosi per attributi HTML
-        return String(str).replace(/["'<>&]/g, function(match) {
+        // PRIMA rimuovi completamente tentativi di injection
+        let cleaned = String(str)
+            // Rimuovi qualsiasi tentativo di aggiungere event handlers
+            .replace(/\s*on\w+\s*=/gi, '')
+            // Rimuovi tentativi di chiudere/aprire tag
+            .replace(/[<>]/g, '');
+            
+        // POI escape dei caratteri rimanenti
+        return cleaned.replace(/["'&]/g, function(match) {
             const escapeMap = {
                 '"': '&quot;',
                 "'": '&#x27;',
-                '<': '&lt;',
-                '>': '&gt;',
                 '&': '&amp;'
             };
             return escapeMap[match];
         });
+    }
+    
+    /**
+     * Sanitizza URL per prevenire XSS
+     * @param {string} url - URL da sanitizzare
+     * @returns {string} URL sicuro
+     */
+    sanitizeURL(url) {
+        const str = String(url).trim();
+        
+        // Blocca javascript:, data:text/html e altri schemi pericolosi
+        const dangerousProtocols = /^(javascript:|data:text\/html|vbscript:|file:)/i;
+        if (dangerousProtocols.test(str)) {
+            return '#'; // Sostituisci con URL sicuro
+        }
+        
+        // Per data: URLs, permetti solo immagini
+        if (str.startsWith('data:')) {
+            const safeDataTypes = /^data:image\/(png|jpg|jpeg|gif|webp|svg\+xml);/i;
+            if (!safeDataTypes.test(str)) {
+                return '#'; // Blocca data URLs non-immagine
+            }
+        }
+        
+        // Escape caratteri pericolosi
+        return this.sanitizeForAttribute(str);
     }
     
     /**
@@ -786,13 +817,18 @@ class StaticPortfolio {
             
             // Use project url if available, otherwise build from id
             const projectUrl = project.url || `./progetti/${safeId}.html`;
-            const safeUrl = this.sanitizeForAttribute(projectUrl);
+            const safeUrl = this.sanitizeURL(projectUrl);
+            
+            // CRITICO: Sanitizza anche l'immagine per prevenire XSS
+            const defaultImage = `https://picsum.photos/400/550?random=${randomId}`;
+            const imageUrl = project.image || defaultImage;
+            const safeImage = this.sanitizeURL(imageUrl);
             
             return `
                 <div class="project-card" data-project-id="${safeId}" data-category="${safeCategory}" data-index="${index}" data-title="${safeTitle}">
                     <a href="${safeUrl}" class="project-link" style="text-decoration: none; display: block; width: 100%; height: 100%;">
                         <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden;">
-                            <img src="${project.image || `https://picsum.photos/400/550?random=${randomId}`}" alt="${safeTitle}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                            <img src="${safeImage}" alt="${safeTitle}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
                             <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
                                 <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${safeTitleHTML}</h3>
                             </div>
@@ -802,9 +838,16 @@ class StaticPortfolio {
             `;
         }).join('');
         
-        // Insert projects into container
+        // Insert projects into container using safeHTML
         if (this.projectsContainer) {
-            this.projectsContainer.innerHTML = projectsHTML;
+            // Use safeHTML to prevent XSS while preserving functionality
+            if (window.safeHTML) {
+                this.projectsContainer.innerHTML = window.safeHTML(projectsHTML, 'portfolio-projects-render');
+            } else {
+                // Fallback: clear and use textContent for safety
+                this.projectsContainer.textContent = '';
+                // Silent fail in production
+            }
         }
         
         // Initialize stack and filter system after projects are loaded
@@ -876,15 +919,18 @@ class StaticPortfolio {
                 </div>
             `;
             
-            // Usa safeReplace se disponibile, altrimenti innerHTML temporaneamente
-            if (window.safeReplace) {
+            // Usa safeHTML per il messaggio di errore
+            if (window.safeHTML) {
+                this.loadingMessage.innerHTML = window.safeHTML(errorHTML, 'portfolio-error-message');
+            } else if (window.safeReplace) {
+                // Fallback a safeReplace se disponibile
                 window.safeReplace(this.loadingMessage, errorHTML, {
                     context: 'portfolio-error-message',
                     useTextContent: false
                 });
             } else {
-                // Fallback temporaneo - TODO: rimuovere dopo test
-                this.loadingMessage.innerHTML = errorHTML;
+                // Ultimate fallback: mostra solo testo
+                this.loadingMessage.textContent = 'Errore nel caricamento. Ricarica la pagina.';
             }
         }
     }
@@ -1046,6 +1092,56 @@ window.initializeFilters = function() {
 // Flag per evitare doppia inizializzazione
 window.__PROJECTS_RENDERED__ = false;
 
+// Funzioni di sanitizzazione per la funzione globale
+function sanitizeAttribute(str) {
+    // PRIMA rimuovi tentativi di injection
+    let cleaned = String(str)
+        .replace(/\s*on\w+\s*=/gi, '') // Rimuovi event handlers
+        .replace(/[<>]/g, ''); // Rimuovi tag
+        
+    // POI escape
+    return cleaned.replace(/["'&]/g, function(match) {
+        const escapeMap = {
+            '"': '&quot;',
+            "'": '&#x27;',
+            '&': '&amp;'
+        };
+        return escapeMap[match];
+    });
+}
+
+function sanitizeHTML(str) {
+    return String(str).replace(/[<>&]/g, function(match) {
+        const escapeMap = {
+            '<': '&lt;',
+            '>': '&gt;',
+            '&': '&amp;'
+        };
+        return escapeMap[match];
+    });
+}
+
+// Sanitizza URL per la funzione globale
+function sanitizeURL(url) {
+    const str = String(url).trim();
+    
+    // Blocca protocolli pericolosi
+    const dangerousProtocols = /^(javascript:|data:text\/html|vbscript:|file:)/i;
+    if (dangerousProtocols.test(str)) {
+        return '#';
+    }
+    
+    // Per data: URLs, permetti solo immagini
+    if (str.startsWith('data:')) {
+        const safeDataTypes = /^data:image\/(png|jpg|jpeg|gif|webp|svg\+xml);/i;
+        if (!safeDataTypes.test(str)) {
+            return '#';
+        }
+    }
+    
+    return sanitizeAttribute(str);
+}
+
 // Funzione globale per renderizzare i progetti dal CMS
 window.renderProjects = function(projects) {
     const projectsContainer = document.getElementById('projects-container');
@@ -1061,17 +1157,26 @@ window.renderProjects = function(projects) {
     
     // Genera HTML per ogni progetto
     const projectsHTML = projects.map((project, index) => {
-        // Usa la thumbnail del progetto se disponibile
+        // CRITICO: Sanitizza TUTTI i valori per prevenire XSS
+        const safeId = sanitizeAttribute(String(project.id || ''));
+        const safeCategory = sanitizeAttribute(String(project.category || ''));
+        const safeTitle = sanitizeAttribute(String(project.title || ''));
+        const safeTitleHTML = sanitizeHTML(String(project.title || ''));
+        
+        // Sanitizza URL immagine e progetto
         const imageUrl = project.thumbnail || project.image || `https://picsum.photos/400/550?random=${project.id}`;
-        const projectUrl = project.slug ? `./progetti/${project.slug}.html` : '#';
+        const safeImage = sanitizeURL(imageUrl);
+        
+        const projectUrl = project.slug ? `./progetti/${sanitizeAttribute(project.slug)}.html` : '#';
+        const safeUrl = sanitizeURL(projectUrl);
         
         return `
-            <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}">
-                <a href="${projectUrl}" class="project-link" style="display: block; width: 100%; height: 100%; text-decoration: none; position: relative; z-index: 999;">
+            <div class="project-card" data-project-id="${safeId}" data-category="${safeCategory}" data-index="${index}" data-title="${safeTitle}">
+                <a href="${safeUrl}" class="project-link" style="display: block; width: 100%; height: 100%; text-decoration: none; position: relative; z-index: 999;">
                     <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden; pointer-events: none;">
-                        <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                        <img src="${safeImage}" alt="${safeTitle}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
                         <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
-                            <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+                            <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${safeTitleHTML}</h3>
                         </div>
                     </div>
                 </a>
@@ -1079,8 +1184,14 @@ window.renderProjects = function(projects) {
         `;
     }).join('');
     
-    // Inserisci i progetti nel container
-    projectsContainer.innerHTML = projectsHTML;
+    // Inserisci i progetti nel container usando safeHTML
+    if (window.safeHTML) {
+        projectsContainer.innerHTML = window.safeHTML(projectsHTML, 'portfolio-global-render');
+    } else {
+        // Fallback sicuro
+        projectsContainer.textContent = '';
+        console.error('[Portfolio] safeHTML not available - projects not rendered');
+    }
     
     // Reinizializza i componenti dopo il caricamento dei progetti
     requestAnimationFrame(() => {
