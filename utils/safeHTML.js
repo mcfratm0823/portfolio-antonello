@@ -1,24 +1,71 @@
 /**
- * SafeHTML Wrapper - Sistema di sanitizzazione HTML progressivo
+ * SafeHTML Wrapper - Sistema di sanitizzazione HTML con DOMPurify
  * 
- * Fase 1: Log only (non modifica nulla)
- * Fase 2: Sanitizzazione attiva con DOMPurify
+ * Fornisce sanitizzazione automatica per prevenire XSS attacks
+ * Attivazione immediata con fallback sicuro
  */
 
 (function() {
     'use strict';
     
-    // Contatore per tracking
+    // Contatore per tracking (utile per monitoring)
     let sanitizationCalls = 0;
+    let purifyActive = false;
     
-    // Funzione wrapper iniziale - NON MODIFICA L'HTML
+    // Configurazione DOMPurify ottimizzata per il sito
+    const DOMPURIFY_CONFIG = {
+        ALLOWED_TAGS: [
+            // Text formatting
+            'b', 'i', 'em', 'strong', 'u', 'mark', 'small', 'del', 'ins', 'sub', 'sup',
+            // Links and media
+            'a', 'img', 'video', 'audio', 'source', 'picture',
+            // Structure
+            'br', 'hr', 'p', 'div', 'span', 'section', 'article', 'header', 'footer', 'nav', 'main',
+            // Headers
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            // Lists
+            'ul', 'ol', 'li', 'dl', 'dt', 'dd',
+            // Tables
+            'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
+            // Forms
+            'form', 'input', 'textarea', 'select', 'option', 'button', 'label',
+            // Other
+            'blockquote', 'code', 'pre', 'figure', 'figcaption'
+        ],
+        ALLOWED_ATTR: [
+            'href', 'src', 'alt', 'title', 'width', 'height',
+            'class', 'id', 'style', 'target', 'rel',
+            'data-*', 'aria-*', 'role',
+            'type', 'name', 'value', 'placeholder', 'required', 'disabled',
+            'for', 'colspan', 'rowspan', 'scope'
+        ],
+        ALLOW_DATA_ATTR: true,
+        KEEP_CONTENT: true,
+        SAFE_FOR_TEMPLATES: false,
+        SANITIZE_DOM: true
+    };
+    
+    // Funzione wrapper con fallback sicuro
     window.safeHTML = function(html, context = 'unknown') {
         sanitizationCalls++;
         
-        // Log per debugging
+        // Se DOMPurify non è disponibile, ritorna stringa vuota per sicurezza
+        if (!purifyActive || typeof DOMPurify === 'undefined') {
+            if (typeof DOMPurify !== 'undefined') {
+                // Tenta di attivare DOMPurify se disponibile
+                activateDOMPurifyInternal();
+            }
+            
+            if (!purifyActive) {
+                // Fallback sicuro: escapa l'HTML
+                const div = document.createElement('div');
+                div.textContent = html;
+                return div.innerHTML;
+            }
+        }
         
-        // Per ora ritorna HTML non modificato
-        return html;
+        // Sanitizza con DOMPurify
+        return DOMPurify.sanitize(html, DOMPURIFY_CONFIG);
     };
     
     // Funzione helper per sostituire innerHTML in modo sicuro con rollback
@@ -30,7 +77,7 @@
         } = options;
         
         if (!element) {
-            console.error('[SafeReplace] Element not found');
+            // Silently fail in production
             return false;
         }
         
@@ -56,46 +103,39 @@
             
             return true;
         } catch (error) {
-            // Rollback automatico
-            console.error(`[SafeReplace] Error in ${context}, rolling back:`, error);
+            // Rollback automatico silenzioso
             element.innerHTML = backup;
             return false;
         }
     };
     
-    // Funzione per attivare DOMPurify quando siamo pronti
-    window.activateDOMPurify = function(config = {}) {
+    // Funzione interna per attivare DOMPurify
+    function activateDOMPurifyInternal() {
+        if (typeof DOMPurify !== 'undefined' && !purifyActive) {
+            purifyActive = true;
+            return true;
+        }
+        return false;
+    }
+    
+    // Funzione pubblica per configurazione custom
+    window.configureSafeHTML = function(customConfig = {}) {
         if (typeof DOMPurify === 'undefined') {
-            console.error('[SafeHTML] DOMPurify not loaded! Add script to HTML first.');
             return false;
         }
         
-        const defaultConfig = {
-            ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'img', 'br', 'p', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li'],
-            ALLOWED_ATTR: ['href', 'src', 'alt', 'class', 'id', 'style', 'target', 'data-*'],
-            ALLOW_DATA_ATTR: true,
-            KEEP_CONTENT: true
-        };
-        
-        const finalConfig = { ...defaultConfig, ...config };
-        
-        // Sostituisci la funzione wrapper con DOMPurify attivo
-        window.safeHTML = function(html, context = 'unknown') {
-            sanitizationCalls++;
-            return DOMPurify.sanitize(html, finalConfig);
-        };
-        
+        // Merge configurazione custom con quella di default
+        Object.assign(DOMPURIFY_CONFIG, customConfig);
+        purifyActive = true;
         return true;
     };
     
-    // Utility per testare singoli elementi
+    // Utility per testare la sanitizzazione (solo per development)
     window.testSanitization = function(selector, testHTML = '<img src=x onerror="alert(\'XSS\')">Test') {
         const element = document.querySelector(selector);
         if (!element) {
-            console.error('[TestSanitization] Element not found:', selector);
-            return;
+            return false;
         }
-        
         
         // Test con HTML pericoloso
         const result = window.safeReplace(element, testHTML, {
@@ -106,15 +146,40 @@
             }
         });
         
+        return result;
     };
     
+    // Funzione per ottenere statistiche di utilizzo
+    window.getSanitizationStats = function() {
+        return {
+            calls: sanitizationCalls,
+            purifyActive: purifyActive,
+            dompurifyLoaded: typeof DOMPurify !== 'undefined'
+        };
+    };
     
-    // AUTO-ATTIVAZIONE dopo 2 secondi (per dare tempo a DOMPurify di caricarsi)
-    setTimeout(() => {
-        if (typeof DOMPurify !== 'undefined') {
-            window.activateDOMPurify();
+    // ATTIVAZIONE IMMEDIATA
+    // Tenta di attivare DOMPurify immediatamente
+    if (typeof DOMPurify !== 'undefined') {
+        activateDOMPurifyInternal();
+    } else {
+        // Se DOMPurify non è ancora caricato, attendi il DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                activateDOMPurifyInternal();
+            });
         } else {
-            console.warn('[SafeHTML] ⚠️ DOMPurify non trovato - protezione non attiva');
+            // Fallback: controlla ogni 100ms per massimo 3 secondi
+            let attempts = 0;
+            const checkInterval = setInterval(function() {
+                attempts++;
+                if (typeof DOMPurify !== 'undefined') {
+                    activateDOMPurifyInternal();
+                    clearInterval(checkInterval);
+                } else if (attempts >= 30) { // 3 secondi
+                    clearInterval(checkInterval);
+                }
+            }, 100);
         }
-    }, 2000);
+    }
 })();
