@@ -1,8 +1,8 @@
 [build]
-  # Nessun comando di build necessario per sito statico
-  command = "echo 'No build needed for static site'"
-  # Pubblica dalla root del progetto
-  publish = "."
+  # Comando per costruire il sito con Vite
+  command = "npm run build"
+  # Pubblica dalla cartella dist generata da Vite
+  publish = "dist"
 
 [[headers]]
   for = "/*"
