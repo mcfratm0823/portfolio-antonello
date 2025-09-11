@@ -345,7 +345,13 @@ class CMSModule {
         // Testo
         const contentElement = document.querySelector('.project-content');
         if (contentElement && project.content) {
-            contentElement.innerHTML = project.content;
+            // Fix XSS: Usa safeHTML per contenuti dinamici
+            if (window.safeHTML) {
+                contentElement.innerHTML = window.safeHTML(project.content, 'project-detail-content');
+            } else {
+                // Fallback sicuro: usa textContent
+                contentElement.textContent = project.content;
+            }
         }
     }
     
@@ -370,16 +376,25 @@ class CMSModule {
             if (!container) return;
             
             const projectsHTML = this.projectsData.map((project, index) => {
-                const imageUrl = project.thumbnail || project.image || `https://picsum.photos/400/550?random=${project.id}`;
-                const projectUrl = project.slug ? `./progetti/project-detail.html?p=${project.slug}` : '#';
+                // Fix XSS: Sanitizza tutti i valori dinamici
+                const safeId = this.escapeHtml(project.id);
+                const safeCategory = this.escapeHtml(project.category);
+                const safeTitle = this.escapeHtml(project.title);
+                const safeSlug = this.escapeHtml(project.slug || '');
+                
+                // Sanitizza URLs
+                const imageUrl = project.thumbnail || project.image || `https://picsum.photos/400/550?random=${safeId}`;
+                const safeImageUrl = this.sanitizeUrl(imageUrl);
+                const projectUrl = project.slug ? `./progetti/project-detail.html?p=${safeSlug}` : '#';
+                const safeProjectUrl = this.sanitizeUrl(projectUrl);
                 
                 return `
-                    <div class="project-card" data-project-id="${project.id}" data-category="${project.category}" data-index="${index}" data-title="${project.title}">
-                        <a href="${projectUrl}" class="project-link" style="display: block; width: 100%; height: 100%; text-decoration: none; position: relative; z-index: 999;">
+                    <div class="project-card" data-project-id="${safeId}" data-category="${safeCategory}" data-index="${index}" data-title="${safeTitle}">
+                        <a href="${safeProjectUrl}" class="project-link" style="display: block; width: 100%; height: 100%; text-decoration: none; position: relative; z-index: 999;">
                             <div class="project-content" style="width: 100%; height: 100%; position: relative; overflow: hidden; pointer-events: none;">
-                                <img src="${imageUrl}" alt="${project.title}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+                                <img src="${safeImageUrl}" alt="${safeTitle}" width="400" height="550" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
                                 <div class="desktop-title" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; padding: 20px;">
-                                    <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${project.title}</h3>
+                                    <h3 style="color: white; font-family: Neue; font-size: 1.2rem; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0;">${safeTitle}</h3>
                                 </div>
                             </div>
                         </a>
@@ -387,7 +402,13 @@ class CMSModule {
                 `;
             }).join('');
             
-            container.innerHTML = projectsHTML;
+            // Fix XSS: Usa safeHTML per il rendering
+            if (window.safeHTML) {
+                container.innerHTML = window.safeHTML(projectsHTML, 'cms-projects-render');
+            } else {
+                // Fallback: clear and set text (disabilita funzionalità)
+                container.textContent = 'Errore nel caricamento progetti';
+            }
             
             // Emit event for other modules
             window.APP_EVENT_BUS.emit('projects:rendered', {
@@ -416,10 +437,32 @@ class CMSModule {
         let filtersHTML = '<div class="filter-item active" data-filter="all">TUTTI I LAVORI</div>';
         
         this.filtersData.forEach(filter => {
-            filtersHTML += `<div class="filter-item" data-filter="${filter.value}">${filter.label}</div>`;
+            // Fix XSS: Sanitizza valori dei filtri
+            const safeValue = this.escapeHtml(filter.value);
+            const safeLabel = this.escapeHtml(filter.label);
+            filtersHTML += `<div class="filter-item" data-filter="${safeValue}">${safeLabel}</div>`;
         });
         
-        container.innerHTML = filtersHTML;
+        // Fix XSS: Usa safeHTML per il rendering
+        if (window.safeHTML) {
+            container.innerHTML = window.safeHTML(filtersHTML, 'cms-filters-render');
+        } else {
+            // Fallback: crea elementi DOM manualmente
+            container.textContent = '';
+            const allFilter = document.createElement('div');
+            allFilter.className = 'filter-item active';
+            allFilter.dataset.filter = 'all';
+            allFilter.textContent = 'TUTTI I LAVORI';
+            container.appendChild(allFilter);
+            
+            this.filtersData.forEach(filter => {
+                const filterEl = document.createElement('div');
+                filterEl.className = 'filter-item';
+                filterEl.dataset.filter = filter.value;
+                filterEl.textContent = filter.label;
+                container.appendChild(filterEl);
+            });
+        }
         
         // Inizializza event listeners
         if (window.initializeFilters) {
@@ -444,6 +487,41 @@ class CMSModule {
             'branding': 'BRANDING'
         };
         return categoryMap[category] || category.toUpperCase();
+    }
+    
+    /**
+     * Escape HTML special characters
+     * @private
+     */
+    escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+    
+    /**
+     * Sanitize URL to prevent XSS
+     * @private
+     */
+    sanitizeUrl(url) {
+        const str = String(url).trim();
+        
+        // Block dangerous protocols
+        const dangerousProtocols = /^(javascript:|data:text\/html|vbscript:|file:)/i;
+        if (dangerousProtocols.test(str)) {
+            return '#';
+        }
+        
+        // For data: URLs, only allow images
+        if (str.startsWith('data:')) {
+            const safeDataTypes = /^data:image\/(png|jpg|jpeg|gif|webp|svg\+xml);/i;
+            if (!safeDataTypes.test(str)) {
+                return '#';
+            }
+        }
+        
+        // Return escaped URL
+        return this.escapeHtml(str);
     }
 }
 
