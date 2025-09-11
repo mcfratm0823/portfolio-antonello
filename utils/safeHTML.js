@@ -37,7 +37,10 @@
             'class', 'id', 'style', 'target', 'rel',
             'data-*', 'aria-*', 'role',
             'type', 'name', 'value', 'placeholder', 'required', 'disabled',
-            'for', 'colspan', 'rowspan', 'scope'
+            'for', 'colspan', 'rowspan', 'scope',
+            // Portfolio specific attributes
+            'data-project-id', 'data-category', 'data-index', 'data-title',
+            'data-filter', 'data-cursor-type', 'data-scroll-container'
         ],
         ALLOW_DATA_ATTR: true,
         KEEP_CONTENT: true,

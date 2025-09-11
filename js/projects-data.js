@@ -18,7 +18,7 @@ export const PROJECTS_DATA = {
         order: 1,
         
         // Visual Assets
-        thumbnail: './img/portfolio-preview/cafe-124.png',
+        thumbnail: './img/portfolio-preview/cafe-124.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=201',
         gallery_images: [
             'https://picsum.photos/1200/800?random=202',
@@ -48,7 +48,7 @@ export const PROJECTS_DATA = {
         featured: false,
         order: 2,
         
-        thumbnail: './img/portfolio-preview/GA4G_HP.png',
+        thumbnail: './img/portfolio-preview/GA4G_HP.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=301',
         gallery_images: [
             'https://picsum.photos/1200/800?random=302',
@@ -77,7 +77,7 @@ export const PROJECTS_DATA = {
         featured: false,
         order: 3,
         
-        thumbnail: './img/portfolio-preview/audi.png',
+        thumbnail: './img/portfolio-preview/audi.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=401',
         gallery_images: [
             'https://picsum.photos/1200/800?random=402',
@@ -106,7 +106,7 @@ export const PROJECTS_DATA = {
         featured: false,
         order: 4,
         
-        thumbnail: './img/portfolio-preview/Curasept.png',
+        thumbnail: './img/portfolio-preview/Curasept.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=501',
         gallery_images: [
             'https://picsum.photos/1200/800?random=502',
@@ -135,7 +135,7 @@ export const PROJECTS_DATA = {
         featured: true,
         order: 5,
         
-        thumbnail: './img/portfolio-preview/gpf.png',
+        thumbnail: './img/portfolio-preview/gpf.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=601',
         gallery_images: [
             'https://picsum.photos/1200/800?random=602',
@@ -164,7 +164,7 @@ export const PROJECTS_DATA = {
         featured: false,
         order: 6,
         
-        thumbnail: './img/portfolio-preview/Mediaset.png',
+        thumbnail: './img/portfolio-preview/Mediaset.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=701',
         gallery_images: [
             'https://picsum.photos/1200/800?random=702',
@@ -193,7 +193,7 @@ export const PROJECTS_DATA = {
         featured: true,
         order: 7,
         
-        thumbnail: './img/portfolio-preview/Intrum.png',
+        thumbnail: './img/portfolio-preview/Intrum.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=801',
         gallery_images: [
             'https://picsum.photos/1200/800?random=802',
@@ -222,7 +222,7 @@ export const PROJECTS_DATA = {
         featured: true,
         order: 8,
         
-        thumbnail: './img/portfolio-preview/gas sales.png',
+        thumbnail: './img/portfolio-preview/gas sales.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=901',
         gallery_images: [
             'https://picsum.photos/1200/800?random=902',
@@ -251,7 +251,7 @@ export const PROJECTS_DATA = {
         featured: false,
         order: 9,
         
-        thumbnail: './img/portfolio-preview/Mipharm.png',
+        thumbnail: './img/portfolio-preview/Mipharm.jpg',
         hero_image: 'https://picsum.photos/1200/600?random=1001',
         gallery_images: [
             'https://picsum.photos/1200/800?random=1002',
