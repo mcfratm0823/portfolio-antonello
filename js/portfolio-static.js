@@ -138,7 +138,6 @@ function initializePortfolio() {
                            document.getElementById('projects-container');
     
     if (isPortfolioPage && !window.__PORTFOLIO_INITIALIZER__) {
-        console.log('Initializing portfolio...');
         window.__PORTFOLIO_INITIALIZER__ = new PortfolioInitializer();
     }
 }
