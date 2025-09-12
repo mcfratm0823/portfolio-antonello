@@ -223,7 +223,7 @@ html {
     font-size: 2.7vw;
     line-height: .9;
     color: var(--color);
-    text-transform: uppercase;
+    /* text-transform: uppercase; */ /* Temporarily disabled for testing */
     letter-spacing: 0.5px;
     margin: 0;
     max-width: 100vw;
