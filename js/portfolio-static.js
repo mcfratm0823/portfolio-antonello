@@ -5,7 +5,10 @@
  * @version 2.0.0
  */
 
+console.log('[Portfolio-Static] Script loaded');
+
 // Import project data from centralized data layer  
+console.log('[Portfolio-Static] Importing projects data...');
 import { getAllProjects, getProjectsByCategory } from './projects-data.js?v=4';
 
 // Professional filter configuration
@@ -22,10 +25,12 @@ const STATIC_FILTERS = [
  */
 class PortfolioInitializer {
     constructor() {
+        console.log('[PortfolioInitializer] Constructor called');
         this.initialized = false;
         this.projects = [];
         this.currentFilter = 'all';
         
+        console.log('[PortfolioInitializer] Starting init...');
         this.init();
     }
     
@@ -33,26 +38,35 @@ class PortfolioInitializer {
      * Initialize portfolio system
      */
     async init() {
+        console.log('[PortfolioInitializer] Init called, initialized:', this.initialized);
+        
         if (this.initialized) {
-            // PortfolioInitializer already initialized
+            console.log('[PortfolioInitializer] Already initialized, skipping');
             return;
         }
         
         try {
+            console.log('[PortfolioInitializer] Loading projects from data layer...');
+            
             // Load projects from centralized data
             this.projects = getAllProjects();
+            console.log('[PortfolioInitializer] Projects loaded:', this.projects.length);
+            console.log('[PortfolioInitializer] Sample project:', this.projects[0]?.title);
             
             // Initialize filters
+            console.log('[PortfolioInitializer] Initializing filters...');
             this.initializeFilters();
             
             // Load and render projects
+            console.log('[PortfolioInitializer] Rendering projects...');
             this.renderProjects();
             
             this.initialized = true;
-            // PortfolioInitializer successfully initialized
+            console.log('[PortfolioInitializer] ✅ Successfully initialized');
             
         } catch (error) {
-            // PortfolioInitializer failed to initialize
+            console.error('[PortfolioInitializer] ❌ Failed to initialize:', error);
+            console.error('[PortfolioInitializer] Error stack:', error.stack);
         }
     }
     
@@ -136,11 +150,17 @@ class PortfolioInitializer {
  * Initialize when DOM is ready and we're on portfolio page
  */
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('[Portfolio-Static] DOMContentLoaded fired');
     const isPortfolioPage = window.location.pathname.includes('portfolio');
+    console.log('[Portfolio-Static] Is portfolio page:', isPortfolioPage, 'path:', window.location.pathname);
     
     if (isPortfolioPage) {
+        console.log('[Portfolio-Static] Creating PortfolioInitializer instance...');
         // Initialize professional portfolio system
         window.__PORTFOLIO_INITIALIZER__ = new PortfolioInitializer();
+        console.log('[Portfolio-Static] Instance created and assigned to window');
+    } else {
+        console.log('[Portfolio-Static] Not portfolio page, skipping');
     }
 });
 

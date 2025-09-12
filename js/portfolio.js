@@ -1207,21 +1207,38 @@ window.renderProjects = function(projects) {
     });
 };
 
+// DEBUG: Log when script loads
+console.log('[Portfolio] portfolio.js script loaded');
+
 // Initialize portfolio when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('[Portfolio] DOM loaded, checking page...');
+    console.log('[Portfolio] Current pathname:', window.location.pathname);
+    console.log('[Portfolio] Projects container exists:', !!document.getElementById('projects-container'));
+    
     // Only initialize if we're on the portfolio page
     if (window.location.pathname.includes('portfolio') || document.getElementById('projects-container')) {
-        console.log('[Portfolio] Initializing portfolio system...');
+        console.log('[Portfolio] ✅ Portfolio page detected - starting initialization...');
+        
+        // Check if required elements exist
+        const container = document.getElementById('projects-container');
+        const loading = document.getElementById('loading-message');
+        console.log('[Portfolio] Elements check - container:', !!container, 'loading:', !!loading);
         
         // Import and initialize portfolio data
-        import('./portfolio-static.js?v=4').then(() => {
-            console.log('[Portfolio] Portfolio static loaded successfully');
+        console.log('[Portfolio] Attempting to import portfolio-static.js...');
+        import('./portfolio-static.js?v=4').then((module) => {
+            console.log('[Portfolio] ✅ Portfolio static loaded successfully');
+            console.log('[Portfolio] Module exports:', Object.keys(module));
         }).catch(error => {
-            console.error('[Portfolio] Failed to load portfolio-static:', error);
+            console.error('[Portfolio] ❌ Failed to load portfolio-static:', error);
+            console.error('[Portfolio] Error stack:', error.stack);
             
             // Fallback: try to initialize manually
             initializeFallbackPortfolio();
         });
+    } else {
+        console.log('[Portfolio] ❌ Not a portfolio page - skipping initialization');
     }
 });
 
