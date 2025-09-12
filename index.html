@@ -420,13 +420,13 @@
     </main>
 
     <!-- External Dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- GSAP Ottimizzato: caricato via modulo ES6 per tree shaking -->
     <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
     
     <!-- Module-based loading (modern browsers) -->
     <script type="module">
+        import './js/gsap-optimized.js';  // GSAP tree-shaked (~33KB vs 120KB)
         import './js/lifecycle-manager.js';  // Memory leak prevention
         import './js/global-cursor.js';  // Cursore globale con cleanup
         import './js/form-ajax.js';  // Carica prima form-ajax
@@ -436,6 +436,8 @@
     </script>
     
     <!-- Fallback for browsers without module support -->
+    <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script nomodule src="./js/lifecycle-manager.js"></script>
     <script nomodule src="./config/constants.js"></script>
     <script nomodule src="./utils/formValidator.js"></script>
