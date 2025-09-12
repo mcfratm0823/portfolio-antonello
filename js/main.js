@@ -10,6 +10,8 @@ import { ImageLoader } from '../utils/imageLoader.js';
 import { ErrorHandler, fetchWithRetry } from '../utils/errorHandler.js';
 import { PerformanceMonitor } from '../utils/performanceMonitor.js';
 import { CLSOptimizer } from '../utils/clsOptimizer.js';
+import { WebVitalsDashboard } from '../utils/webVitalsDashboard.js';
+import { ProductionVitalsMonitor } from '../utils/productionVitals.js';
 import { initializeGlobalCursor } from './global-cursor.js';
 import { initializeNavbar } from './navbar.js';
 
@@ -24,7 +26,9 @@ export {
     ImageLoader,
     ErrorHandler,
     fetchWithRetry,
-    PerformanceMonitor
+    PerformanceMonitor,
+    WebVitalsDashboard,
+    ProductionVitalsMonitor
 };
 
 // Initialize core components when DOM is ready
@@ -38,6 +42,16 @@ function initializeCore() {
         // Initialize performance monitor
         if (!window.performanceMonitor) {
             window.performanceMonitor = new PerformanceMonitor();
+        }
+        
+        // Initialize Web Vitals Dashboard (dev mode)
+        if (!window.webVitalsDashboard) {
+            window.webVitalsDashboard = new WebVitalsDashboard();
+        }
+        
+        // Initialize Production Vitals Monitor (production)
+        if (!window.productionVitalsMonitor) {
+            window.productionVitalsMonitor = new ProductionVitalsMonitor();
         }
         
         // Initialize CLS optimizer
