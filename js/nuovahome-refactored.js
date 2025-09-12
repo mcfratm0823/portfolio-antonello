@@ -51,21 +51,43 @@ class NuovaHomeInitializer {
         if (window.trackModuleInit) {
             window.trackModuleInit('NuovaHome');
         }
-        
-        // Initialize video control before preloader
-        this.initHeroVideo();
-        
-        // Initialize all features
-        this.initFooterForm();
-        this.initPreloader();
-        this.initPhotoScaling();
-        this.initPortfolioSection();
-        this.initAboutSection();
-        this.initServicesSection();
-        this.initFooterAnimation();
-        this.initServicesAccordion();
-        
-        if (this.debug) {} // NuovaHome initialization complete
+
+        try {
+            // Initialize video control before preloader
+            this.initHeroVideo();
+            
+            // Initialize all features with error boundaries
+            this.initFooterForm();
+            this.initPreloader();
+            this.initPhotoScaling();
+            this.initPortfolioSection();
+            this.initAboutSection();
+            this.initServicesSection();
+            this.initFooterAnimation();
+            this.initServicesAccordion();
+            
+            if (this.debug) {} // NuovaHome initialization complete
+        } catch (error) {
+            // Error boundary per inizializzazione critica
+            if (window.errorHandler) {
+                window.errorHandler.handle(error, {
+                    component: 'NuovaHome',
+                    action: 'initialization',
+                    critical: true,
+                    phase: 'main_init'
+                });
+            } else {
+                console.error('NuovaHome initialization failed:', error);
+            }
+            
+            // Fallback: inizializza almeno le funzioni base
+            try {
+                this.initHeroVideo();
+                this.initPreloader();
+            } catch (fallbackError) {
+                console.error('Even fallback initialization failed:', fallbackError);
+            }
+        }
     }
     
     /**
@@ -107,8 +129,17 @@ class NuovaHomeInitializer {
         // Small delay to ensure smooth transition after preloader
         setTimeout(() => {
             this.heroVideo.play().catch(err => {
-                // Fallback: if autoplay is blocked, just ensure video is visible
-                if (this.debug) console.warn('Video autoplay blocked:', err);
+                // Usa ErrorHandler professionale se disponibile
+                if (window.errorHandler) {
+                    window.errorHandler.handle(err, {
+                        component: 'NuovaHome',
+                        action: 'heroVideoAutoplay',
+                        critical: false,
+                        fallback: 'show_first_frame'
+                    });
+                } else if (this.debug) {
+                    console.warn('Video autoplay blocked:', err);
+                }
             });
         }, 100);
     }
@@ -252,17 +283,18 @@ class NuovaHomeInitializer {
      * Initialize photo scaling animation
      */
     initPhotoScaling() {
-        // Only apply animation on desktop/landscape tablets
-        if (window.innerWidth < 1024) return;
-        
-        const centerVideo = document.getElementById('center-video');
-        const visualTitle = document.getElementById('antonello-title');
-        const designerTitle = document.getElementById('guarnieri-title');
-        
-        if (!centerVideo) return;
-        
-        // Register ScrollTrigger plugin
-        gsap.registerPlugin(ScrollTrigger);
+        try {
+            // Only apply animation on desktop/landscape tablets
+            if (window.innerWidth < 1024) return;
+            
+            const centerVideo = document.getElementById('center-video');
+            const visualTitle = document.getElementById('antonello-title');
+            const designerTitle = document.getElementById('guarnieri-title');
+            
+            if (!centerVideo) return;
+            
+            // Register ScrollTrigger plugin
+            gsap.registerPlugin(ScrollTrigger);
         
         // Calculate dimensions needed for full viewport coverage
         function getFullScreenDimensions() {
@@ -306,16 +338,27 @@ class NuovaHomeInitializer {
             anticipatePin: 1
         });
         
-        // Handle resize with debouncing
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                if (window.innerWidth >= 1024) {
-                    ScrollTrigger.refresh();
-                }
-            }, window.CONSTANTS?.TIMING?.RESIZE_DEBOUNCE || 300);
-        });
+            // Handle resize with debouncing
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    if (window.innerWidth >= 1024) {
+                        ScrollTrigger.refresh();
+                    }
+                }, window.CONSTANTS?.TIMING?.RESIZE_DEBOUNCE || 300);
+            });
+        } catch (error) {
+            // Error boundary per GSAP ScrollTrigger
+            if (window.errorHandler) {
+                window.errorHandler.handle(error, {
+                    component: 'NuovaHome',
+                    action: 'initPhotoScaling',
+                    critical: false,
+                    gsap_related: true
+                });
+            }
+        }
     }
     
     /**
@@ -834,7 +877,16 @@ class NuovaHomeInitializer {
                     imageCache.set(imageUrl, true);
                     resolve();
                 };
-                img.onerror = () => {
+                img.onerror = (error) => {
+                    // Usa ErrorHandler per tracciare errori immagini
+                    if (window.errorHandler) {
+                        window.errorHandler.handle(new Error(`Image load failed: ${imageUrl}`), {
+                            component: 'ServicesAccordion',
+                            action: 'imagePreload',
+                            critical: false,
+                            imageUrl: imageUrl
+                        });
+                    }
                     resolve(); // Resolve anyway to not block
                 };
                 img.src = imageUrl;
