@@ -6,7 +6,7 @@
  */
 
 // Import project data from centralized data layer  
-import { getAllProjects, getProjectsByCategory } from './projects-data.js?v=4';
+import { getAllProjects, getProjectsByCategory } from './projects-data.js';
 
 // Professional filter configuration
 const STATIC_FILTERS = [
@@ -131,16 +131,25 @@ class PortfolioInitializer {
 }
 
 /**
- * Initialize when DOM is ready and we're on portfolio page
+ * Initialize portfolio - handles both DOM ready and already loaded cases
  */
-document.addEventListener('DOMContentLoaded', function() {
-    const isPortfolioPage = window.location.pathname.includes('portfolio');
+function initializePortfolio() {
+    const isPortfolioPage = window.location.pathname.includes('portfolio') || 
+                           document.getElementById('projects-container');
     
-    if (isPortfolioPage) {
-        // Initialize professional portfolio system
+    if (isPortfolioPage && !window.__PORTFOLIO_INITIALIZER__) {
+        console.log('Initializing portfolio...');
         window.__PORTFOLIO_INITIALIZER__ = new PortfolioInitializer();
     }
-});
+}
+
+// Handle both cases: DOM already ready or still loading
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePortfolio);
+} else {
+    // DOM is already ready, initialize immediately
+    initializePortfolio();
+}
 
 // Export for debugging and external access
 export { STATIC_FILTERS, PortfolioInitializer };
