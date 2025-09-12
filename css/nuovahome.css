@@ -1390,6 +1390,44 @@ body::-webkit-scrollbar,
     color: inherit;
 }
 
+/* Focus indicators per accessibilità - Solo navigazione da tastiera */
+.service-arrow:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.selected_work_box_link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+/* Migliora focus sui form mantenendo stili esistenti */
+.footer-menu-item input:focus-visible,
+.footer-menu-item textarea:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 1px;
+}
+
+/* Focus generico per tutti i link */
+a:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+/* Focus specifico per elementi navbar (se esistente) */
+.navbar a:focus-visible,
+.nav-link:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+/* Rimuovo outline di default browser solo se abbiamo focus-visible */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
 /* Footer Bottom Contacts */
 .footer-bottom-contacts {
     position: absolute;
