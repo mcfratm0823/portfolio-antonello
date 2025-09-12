@@ -1207,60 +1207,14 @@ window.renderProjects = function(projects) {
     });
 };
 
-// DEBUG: Log when script loads
-console.log('[Portfolio] portfolio.js script loaded');
-
 // Simple safeHTML implementation for portfolio
 window.safeHTML = function(html, context) {
-    console.log('[Portfolio] safeHTML called with context:', context);
     // Use DOMPurify if available, otherwise return as-is for now
     if (typeof DOMPurify !== 'undefined') {
         return DOMPurify.sanitize(html);
     }
     return html;
 };
-
-// Initialize portfolio when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('[Portfolio] DOM loaded, checking page...');
-    console.log('[Portfolio] Current pathname:', window.location.pathname);
-    console.log('[Portfolio] Projects container exists:', !!document.getElementById('projects-container'));
-    
-    // Only initialize if we're on the portfolio page
-    if (window.location.pathname.includes('portfolio') || document.getElementById('projects-container')) {
-        console.log('[Portfolio] ✅ Portfolio page detected - starting initialization...');
-        
-        // Check if required elements exist
-        const container = document.getElementById('projects-container');
-        const loading = document.getElementById('loading-message');
-        console.log('[Portfolio] Elements check - container:', !!container, 'loading:', !!loading);
-        
-        // Import and initialize portfolio data
-        console.log('[Portfolio] Attempting to import portfolio-static.js...');
-        import('./portfolio-static.js?v=4').then((module) => {
-            console.log('[Portfolio] ✅ Portfolio static loaded successfully');
-            console.log('[Portfolio] Module exports:', Object.keys(module));
-        }).catch(error => {
-            console.error('[Portfolio] ❌ Failed to load portfolio-static:', error);
-            console.error('[Portfolio] Error stack:', error.stack);
-            
-            // Fallback: try to initialize manually
-            initializeFallbackPortfolio();
-        });
-    } else {
-        console.log('[Portfolio] ❌ Not a portfolio page - skipping initialization');
-    }
-});
-
-// Fallback initialization if import fails
-function initializeFallbackPortfolio() {
-    console.log('[Portfolio] Using fallback initialization...');
-    
-    const loadingMessage = document.getElementById('loading-message');
-    if (loadingMessage) {
-        loadingMessage.innerHTML = '<p>Errore nel caricamento progetti. <button onclick="location.reload()">Ricarica</button></p>';
-    }
-}
 
 // Export for ES6 module support
 if (typeof module !== 'undefined' && module.exports) {

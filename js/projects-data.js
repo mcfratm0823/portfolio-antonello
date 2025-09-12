@@ -5,8 +5,6 @@
  * @version 1.0.0
  */
 
-console.log('[Projects-Data] Module loading...');
-
 export const PROJECTS_DATA = {
     'cafe-124': {
         // Meta Information
@@ -287,10 +285,7 @@ export function getProject(slug) {
  * @returns {Array} Array of all projects
  */
 export function getAllProjects() {
-    console.log('[Projects-Data] getAllProjects called, data keys:', Object.keys(PROJECTS_DATA).length);
-    const projects = Object.values(PROJECTS_DATA).sort((a, b) => a.order - b.order);
-    console.log('[Projects-Data] Returning', projects.length, 'projects');
-    return projects;
+    return Object.values(PROJECTS_DATA).sort((a, b) => a.order - b.order);
 }
 
 /**
