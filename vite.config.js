@@ -2,8 +2,9 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { readdirSync } from 'fs';
 
-// Trova tutti i file HTML nella root
+// Trova tutti i file HTML nella root E nella cartella progetti
 const htmlFiles = readdirSync('.').filter(file => file.endsWith('.html'));
+const projectFiles = readdirSync('./progetti').filter(file => file.endsWith('.html'));
 
 // Crea l'oggetto input per Rollup
 const input = htmlFiles.reduce((acc, file) => {
@@ -11,6 +12,12 @@ const input = htmlFiles.reduce((acc, file) => {
   acc[name] = resolve(__dirname, file);
   return acc;
 }, {});
+
+// Aggiungi i progetti
+projectFiles.forEach(file => {
+  const name = `progetti/${file.replace('.html', '')}`;
+  input[name] = resolve(__dirname, `progetti/${file}`);
+});
 
 export default defineConfig({
   root: './',
