@@ -30,11 +30,15 @@ export default defineConfig({
     },
     // Asset handling
     assetsInlineLimit: 4096, // 4kb
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    // Copia le immagini dei servizi nella struttura originale
+    copyPublicDir: true
   },
   // Server di sviluppo
   server: {
     port: 5173,
     open: true
-  }
+  },
+  // Definisci la cartella public per asset statici
+  publicDir: 'public'
 });
