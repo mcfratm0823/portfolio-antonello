@@ -1210,6 +1210,16 @@ window.renderProjects = function(projects) {
 // DEBUG: Log when script loads
 console.log('[Portfolio] portfolio.js script loaded');
 
+// Simple safeHTML implementation for portfolio
+window.safeHTML = function(html, context) {
+    console.log('[Portfolio] safeHTML called with context:', context);
+    // Use DOMPurify if available, otherwise return as-is for now
+    if (typeof DOMPurify !== 'undefined') {
+        return DOMPurify.sanitize(html);
+    }
+    return html;
+};
+
 // Initialize portfolio when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     console.log('[Portfolio] DOM loaded, checking page...');
