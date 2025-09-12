@@ -1009,22 +1009,17 @@ if (!window.__PORTFOLIO_INIT_REGISTERED__) {
         }
         window.__PORTFOLIO_INITIALIZED__ = true;
         
-        // Non inizializzare StaticPortfolio se siamo sulla pagina portfolio
-        // poiché i progetti verranno caricati dal CMS
-        const isPortfolioPage = window.location.pathname.includes('portfolio');
-        if (!isPortfolioPage) {
-            // Initialize Static Portfolio solo per altre pagine
-            const staticPortfolio = new StaticPortfolio();
-            
-            // Store globally for lifecycle management
-            window.__STATIC_PORTFOLIO_INSTANCE__ = staticPortfolio;
-            
-            // Register with LifecycleManager if available
-            if (typeof window !== 'undefined' && window.lifecycleManager) {
-                window.lifecycleManager.register('portfolio', staticPortfolio, () => {
-                    staticPortfolio.destroy();
-                });
-            }
+        // Initialize Static Portfolio su tutte le pagine inclusa portfolio
+        const staticPortfolio = new StaticPortfolio();
+        
+        // Store globally for lifecycle management
+        window.__STATIC_PORTFOLIO_INSTANCE__ = staticPortfolio;
+        
+        // Register with LifecycleManager if available
+        if (typeof window !== 'undefined' && window.lifecycleManager) {
+            window.lifecycleManager.register('portfolio', staticPortfolio, () => {
+                staticPortfolio.destroy();
+            });
         }
         
         updateDate();
