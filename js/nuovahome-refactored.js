@@ -908,29 +908,53 @@ class NuovaHomeInitializer {
                 
                 e.stopPropagation();
                 
-                const serviceArrow = item.querySelector('.service-arrow');
-                
-                // Close all other accordions
-                serviceItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                        const otherArrow = otherItem.querySelector('.service-arrow');
-                        if (otherArrow) otherArrow.textContent = '+';
+                this.toggleServiceAccordion(item, serviceItems);
+            });
+
+            // Add keyboard accessibility
+            const serviceArrow = item.querySelector('.service-arrow');
+            if (serviceArrow) {
+                serviceArrow.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.toggleServiceAccordion(item, serviceItems);
                     }
                 });
-                
-                // Toggle current accordion
-                item.classList.toggle('active');
-                
-                if (item.classList.contains('active')) {
-                    serviceArrow.textContent = '−';
-                } else {
-                    serviceArrow.textContent = '+';
-                }
-            });
+            }
         });
     }
     
+    /**
+     * Toggle service accordion
+     */
+    toggleServiceAccordion(item, serviceItems) {
+        const serviceArrow = item.querySelector('.service-arrow');
+        
+        // Close all other accordions
+        serviceItems.forEach(otherItem => {
+            if (otherItem !== item) {
+                otherItem.classList.remove('active');
+                const otherArrow = otherItem.querySelector('.service-arrow');
+                if (otherArrow) {
+                    otherArrow.textContent = '+';
+                    otherArrow.setAttribute('aria-expanded', 'false');
+                }
+            }
+        });
+        
+        // Toggle current accordion
+        item.classList.toggle('active');
+        
+        if (item.classList.contains('active')) {
+            serviceArrow.textContent = '−';
+            serviceArrow.setAttribute('aria-expanded', 'true');
+        } else {
+            serviceArrow.textContent = '+';
+            serviceArrow.setAttribute('aria-expanded', 'false');
+        }
+    }
+
     /**
      * Helper function to match CSS clamp
      */
