@@ -258,7 +258,8 @@ body::-webkit-scrollbar,
     z-index: 100;
 }
 
-#antonello-title h1 {
+#antonello-title h1,
+#antonello-title h2 {
     font-family: Neue;
     font-size: clamp(8rem, 12vw, 300px);
     line-height: 1;
@@ -278,7 +279,8 @@ body::-webkit-scrollbar,
     z-index: 100;
 }
 
-#guarnieri-title h1 {
+#guarnieri-title h1,
+#guarnieri-title h2 {
     font-family: Neue;
     font-size: clamp(8rem, 12vw, 300px);
     line-height: 1;
@@ -1552,7 +1554,8 @@ body::-webkit-scrollbar,
         z-index: 200;
     }
     
-    #antonello-title h1 {
+    #antonello-title h1,
+    #antonello-title h2 {
         font-size: 20vw;
         line-height: 1;
         text-align: center;
@@ -1591,7 +1594,8 @@ body::-webkit-scrollbar,
         z-index: 200;
     }
     
-    #guarnieri-title h1 {
+    #guarnieri-title h1,
+    #guarnieri-title h2 {
         font-size: 20vw;
         line-height: 1;
         text-align: center;
