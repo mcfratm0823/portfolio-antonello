@@ -1207,6 +1207,34 @@ window.renderProjects = function(projects) {
     });
 };
 
+// Initialize portfolio when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Only initialize if we're on the portfolio page
+    if (window.location.pathname.includes('portfolio') || document.getElementById('projects-container')) {
+        console.log('[Portfolio] Initializing portfolio system...');
+        
+        // Import and initialize portfolio data
+        import('./portfolio-static.js?v=4').then(() => {
+            console.log('[Portfolio] Portfolio static loaded successfully');
+        }).catch(error => {
+            console.error('[Portfolio] Failed to load portfolio-static:', error);
+            
+            // Fallback: try to initialize manually
+            initializeFallbackPortfolio();
+        });
+    }
+});
+
+// Fallback initialization if import fails
+function initializeFallbackPortfolio() {
+    console.log('[Portfolio] Using fallback initialization...');
+    
+    const loadingMessage = document.getElementById('loading-message');
+    if (loadingMessage) {
+        loadingMessage.innerHTML = '<p>Errore nel caricamento progetti. <button onclick="location.reload()">Ricarica</button></p>';
+    }
+}
+
 // Export for ES6 module support
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
