@@ -173,24 +173,12 @@
         </div>
     </footer>
 
-    <!-- Module-based loading (modern browsers) -->
-    <script type="module">
-        import './config/constants.js';
-        import './js/main.js';
-        import './js/portfolio.js';
-        import './js/portfolio-static.js?v=4';
-    </script>
+    <!-- Vite entry point - tutto gestito automaticamente -->
+    <script type="module" src="./js/portfolio.js"></script>
     
-    <!-- Fallback for browsers without module support -->
-    <script nomodule src="./config/constants.js"></script>
-    <script nomodule src="./utils/formValidator.js"></script>
-    <script nomodule src="./utils/imageLoader.js"></script>
-    <script nomodule src="./utils/errorHandler.js"></script>
-    <script nomodule src="./utils/performanceMonitor.js"></script>
-    <script nomodule src="./utils/clsOptimizer.js"></script>
-    <script nomodule src="./js/global-cursor.js"></script>
-    <script nomodule src="./js/navbar.js"></script>
-    <script nomodule src="./js/portfolio.js"></script>
-    <script nomodule src="./js/portfolio-static.js?v=4"></script>
+    <!-- Fallback per browser molto vecchi -->
+    <noscript>
+        <p style="text-align: center; padding: 50px;">JavaScript è necessario per visualizzare i progetti.</p>
+    </noscript>
 </body>
 </html>
