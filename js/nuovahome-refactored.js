@@ -505,9 +505,15 @@ class NuovaHomeInitializer {
                 defaults: { duration: 1 }
             });
             
-            // Set pointer events
-            projectTimeline.set(items, { pointerEvents: "none" });
-            projectTimeline.set(item, { pointerEvents: "auto" });
+            // Set pointer events - Fixed to ensure correct project is clickable
+            projectTimeline.call(() => {
+                // First disable all items
+                items.forEach(projectItem => {
+                    gsap.set(projectItem, { pointerEvents: "none" });
+                });
+                // Then enable only the current item
+                gsap.set(item, { pointerEvents: "auto" });
+            });
             
             // Animate current project in
             projectTimeline
