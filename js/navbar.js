@@ -31,7 +31,7 @@ class Navbar {
         
         // Store navigation data
         this.navigationData = {
-            logo: { text: "Zero823®", link: "index.html" },
+            logo: { text: "ZERO823®", link: "index.html" },
             menu_trigger: { text: "IV.V.MMXXIII", show_arrow: true },
             menu_overlay: {
                 close_text: "CHIUDI",
