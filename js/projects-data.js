@@ -156,7 +156,7 @@ export const PROJECTS_DATA = {
     
     'mediaset': {
         id: 6,
-        title: 'Mediaset',
+        title: 'Mediaset Infinity',
         slug: 'mediaset',
         category: 'brand',
         year: '2024',
