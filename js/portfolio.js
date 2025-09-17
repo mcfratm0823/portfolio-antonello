@@ -997,7 +997,40 @@ class StaticPortfolio {
 }
 
 
-// Funzioni di animazione rimosse - tornato all'approccio semplice senza GSAP
+// FOUT Animation - Show text after fonts are loaded
+function animatePortfolioText() {
+    if (typeof gsap === 'undefined') return;
+    
+    // Animate portfolio title
+    gsap.to("#portfolio-title", {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+    
+    // Animate filter items
+    gsap.to(".filter-item", {
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
+    });
+    
+    // Animate project cards
+    gsap.to(".project-card h3", {
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "power2.out"
+    });
+    
+    // Animate footer
+    gsap.to("#footer p", {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out"
+    });
+}
 
 // Initialize Everything - con controllo per evitare doppia inizializzazione
 if (!window.__PORTFOLIO_INIT_REGISTERED__) {
@@ -1010,6 +1043,16 @@ if (!window.__PORTFOLIO_INIT_REGISTERED__) {
             return;
         }
         window.__PORTFOLIO_INITIALIZED__ = true;
+        
+        // Animate text after fonts are loaded
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                animatePortfolioText();
+            });
+        } else {
+            // Fallback for older browsers
+            setTimeout(animatePortfolioText, 300);
+        }
         
         // Initialize Static Portfolio su tutte le pagine inclusa portfolio
         const staticPortfolio = new StaticPortfolio();

@@ -91,6 +91,24 @@
         .filter-item {
             font-family: Neue, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
+        
+        /* CRITICAL: Prevent FOUT by hiding text initially */
+        #portfolio-title,
+        .filter-item,
+        .project-card h3,
+        #footer p {
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        /* Show content when fonts are ready or after timeout */
+        .fonts-loaded #portfolio-title,
+        .fonts-loaded .filter-item,
+        .fonts-loaded .project-card h3,
+        .fonts-loaded #footer p {
+            opacity: 1;
+        }
+        
         #projects-stack { contain: layout style; }
     </style>
     
@@ -98,7 +116,6 @@
     <link href="./utils/imageLoader.css" rel="stylesheet">
     <link href="./css/portfolio.css" rel="stylesheet">
     <link href="./css/portfolio-links.css" rel="stylesheet">
-    <link href="./css/portfolio-fout-fix.css" rel="stylesheet">
     <script>
         // Data automatica
         document.addEventListener('DOMContentLoaded', function() {
@@ -179,6 +196,9 @@
         </div>
     </footer>
 
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <!-- Font handler per prevenire FOUT -->
     <script src="./js/portfolio-font-handler.js"></script>
     

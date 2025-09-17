@@ -3,6 +3,25 @@
  * Ottimizzazione minimale per ridurre l'impatto del FOUT
  */
 
+/* CRITICAL: Hide elements until fonts are loaded */
+.fonts-loading #portfolio-title,
+.fonts-loading .filter-item,
+.fonts-loading .project-card h3,
+.fonts-loading #footer p {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Show elements after fonts are loaded with smooth transition */
+.fonts-loaded #portfolio-title,
+.fonts-loaded .filter-item,
+.fonts-loaded .project-card h3,
+.fonts-loaded #footer p {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
 /* Transizione smooth per quando i font si caricano */
 #portfolio-title,
 .filter-item {
@@ -33,5 +52,23 @@
     #portfolio-title,
     .filter-item {
         font-family: Neue, 'Neue-fallback', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+}
+
+/* Fallback for when JavaScript is disabled or fails */
+@media (prefers-reduced-motion: no-preference) {
+    /* After 1 second, show content even if fonts haven't loaded */
+    @keyframes showContentFallback {
+        to {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+    }
+    
+    .fonts-loading #portfolio-title,
+    .fonts-loading .filter-item,
+    .fonts-loading .project-card h3,
+    .fonts-loading #footer p {
+        animation: showContentFallback 0s 1s forwards;
     }
 }
