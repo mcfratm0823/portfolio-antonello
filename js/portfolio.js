@@ -1001,12 +1001,7 @@ class StaticPortfolio {
 function animatePortfolioText() {
     if (typeof gsap === 'undefined') return;
     
-    // Animate portfolio title
-    gsap.to("#portfolio-title", {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out"
-    });
+    // Portfolio title è sempre visibile, no animazione
     
     // Animate filter items
     gsap.to(".filter-item", {
