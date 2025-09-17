@@ -86,17 +86,10 @@
         /* Contain animations */
         .project-card { contain: layout; }
         
-        /* CRITICO: Nascondi elementi per prevenire flash iniziale */
-        #portfolio-title {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(30px);
-        }
-        
+        /* Font loading strategy per portfolio */
+        #portfolio-title,
         .filter-item {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
+            font-family: Neue, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         #projects-stack { contain: layout style; }
     </style>
@@ -186,8 +179,10 @@
         </div>
     </footer>
 
+    <!-- Font handler per prevenire FOUT -->
+    <script src="./js/portfolio-font-handler.js"></script>
+    
     <!-- Vite entry points - componenti necessari per portfolio -->
-    <script type="module" src="./js/gsap-optimized.js"></script>
     <script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/navbar.js"></script>
     <script type="module" src="./js/global-cursor.js"></script>

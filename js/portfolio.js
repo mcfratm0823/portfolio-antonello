@@ -997,89 +997,7 @@ class StaticPortfolio {
 }
 
 
-/**
- * Animate portfolio elements to hide FOUT
- * @returns {void}
- */
-function animatePortfolioElements() {
-    // Attendi che GSAP sia disponibile
-    if (typeof gsap === 'undefined' || !window.gsap) {
-        // Se GSAP non è ancora carico, riprova dopo un breve delay
-        setTimeout(animatePortfolioElements, 100);
-        return;
-    }
-    
-    // Anima il titolo principale
-    const portfolioTitle = document.getElementById('portfolio-title');
-    const filters = document.querySelectorAll('.filter-item');
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    // Nascondi inizialmente il titolo (già nascosto via CSS, ma assicuriamoci)
-    if (portfolioTitle) {
-        // Rimuovi le proprietà CSS inline per permettere a GSAP di animare
-        portfolioTitle.style.visibility = 'visible';
-        
-        // Imposta lo stato iniziale
-        gsap.set(portfolioTitle, {
-            opacity: 0,
-            y: 30
-        });
-        
-        // Anima il titolo dopo un breve delay per dare tempo al font di caricarsi
-        gsap.to(portfolioTitle, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-            delay: 0.1,
-            clearProps: 'transform' // Pulisce la trasformazione dopo l'animazione
-        });
-    }
-        
-    // Anima i filtri
-    if (filters.length > 0) {
-        // Rendi visibili per l'animazione
-        filters.forEach(filter => {
-            filter.style.visibility = 'visible';
-        });
-        
-        // Imposta stato iniziale
-        gsap.set(filters, {
-            opacity: 0,
-            y: 20
-        });
-        
-        gsap.to(filters, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.08,
-            ease: "power3.out",
-            delay: 0.3,
-            clearProps: 'transform'
-        });
-    }
-        
-        // Anima le card dei progetti se esistono
-        if (projectCards.length > 0) {
-            gsap.set(projectCards, { opacity: 0, scale: 0.95 });
-            gsap.to(projectCards, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.8,
-                stagger: 0.05,
-                ease: "power3.out",
-                delay: 0.3
-            });
-        }
-    
-    // Aggiungi classe quando i font sono caricati
-    if ('fonts' in document) {
-        document.fonts.ready.then(() => {
-            document.body.classList.add('fonts-loaded');
-        });
-    }
-}
+// Funzioni di animazione rimosse - tornato all'approccio semplice senza GSAP
 
 // Initialize Everything - con controllo per evitare doppia inizializzazione
 if (!window.__PORTFOLIO_INIT_REGISTERED__) {
@@ -1092,9 +1010,6 @@ if (!window.__PORTFOLIO_INIT_REGISTERED__) {
             return;
         }
         window.__PORTFOLIO_INITIALIZED__ = true;
-        
-        // NUOVO: Anima elementi per nascondere FOUT
-        animatePortfolioElements();
         
         // Initialize Static Portfolio su tutte le pagine inclusa portfolio
         const staticPortfolio = new StaticPortfolio();

@@ -1,44 +1,37 @@
 /**
- * Portfolio FOUT Fix
- * Previene il Flash of Unstyled Text durante il caricamento dei font
+ * Portfolio Font Optimization
+ * Ottimizzazione minimale per ridurre l'impatto del FOUT
  */
 
-/* Classe applicata quando i font sono caricati */
-.fonts-loaded #portfolio-title,
-.fonts-loaded .filter-item {
-    /* Rimuovi le transizioni CSS per lasciare che GSAP gestisca tutto */
-    transition: none !important;
+/* Transizione smooth per quando i font si caricano */
+#portfolio-title,
+.filter-item {
+    transition: font-weight 0.1s ease-out;
 }
 
-/* Fallback per browser che non supportano font loading API */
-@supports not (font-display: swap) {
-    #portfolio-title,
-    .filter-item {
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-    }
-}
-
-/* Fix per Safari che potrebbe avere problemi con visibility */
+/* Ottimizzazione rendering per Safari */
 @supports (-webkit-appearance: none) {
     #portfolio-title,
     .filter-item {
-        -webkit-transform: translateY(30px);
-        -webkit-backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 }
 
-/* Ottimizzazione per ridurre il repaint durante l'animazione */
-#portfolio-title,
-.filter-item,
-.project-card {
-    will-change: opacity, transform;
-}
-
-/* Rimuovi will-change dopo l'animazione per salvare memoria */
-.fonts-loaded #portfolio-title,
-.fonts-loaded .filter-item,
-.fonts-loaded .project-card {
-    will-change: auto;
+/* Font metrics per ridurre CLS quando i font si caricano */
+@supports (size-adjust: 1) {
+    @font-face {
+        font-family: 'Neue-fallback';
+        src: local('Arial');
+        size-adjust: 105%;
+        ascent-override: 90%;
+        descent-override: 15%;
+        line-gap-override: normal;
+    }
+    
+    /* Usa il fallback ottimizzato prima che il font reale si carichi */
+    #portfolio-title,
+    .filter-item {
+        font-family: Neue, 'Neue-fallback', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 }
