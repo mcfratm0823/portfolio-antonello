@@ -85,6 +85,21 @@
         
         /* Contain animations */
         .project-card { contain: layout; }
+        
+        /* CRITICO: Nascondi elementi per prevenire flash iniziale */
+        #portfolio-title {
+            opacity: 0 !important;
+            visibility: hidden;
+        }
+        
+        .filter-item {
+            opacity: 0;
+        }
+        
+        /* Classe aggiunta quando i font sono pronti */
+        .fonts-loaded #portfolio-title {
+            visibility: visible;
+        }
         #projects-stack { contain: layout style; }
     </style>
     

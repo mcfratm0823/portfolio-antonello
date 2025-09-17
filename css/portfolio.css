@@ -156,16 +156,6 @@ html, body {
     }
 }
 
-/* Fix FOUT: Nascondi titolo inizialmente per animazione */
-#portfolio-title {
-    opacity: 0;
-}
-
-/* Mostra quando i font sono caricati */
-.fonts-loaded #portfolio-title {
-    opacity: 1;
-}
-
 /* Filtri lavori */
 #filters {
     position: fixed;
