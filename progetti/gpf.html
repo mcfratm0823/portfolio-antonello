@@ -6,40 +6,23 @@
     <title>GPF - ANTONELLO GUARNIERI ® VISUAL DESIGNER</title>
     
     <!-- Font preloading for faster initial render -->
-    <link rel="preload" href="../fonts/PPNeueMontreal-Book.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="../fonts/PPNeueMontreal-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="../fonts/PPNeueMontreal-Bold.woff2" as="font" type="font/woff2" crossorigin>
     
     <!-- Inline critical font-face to prevent FOUT -->
     <style>
         @font-face {
-            font-family: 'PP Neue Montreal';
-            src: url('../fonts/PPNeueMontreal-Book.woff2') format('woff2'),
-                 url('../fonts/PPNeueMontreal-Book.woff') format('woff');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'PP Neue Montreal';
-            src: url('../fonts/PPNeueMontreal-Bold.woff2') format('woff2'),
-                 url('../fonts/PPNeueMontreal-Bold.woff') format('woff');
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'PP Neue Montreal';
-            src: url('../fonts/PPNeueMontreal-Bold.woff2') format('woff2'),
-                 url('../fonts/PPNeueMontreal-Bold.woff') format('woff');
-            font-weight: 900;
+            font-family: Neue;
+            src: url('../fonts/PPNeueMontreal-Medium.woff2') format('woff2');
+            font-weight: 500;
             font-style: normal;
             font-display: swap;
         }
         
         /* Prevent layout shift by setting font-family early */
         body {
-            font-family: 'PP Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: Neue, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
     </style>
     
