@@ -93,15 +93,25 @@
         }
         
         /* CRITICAL: Prevent FOUT by hiding text initially */
-        #portfolio-title {
-            opacity: 1; /* Sempre visibile, no animazione */
-        }
-        
+        #portfolio-title,
         .filter-item,
         .project-card h3,
         #footer p {
             opacity: 0;
-            transition: opacity 0.3s ease-out;
+        }
+        
+        /* Prepare for elegant reveal */
+        #portfolio-title {
+            transform: translateY(30px);
+        }
+        
+        .filter-item {
+            transform: translateX(-20px);
+        }
+        
+        .project-card {
+            opacity: 0;
+            transform: scale(0.95);
         }
         
         /* Show content when fonts are ready or after timeout */

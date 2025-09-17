@@ -997,33 +997,82 @@ class StaticPortfolio {
 }
 
 
-// FOUT Animation - Show text after fonts are loaded
+// FOUT Animation - Elegant reveal animation
 function animatePortfolioText() {
     if (typeof gsap === 'undefined') return;
     
-    // Portfolio title è sempre visibile, no animazione
-    
-    // Animate filter items
-    gsap.to(".filter-item", {
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out"
+    // Create timeline for coordinated animation
+    const tl = gsap.timeline({
+        defaults: {
+            ease: "power3.out"
+        }
     });
     
-    // Animate project cards
-    gsap.to(".project-card h3", {
+    // Portfolio title - slide up with fade
+    tl.to("#portfolio-title", {
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.05,
-        ease: "power2.out"
-    });
+        y: 0,
+        duration: 1.2,
+        ease: "power4.out"
+    })
     
-    // Animate footer
-    gsap.to("#footer p", {
+    // Filter items - slide in from left with stagger
+    .to(".filter-item", {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        stagger: {
+            each: 0.08,
+            ease: "power2.inOut"
+        }
+    }, "-=0.8")
+    
+    // Project cards - scale and fade with elegant stagger
+    .to(".project-card", {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        stagger: {
+            each: 0.05,
+            from: "random",
+            ease: "power2.inOut"
+        }
+    }, "-=0.4")
+    
+    // Project titles inside cards
+    .to(".project-card h3", {
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.03
+    }, "-=0.3")
+    
+    // Footer - subtle fade
+    .to("#footer p", {
         opacity: 1,
         duration: 0.8,
-        ease: "power2.out"
+        ease: "power2.inOut"
+    }, "-=0.5");
+    
+    // Add hover interactions after animation completes
+    tl.call(() => {
+        // Smooth hover effect on filter items
+        document.querySelectorAll('.filter-item').forEach(filter => {
+            filter.addEventListener('mouseenter', () => {
+                gsap.to(filter, {
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            filter.addEventListener('mouseleave', () => {
+                gsap.to(filter, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+        });
     });
 }
 
