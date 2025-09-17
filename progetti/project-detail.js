@@ -127,36 +127,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100);
 });
 
-// Simple overscroll prevention - only block at boundaries
+// Safari-compatible scroll handling
 document.addEventListener('DOMContentLoaded', function() {
+    // Detect Safari
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     
-    // Block scroll up only when at the very top
-    const wheelHandler = function(event) {
-        if (window.scrollY === 0 && event.deltaY < 0) {
-            event.preventDefault();
-        }
-    };
-    addCleanupListener(document, 'wheel', wheelHandler, { passive: false });
-    
-    // Block touch scroll up only when at the very top
-    let touchStartY = 0;
-    const touchStartHandler = function(e) {
-        touchStartY = e.touches[0].clientY;
-    };
-    addCleanupListener(document, 'touchstart', touchStartHandler);
-    
-    const touchMoveHandler = function(e) {
-        if (window.scrollY === 0) {
-            const touchY = e.touches[0].clientY;
-            const touchDelta = touchStartY - touchY;
-            
-            // If swiping up when at top, prevent it
-            if (touchDelta < 0) {
-                e.preventDefault();
+    // Only apply scroll prevention on non-Safari browsers
+    if (!isSafari) {
+        // Block scroll up only when at the very top
+        const wheelHandler = function(event) {
+            if (window.scrollY === 0 && event.deltaY < 0) {
+                event.preventDefault();
             }
-        }
-    };
-    addCleanupListener(document, 'touchmove', touchMoveHandler, { passive: false });
+        };
+        addCleanupListener(document, 'wheel', wheelHandler, { passive: false });
+        
+        // Block touch scroll up only when at the very top
+        let touchStartY = 0;
+        const touchStartHandler = function(e) {
+            touchStartY = e.touches[0].clientY;
+        };
+        addCleanupListener(document, 'touchstart', touchStartHandler, { passive: true });
+        
+        const touchMoveHandler = function(e) {
+            if (window.scrollY === 0) {
+                const touchY = e.touches[0].clientY;
+                const touchDelta = touchStartY - touchY;
+                
+                // If swiping up when at top, prevent it
+                if (touchDelta < 0) {
+                    e.preventDefault();
+                }
+            }
+        };
+        addCleanupListener(document, 'touchmove', touchMoveHandler, { passive: false });
+    }
 });
 
 // Contact Form CTA Activation Logic
