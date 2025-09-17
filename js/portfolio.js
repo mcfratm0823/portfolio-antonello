@@ -1002,43 +1002,63 @@ class StaticPortfolio {
  * @returns {void}
  */
 function animatePortfolioElements() {
+    // Attendi che GSAP sia disponibile
+    if (typeof gsap === 'undefined' || !window.gsap) {
+        // Se GSAP non è ancora carico, riprova dopo un breve delay
+        setTimeout(animatePortfolioElements, 100);
+        return;
+    }
+    
     // Anima il titolo principale
     const portfolioTitle = document.getElementById('portfolio-title');
     const filters = document.querySelectorAll('.filter-item');
     const projectCards = document.querySelectorAll('.project-card');
     
-    // Se GSAP è disponibile, usa animazioni avanzate
-    if (typeof gsap !== 'undefined') {
-        // Nascondi inizialmente il titolo
-        if (portfolioTitle) {
-            gsap.set(portfolioTitle, { 
-                opacity: 0, 
-                y: 30,
-                visibility: 'visible' // Assicura che sia visibile per l'animazione
-            });
-            
-            // Anima il titolo dopo un breve delay per dare tempo al font di caricarsi
-            gsap.to(portfolioTitle, {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out",
-                delay: 0.2
-            });
-        }
+    // Nascondi inizialmente il titolo (già nascosto via CSS, ma assicuriamoci)
+    if (portfolioTitle) {
+        // Rimuovi le proprietà CSS inline per permettere a GSAP di animare
+        portfolioTitle.style.visibility = 'visible';
         
-        // Anima i filtri
-        if (filters.length > 0) {
-            gsap.set(filters, { opacity: 0, y: 20 });
-            gsap.to(filters, {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                stagger: 0.08,
-                ease: "power3.out",
-                delay: 0.4
-            });
-        }
+        // Imposta lo stato iniziale
+        gsap.set(portfolioTitle, {
+            opacity: 0,
+            y: 30
+        });
+        
+        // Anima il titolo dopo un breve delay per dare tempo al font di caricarsi
+        gsap.to(portfolioTitle, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.1,
+            clearProps: 'transform' // Pulisce la trasformazione dopo l'animazione
+        });
+    }
+        
+    // Anima i filtri
+    if (filters.length > 0) {
+        // Rendi visibili per l'animazione
+        filters.forEach(filter => {
+            filter.style.visibility = 'visible';
+        });
+        
+        // Imposta stato iniziale
+        gsap.set(filters, {
+            opacity: 0,
+            y: 20
+        });
+        
+        gsap.to(filters, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: "power3.out",
+            delay: 0.3,
+            clearProps: 'transform'
+        });
+    }
         
         // Anima le card dei progetti se esistono
         if (projectCards.length > 0) {
@@ -1052,16 +1072,6 @@ function animatePortfolioElements() {
                 delay: 0.3
             });
         }
-    } else {
-        // Fallback CSS per quando GSAP non è disponibile
-        if (portfolioTitle) {
-            portfolioTitle.style.transition = 'opacity 0.3s ease';
-            portfolioTitle.style.opacity = '0';
-            setTimeout(() => {
-                portfolioTitle.style.opacity = '1';
-            }, 100);
-        }
-    }
     
     // Aggiungi classe quando i font sono caricati
     if ('fonts' in document) {

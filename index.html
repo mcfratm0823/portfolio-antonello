@@ -65,6 +65,14 @@
             line-height: 1.2;
         }
         
+        /* FOUT Prevention for homepage elements */
+        #antonello-title h2,
+        #guarnieri-title h2,
+        #left-text p,
+        #right-text p {
+            opacity: 0;
+        }
+        
         /* Prevent layout shift on images */
         img {
             max-width: 100%;
@@ -440,6 +448,7 @@
         import './js/nuovahome-refactored.js';
         import './js/form-handler.js';
         import './js/portfolio-navigation-fix.js';  // Fix for portfolio navigation
+        import './js/homepage-animations.js';  // Homepage FOUT animations
     </script>
     
     <!-- Fallback for browsers without module support -->

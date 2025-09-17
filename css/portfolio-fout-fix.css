@@ -1,0 +1,44 @@
+/**
+ * Portfolio FOUT Fix
+ * Previene il Flash of Unstyled Text durante il caricamento dei font
+ */
+
+/* Classe applicata quando i font sono caricati */
+.fonts-loaded #portfolio-title,
+.fonts-loaded .filter-item {
+    /* Rimuovi le transizioni CSS per lasciare che GSAP gestisca tutto */
+    transition: none !important;
+}
+
+/* Fallback per browser che non supportano font loading API */
+@supports not (font-display: swap) {
+    #portfolio-title,
+    .filter-item {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+    }
+}
+
+/* Fix per Safari che potrebbe avere problemi con visibility */
+@supports (-webkit-appearance: none) {
+    #portfolio-title,
+    .filter-item {
+        -webkit-transform: translateY(30px);
+        -webkit-backface-visibility: hidden;
+    }
+}
+
+/* Ottimizzazione per ridurre il repaint durante l'animazione */
+#portfolio-title,
+.filter-item,
+.project-card {
+    will-change: opacity, transform;
+}
+
+/* Rimuovi will-change dopo l'animazione per salvare memoria */
+.fonts-loaded #portfolio-title,
+.fonts-loaded .filter-item,
+.fonts-loaded .project-card {
+    will-change: auto;
+}
