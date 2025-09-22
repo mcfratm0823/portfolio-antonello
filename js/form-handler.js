@@ -29,6 +29,15 @@ class FormHandler {
         const footerForm = document.querySelector('.footer-contact-form');
         if (!footerForm) return;
         
+        // Aggiungi event listener al bottone del footer
+        const footerButton = document.getElementById('footer-request-cta');
+        if (footerButton) {
+            footerButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleFooterFormSubmit();
+            });
+        }
+        
         // Aggiungi CSS per uniformare spaziature con il menu
         if (!document.getElementById('footer-form-styles')) {
             const style = document.createElement('style');
