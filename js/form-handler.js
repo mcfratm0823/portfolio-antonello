@@ -9,7 +9,7 @@ class FormHandler {
             email_placeholder: "EMAIL",
             message_placeholder: "Scrivi qui la tua richiesta",
             button_text: "CONTATTAMI",
-            recipient_email: "antonelloguarnieri6@gmail.com",
+            recipient_email: "info@zero823.com",
             success_message: "Grazie! Il tuo messaggio è stato inviato.",
             error_message: "Ops! Qualcosa è andato storto. Riprova.",
             form_integration: {
