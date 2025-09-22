@@ -9,6 +9,9 @@ function handleFormSubmit(e) {
     const form = e.target;
     const formData = new FormData(form);
     
+    // IMPORTANTE: Aggiungi il nome del form per Netlify
+    formData.append("form-name", "contact-menu");
+    
     // Disabilita il bottone durante l'invio
     const submitButton = form.querySelector('button[type="submit"]');
     if (submitButton) {
