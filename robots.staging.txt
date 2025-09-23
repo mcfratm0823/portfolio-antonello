@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# STAGING ENVIRONMENT - DO NOT INDEX
+# This prevents search engines from indexing the staging site

@@ -6,6 +6,10 @@
     <title>ANTONELLO GUARNIERI ® VISUAL DESIGNER</title>
     <meta name="description" content="Portfolio di Antonello Guarnieri, UX/UI designer che parla codice. Progetti web, visual design e project management end-to-end. Caserta, Made in South.">
     
+    <!-- STAGING ENVIRONMENT - PREVENT INDEXING -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow">
+    
     <!-- Netlify Identity Widget -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     
@@ -121,6 +125,24 @@
     <script src="./utils/safeHTML.js"></script>
 </head>
 <body>
+    <!-- STAGING ENVIRONMENT BANNER -->
+    <div id="staging-banner" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ff4444;
+        color: white;
+        text-align: center;
+        padding: 5px;
+        font-family: monospace;
+        font-size: 12px;
+        z-index: 10000;
+        border-bottom: 2px solid #cc0000;
+    ">
+        🚧 STAGING ENVIRONMENT - NOT FOR PRODUCTION 🚧
+    </div>
+    
     <!-- Form nascosto per Netlify Forms -->
     <form name="contact-menu" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
         <input type="text" name="nome" />
