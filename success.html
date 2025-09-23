@@ -4,13 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messaggio Inviato - ANTONELLO GUARNIERI</title>
+    
+    <!-- Preload font Neue -->
+    <link rel="preload" href="./fonts/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="./fonts/PPNeueMontreal-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    
     <style>
+        /* Font Neue definition */
+        @font-face {
+            font-family: Neue;
+            src: url(./fonts/PPNeueMontreal-Medium.woff2) format("woff2");
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: Neue;
+            src: url(./fonts/PPNeueMontreal-Bold.woff2) format("woff2");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
         body {
             margin: 0;
             padding: 0;
             background: #000;
             color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: Neue, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -23,12 +44,16 @@
         h1 {
             font-size: 2rem;
             margin-bottom: 1rem;
+            font-weight: 700;
+            font-family: Neue, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
             opacity: 0.8;
             line-height: 1.6;
+            font-weight: 500;
+            font-family: Neue, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
     </style>
 </head>
