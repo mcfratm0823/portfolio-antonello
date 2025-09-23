@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTONELLO GUARNIERI ® VISUAL DESIGNER</title>
+    <meta name="description" content="Portfolio di Antonello Guarnieri, UX/UI designer che parla codice. Progetti web, visual design e project management end-to-end. Caserta, Made in South.">
+    
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <!-- Removed picsum.photos preconnect as we're using local placeholder images -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    
+    <!-- Preload critical fonts with highest priority -->
+    <link rel="preload" href="/assets/PPNeueMontreal-Medium-0qsiMyyJ.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high">
+    <link rel="preload" href="/assets/PPNeueMontreal-Regular-C0RgVexg.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/PPNeueMontreal-Bold-CXsqV9IZ.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Critical CSS inline to prevent CLS -->
+    <style>
+        /* Critical CLS fixes - inline for immediate effect */
+        body { margin: 0; overflow-x: hidden; }
+        
+        /* Critical font-face for preloader to prevent FOUT */
+        @font-face {
+            font-family: Neue;
+            src: url(/assets/PPNeueMontreal-Medium-0qsiMyyJ.woff2) format("woff2");
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        /* Fallback font stack */
+        body {
+            font-family: Neue, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        
+        /* Hide preloader text until animation starts */
+        #preloader-left h1,
+        #preloader-right p {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        /* Reserve space for navbar */
+        body::before {
+            content: '';
+            display: block;
+            height: 80px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: -1;
+        }
+        
+        /* Stabilize text during font load */
+        h1, h2, h3, p { 
+            font-synthesis: none;
+            text-rendering: optimizeLegibility;
+            line-height: 1.2;
+        }
+        
+        /* FOUT Prevention for homepage elements */
+        #antonello-title h2,
+        #guarnieri-title h2,
+        #left-text p,
+        #right-text p {
+            opacity: 0;
+        }
+        
+        /* Prevent layout shift on images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Contain animations */
+        #preloader { contain: strict; }
+        #hero-section { contain: layout style; }
+        .selected_work_item { contain: layout; }
+        
+        /* Critical mobile video fix */
+        @media (max-width: 1023px) {
+            #center-video {
+                height: 190px !important;
+                max-height: 190px !important;
+                min-height: unset !important;
+            }
+            #center-video video {
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+        }
+    </style>
+    
+    
+    <!-- Check for ES6 module support -->
+    <script>
+        // Feature detection for ES6 modules
+        function supportsModules() {
+            const script = document.createElement('script');
+            return 'noModule' in script;
+        }
+        
+        window.USING_MODULES = supportsModules();
+        
+        // Professional Video System Configuration
+        // Configurazione opzionale per controllo fine del comportamento video
+        window.VIDEO_SYSTEM_CONFIG = {
+            autoInit: true,           // Auto-inizializzazione del sistema
+            debug: false,             // Debug mode (cambiare a true per troubleshooting)
+            fallbackMode: false,      // Forza modalità fallback
+            maxRetries: 3,            // Tentativi massimi di inizializzazione
+            enableMetrics: true       // Abilitazione metriche performance
+        };
+    </script>
+    
+    <!-- Security: DOMPurify per sanitizzazione HTML (non attivo di default) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js" integrity="sha512-H+rglffZ6f5gF7UJgvH4Naa+fGCgjrHKMgoFOGmcPTRwR6oILo5R+gtzNrpDp7iMV3udbymBVjkeZGNz1Em4rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- SafeHTML Wrapper - Sistema di sanitizzazione progressivo -->
+    <script src="./utils/safeHTML.js"></script>
+  <script type="module" crossorigin src="/assets/index-Svm3ZwBa.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/navbar-CK4k9F_Y.js">
+  <link rel="modulepreload" crossorigin href="/assets/main-266fV1Yc.js">
+  <link rel="stylesheet" crossorigin href="/assets/navbar-CZPZ6ITI.css">
+  <link rel="stylesheet" crossorigin href="/assets/main-22-lKz3v.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-BJWvdp-O.css">
+</head>
+<body>
+    <!-- Form nascosto per Netlify Forms -->
+    <form name="contact-menu" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
+        <input type="text" name="nome" />
+        <input type="text" name="cognome" />
+        <input type="email" name="email" />
+        <textarea name="messaggio"></textarea>
+    </form>
+    
+    <!-- Form nascosto per il footer -->
+    <form name="contact-footer" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
+        <input type="text" name="nome" />
+        <input type="text" name="cognome" />
+        <input type="email" name="email" />
+        <textarea name="messaggio"></textarea>
+    </form>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="preloader-content">
+            <div id="preloader-left">
+                <h1>ZERO823® VISUAL DESIGNER</h1>
+            </div>
+            <div id="preloader-right">
+                <p>MADE IN CASERTA.<br>BLAME IT ON THE SOUTH.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <main id="main-content">
+        
+        <!-- Hero Section -->
+        <section id="hero-section">
+            
+            <!-- ANTONELLO - Top Left -->
+            <div id="antonello-title">
+                <h2>VISUAL</h2>
+            </div>
+            
+            <!-- GUARNIERI - Bottom Right -->
+            <div id="guarnieri-title">
+                <h2>DESIGN</h2>
+            </div>
+            
+            <!-- A CREATIVE CGI STUDIO - Left Side -->
+            <div id="left-text">
+                <p>GUARNIERI ANTONELLO</p>
+            </div>
+            
+            <!-- SETTING BRANDS IN MOTION - Right Side -->
+            <div id="right-text">
+                <p>CASERTA MADE, <b>SOUTH GUILTY.</b></p>
+            </div>
+            
+            <!-- Central Video -->
+            <div id="center-video">
+                <video id="hero-video" muted loop playsinline width="1920" height="1080" preload="metadata">
+                    <source src="/assets/intro-min-CBs9u2Ud.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+        </section>
+
+        <!-- About Section -->
+        <section id="about-section">
+            <div id="about-text">
+                <span class="about-label">(info)</span>
+                <p>UX/UI designer che parla codice. Progetto interfacce e conosco il front-end, quindi dialogo naturalmente con gli sviluppatori. Gestisco clienti e progetti end-to-end, dal wireframe al deploy.</p>
+            </div>
+            
+            <div class="about-details">
+                <div class="detail-column">
+                    <p>Dal visual design al project management. Ho iniziato creando contenuti per social media, per poi evolvermi verso UX/UI e gestione progetti. Oggi coordino team creativi e tecnici, seguendo i progetti dalla strategia iniziale al risultato finale.</p>
+                </div>
+                <div class="detail-column">
+                    <p>Competenze trasversali per progetti digitali completi. Visual design, UX/UI, email marketing con Mailchimp, sviluppo front-end base. Un profilo ibrido che unisce creatività, tecnica e gestione per rispondere a ogni esigenza.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services-section" class="services-section">
+            <div class="services-header">
+                <h2 class="services-title">aree</h2>
+                <div class="services-description">
+                    <p>Le mie competenze uniscono creatività e tecnica. Progetto, sviluppo e gestisco progetti digitali complessi con un approccio end-to-end, curando ogni singola fase del processo creativo.</p>
+                </div>
+            </div>
+            
+            <div class="container">
+                <div class="services-list">
+                    <div class="service-item" data-image="./img/services/brand_visual_design.jpg">
+                        <div class="service-header">
+                            <span class="service-name">BRAND & VISUAL DESIGN</span>
+                            <span class="service-arrow" role="button" tabindex="0" aria-label="Espandi dettagli BRAND & VISUAL DESIGN" aria-expanded="false">+</span>
+                        </div>
+                        <div class="service-content">
+                            <p>Creo identità visive per brand, contenuti grafici per social media e materiali di comunicazione digitale. Sviluppo progetti coordinati per garantire coerenza visiva.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item" data-image="./img/services/ui_design.jpg">
+                        <div class="service-header">
+                            <span class="service-name">UX/UI DESIGN</span>
+                            <span class="service-arrow" role="button" tabindex="0" aria-label="Espandi dettagli UX/UI DESIGN" aria-expanded="false">+</span>
+                        </div>
+                        <div class="service-content">
+                            <p>Progetto siti web e interfacce digitali, dal wireframe al layout finale, curando sia l'aspetto visivo che l'usabilità.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item" data-image="./img/services/digital_implementation.jpg">
+                        <div class="service-header">
+                            <span class="service-name">DIGITAL IMPLEMENTATION</span>
+                            <span class="service-arrow" role="button" tabindex="0" aria-label="Espandi dettagli DIGITAL IMPLEMENTATION" aria-expanded="false">+</span>
+                        </div>
+                        <div class="service-content">
+                            <p>Mi occupo degli aspetti tecnici dei progetti: collaboro con sviluppatori, gestisco piattaforme CMS e creo campagne di email marketing con Mailchimp.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item" data-image="./img/services/project_manager.jpg">
+                        <div class="service-header">
+                            <span class="service-name">PROJECT MANAGEMENT</span>
+                            <span class="service-arrow" role="button" tabindex="0" aria-label="Espandi dettagli PROJECT MANAGEMENT" aria-expanded="false">+</span>
+                        </div>
+                        <div class="service-content">
+                            <p>Gestisco i progetti dall'inizio alla fine, coordinando i team di lavoro, organizzando le fasi operative e mantenendo il rapporto diretto con i clienti.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service-image-container">
+                <img class="service-image" src="" alt="" width="400" loading="lazy">
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" data-scroll-selected-work="section" data-theme="light" class="selected_work_wrap is-visible">
+            <div class="selected_work_contain">
+                <div class="selected_work_sticky">
+                    <div class="selected_work_list_wrap">
+                        <div data-theme="dark" data-scroll-selected-work="list" role="list" class="selected_work_list">
+                            
+                            <!-- Project 1 -->
+                            <div data-cursor="-opaque" data-scroll-selected-work="item" role="listitem" class="selected_work_item">
+                                <div class="selected_work_content">
+                                    <div class="selected_work_upper">
+                                        <h2 class="u-text center">Selected Work<br></h2>
+                                        <div class="u-overflowy-hidden">
+                                            <h3 data-scroll-selected-work="headline" class="selected_work_name u-display">Cafè 124</h3>
+                                        </div>
+                                        <div class="u-overflowy-hidden">
+                                            <div data-scroll-selected-work="category" class="selected_work_category">WEB DESIGN & DEVELOPMENT</div>
+                                        </div>
+                                    </div>
+                                    <div class="selected_work_box_wrap">
+                                        <div class="projects-box-contain">
+                                            <div data-scroll-selected-work="box" class="selected_work_box">
+                                                <a href="./progetti/cafe-124.html" class="selected_work_box_link">
+                                                    <img data-scroll-selected-work="box-img" alt="Cafè 124" src="/assets/cafe-124-BpSIoqMZ.jpg" class="selected_work_box_image" width="800" height="600">
+                                                    <div class="overlay is-light"></div>
+                                                    <div data-scroll-selected-work="box-title" class="selected_work_box_title">SEE MORE</div>
+                                                    <video data-scroll-selected-work="box-video" muted loop playsinline class="selected_work_box_video" style="display: none;">
+                                                        <source src="" type="video/mp4">
+                                                    </video>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected_work_bg">
+                                    <div data-scroll-selected-work="overlay" class="overlay"></div>
+                                    <img src="/assets/background124-BbsSnPcf.jpg" data-scroll-selected-work="bg" alt="Cafè 124" class="selected_work_img" width="1920" height="1080">
+                                </div>
+                            </div>
+
+                            <!-- Project 2 -->
+                            <div data-cursor="-opaque" data-scroll-selected-work="item" role="listitem" class="selected_work_item">
+                                <div class="selected_work_content">
+                                    <div class="selected_work_upper">
+                                        <h2 class="u-text center">Selected Work<br></h2>
+                                        <div class="u-overflowy-hidden">
+                                            <h3 data-scroll-selected-work="headline" class="selected_work_name u-display">Curasept</h3>
+                                        </div>
+                                        <div class="u-overflowy-hidden">
+                                            <div data-scroll-selected-work="category" class="selected_work_category">SOCIAL MEDIA DESIGN</div>
+                                        </div>
+                                    </div>
+                                    <div class="selected_work_box_wrap">
+                                        <div class="projects-box-contain">
+                                            <div data-scroll-selected-work="box" class="selected_work_box">
+                                                <a href="./progetti/curasept.html" class="selected_work_box_link">
+                                                    <img data-scroll-selected-work="box-img" loading="lazy" alt="Curasept" src="/assets/Curasept-Bord2cjw.jpg" class="selected_work_box_image" width="800" height="600">
+                                                    <div class="overlay is-light"></div>
+                                                    <div data-scroll-selected-work="box-title" class="selected_work_box_title">SEE MORE</div>
+                                                    <video data-scroll-selected-work="box-video" muted loop playsinline class="selected_work_box_video" style="display: none;">
+                                                        <source src="" type="video/mp4">
+                                                    </video>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected_work_bg">
+                                    <div data-scroll-selected-work="overlay" class="overlay"></div>
+                                    <img src="/assets/background_curasept-CBe66qI4.jpg" loading="lazy" data-scroll-selected-work="bg" alt="Curasept" class="selected_work_img" width="1920" height="1080">
+                                </div>
+                            </div>
+
+                            <!-- Project 3 -->
+                            <div data-cursor="-opaque" data-scroll-selected-work="item" role="listitem" class="selected_work_item">
+                                <div class="selected_work_content">
+                                    <div class="selected_work_upper">
+                                        <h2 class="u-text center">Selected Work<br></h2>
+                                        <div class="u-overflowy-hidden">
+                                            <h3 data-scroll-selected-work="headline" class="selected_work_name u-display">Mediaset Infinity</h3>
+                                        </div>
+                                        <div class="u-overflowy-hidden">
+                                            <div data-scroll-selected-work="category" class="selected_work_category">DIGITAL EXPERIENCE</div>
+                                        </div>
+                                    </div>
+                                    <div class="selected_work_box_wrap">
+                                        <div class="projects-box-contain">
+                                            <div data-scroll-selected-work="box" class="selected_work_box">
+                                                <a href="./progetti/mediaset.html" class="selected_work_box_link">
+                                                    <img data-scroll-selected-work="box-img" loading="lazy" alt="Mediaset Infinity" src="/assets/Mediaset-Dmpkmjh6.jpg" class="selected_work_box_image" width="800" height="600">
+                                                    <div class="overlay is-light"></div>
+                                                    <div data-scroll-selected-work="box-title" class="selected_work_box_title">SEE MORE</div>
+                                                    <video data-scroll-selected-work="box-video" muted loop playsinline class="selected_work_box_video" style="display: none;">
+                                                        <source src="" type="video/mp4">
+                                                    </video>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected_work_bg">
+                                    <div data-scroll-selected-work="overlay" class="overlay"></div>
+                                    <img src="/assets/background_mediaset-psLSZyL-.jpg" loading="lazy" data-scroll-selected-work="bg" alt="Mediaset Infinity" class="selected_work_img" width="1920" height="1080">
+                                </div>
+                            </div>
+
+                            <!-- Project 4 -->
+                            <div data-cursor="-opaque" data-scroll-selected-work="item" role="listitem" class="selected_work_item">
+                                <div class="selected_work_content">
+                                    <div class="selected_work_upper">
+                                        <h2 class="u-text center">Selected Work<br></h2>
+                                        <div class="u-overflowy-hidden">
+                                            <h3 data-scroll-selected-work="headline" class="selected_work_name u-display">Generali A4G</h3>
+                                        </div>
+                                        <div class="u-overflowy-hidden">
+                                            <div data-scroll-selected-work="category" class="selected_work_category">WEB DESIGN & PROJECT MANAGEMENT</div>
+                                        </div>
+                                    </div>
+                                    <div class="selected_work_box_wrap">
+                                        <div class="projects-box-contain">
+                                            <div data-scroll-selected-work="box" class="selected_work_box">
+                                                <a href="./progetti/generali.html" class="selected_work_box_link">
+                                                    <img data-scroll-selected-work="box-img" loading="lazy" alt="Generali A4G" src="/assets/GA4G_HP-ABuJz0NO.jpg" class="selected_work_box_image" width="800" height="600">
+                                                    <div class="overlay is-light"></div>
+                                                    <div data-scroll-selected-work="box-title" class="selected_work_box_title">SEE MORE</div>
+                                                    <video data-scroll-selected-work="box-video" muted loop playsinline class="selected_work_box_video" style="display: none;">
+                                                        <source src="" type="video/mp4">
+                                                    </video>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="selected_work_bg">
+                                    <div data-scroll-selected-work="overlay" class="overlay"></div>
+                                    <img src="/assets/background_generali-DL-E4lKe.jpg" loading="lazy" data-scroll-selected-work="bg" alt="Generali A4G" class="selected_work_img" width="1920" height="1080">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <section id="test-section" class="section-after-portfolio footer-black">
+            <div class="footer-container">
+                <div class="test-content">
+                    <h2>FUCK YOU.<br>OOPS,THANK YOU</h2>
+                </div>
+                
+                <div class="footer-contact-form">
+                    <div class="footer-menu-item">CONTATTAMI</div>
+                    <div class="footer-menu-item">
+                        <input type="text" id="footer-nome" placeholder="NOME" />
+                    </div>
+                    <div class="footer-menu-item">
+                        <input type="text" id="footer-cognome" placeholder="COGNOME" />
+                    </div>
+                    <div class="footer-menu-item">
+                        <input type="email" id="footer-email" placeholder="EMAIL" />
+                    </div>
+                    <div class="footer-menu-item">
+                        <textarea id="footer-messaggio" placeholder="Scrivi qui la tua richiesta" rows="3"></textarea>
+                    </div>
+                    <div class="footer-menu-item">
+                        <div id="footer-request-cta" style="cursor: pointer;">
+                            <div id="footer-request-text">CONTATTAMI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-contacts">
+                <a href="mailto:info@zero823.com" class="footer-contact-link">info@zero823.com</a>
+                <a href="tel:+391234567890" class="footer-contact-link">+39 123 456 7890</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- External Dependencies -->
+    <!-- GSAP Ottimizzato: caricato via modulo ES6 per tree shaking -->
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+    
+    <!-- Professional Video System (Non-invasive Integration) -->
+    <!-- Caricato dopo GSAP ma prima degli script principali per garantire compatibilità -->
+    <script src="./js/professional-video-controller.js"></script>
+    <script src="./js/video-integration-manager.js"></script>
+    <script src="./js/video-system-bootstrap.js"></script>
+    <!-- Test suite (caricato in modo asincrono per non bloccare) -->
+    <script src="./js/video-system-tests.js" async></script>
+    
+    <!-- Module-based loading (modern browsers) -->
+    
+    <!-- Fallback for browsers without module support -->
+    <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script nomodule src="./js/lifecycle-manager.js"></script>
+    <script nomodule src="./config/constants.js"></script>
+    <script nomodule src="./js/video-manager.js"></script>
+    <script nomodule src="./utils/formValidator.js"></script>
+    <script nomodule src="./utils/imageLoader.js"></script>
+    <script nomodule src="./utils/errorHandler.js"></script>
+    <script nomodule src="./utils/performanceMonitor.js"></script>
+    <script nomodule src="./utils/clsOptimizer.js"></script>
+    <script nomodule src="./js/global-cursor.js"></script>
+    <script nomodule src="./js/navbar.js"></script>
+    <script nomodule src="./js/nuovahome-refactored.js"></script>
+    <script nomodule src="./js/netlify-forms.js"></script>
+    <script nomodule src="./js/portfolio-navigation-fix.js"></script>
+</body>
+</html>
