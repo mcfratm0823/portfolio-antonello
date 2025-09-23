@@ -133,6 +133,7 @@
     <form name="contact-footer" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display: none;">
         <input type="text" name="nome" />
         <input type="text" name="cognome" />
+        <input type="email" name="email" />
         <textarea name="messaggio"></textarea>
     </form>
 
@@ -420,6 +421,9 @@
                         <input type="text" id="footer-cognome" placeholder="COGNOME" />
                     </div>
                     <div class="footer-menu-item">
+                        <input type="email" id="footer-email" placeholder="EMAIL" />
+                    </div>
+                    <div class="footer-menu-item">
                         <textarea id="footer-messaggio" placeholder="Scrivi qui la tua richiesta" rows="3"></textarea>
                     </div>
                     <div class="footer-menu-item">
@@ -448,13 +452,11 @@
         import './js/gsap-optimized.js';  // GSAP tree-shaked (~33KB vs 120KB)
         import './js/lifecycle-manager.js';  // Memory leak prevention
         import './js/global-cursor.js';  // Cursore globale con cleanup
-        import './js/form-ajax.js';  // Carica prima form-ajax
         import './js/main.js';
         import './js/nuovahome-refactored.js';
-        import './js/form-handler.js';
+        import './js/netlify-forms.js';  // Sistema semplificato per Netlify Forms
         import './js/portfolio-navigation-fix.js';  // Fix for portfolio navigation
         import './js/homepage-animations.js';  // Homepage FOUT animations
-        import './js/footer-form.js';  // Footer form handler
     </script>
     
     <!-- Fallback for browsers without module support -->
@@ -468,10 +470,9 @@
     <script nomodule src="./utils/performanceMonitor.js"></script>
     <script nomodule src="./utils/clsOptimizer.js"></script>
     <script nomodule src="./js/global-cursor.js"></script>
-    <script nomodule src="./js/form-ajax.js"></script>
     <script nomodule src="./js/navbar.js"></script>
     <script nomodule src="./js/nuovahome-refactored.js"></script>
-    <script nomodule src="./js/form-handler.js"></script>
+    <script nomodule src="./js/netlify-forms.js"></script>
     <script nomodule src="./js/portfolio-navigation-fix.js"></script>
 </body>
 </html>
