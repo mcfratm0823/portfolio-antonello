@@ -124,67 +124,58 @@ class NetlifyFormsHandler {
         this.submitToNetlify(formName, data);
     }
     
-    async submitToNetlify(formName, data) {
+    submitToNetlify(formName, data) {
         if (this.isSubmitting) return;
         
         this.isSubmitting = true;
         this.showLoading(true);
         
-        try {
-            // Prepara i dati per Netlify
-            const formData = new URLSearchParams();
-            formData.append('form-name', formName);
-            
-            // Aggiungi tutti i campi
-            Object.entries(data).forEach(([key, value]) => {
-                if (value) { // Solo campi non vuoti
-                    formData.append(key, value);
-                }
+        // Crea form temporaneo per il submit
+        const tempForm = document.createElement('form');
+        tempForm.method = 'POST';
+        tempForm.action = '/success.html';
+        tempForm.setAttribute('data-netlify', 'true');
+        tempForm.style.display = 'none';
+        
+        // Aggiungi form-name
+        const formNameInput = document.createElement('input');
+        formNameInput.type = 'hidden';
+        formNameInput.name = 'form-name';
+        formNameInput.value = formName;
+        tempForm.appendChild(formNameInput);
+        
+        // Aggiungi honeypot
+        const honeypot = document.createElement('input');
+        honeypot.type = 'hidden';
+        honeypot.name = 'bot-field';
+        tempForm.appendChild(honeypot);
+        
+        // Aggiungi tutti i dati
+        Object.entries(data).forEach(([key, value]) => {
+            if (value) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                tempForm.appendChild(input);
+            }
+        });
+        
+        // Analytics/tracking se disponibile
+        if (window.gtag) {
+            window.gtag('event', 'form_submit', {
+                form_name: formName,
+                success: true
             });
-            
-            if (this.debug) {
-                console.log('Submitting to Netlify:', formName, data);
-            }
-            
-            const response = await fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: formData
-            });
-            
-            if (response.ok) {
-                this.showMessage('Grazie! Il tuo messaggio è stato inviato.', 'success');
-                this.resetForm(formName);
-                
-                // Analytics/tracking se disponibile
-                if (window.gtag) {
-                    window.gtag('event', 'form_submit', {
-                        form_name: formName,
-                        success: true
-                    });
-                }
-            } else {
-                throw new Error(`HTTP ${response.status}`);
-            }
-            
-        } catch (error) {
-            console.error('Form submission error:', error);
-            this.showMessage('Ops! Qualcosa è andato storto. Riprova.', 'error');
-            
-            // Analytics/tracking errore
-            if (window.gtag) {
-                window.gtag('event', 'form_submit', {
-                    form_name: formName,
-                    success: false,
-                    error: error.message
-                });
-            }
-        } finally {
-            this.isSubmitting = false;
-            this.showLoading(false);
         }
+        
+        if (this.debug) {
+            console.log('Submitting to Netlify:', formName, data);
+        }
+        
+        // Aggiungi al DOM e submit
+        document.body.appendChild(tempForm);
+        tempForm.submit();
     }
     
     resetForm(formName) {
