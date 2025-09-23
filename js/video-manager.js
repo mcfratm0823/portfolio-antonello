@@ -18,6 +18,7 @@ class VideoManager {
         this.maxLoadAttempts = 3;
         this.eventListeners = new Map();
         this.debug = window.location.search.includes('debug=true');
+        this.pendingSeek = false;
         
         // Video states
         this.VIDEO_STATES = {
@@ -34,6 +35,7 @@ class VideoManager {
         // Bind methods
         this.handleLoadedData = this.handleLoadedData.bind(this);
         this.handleCanPlay = this.handleCanPlay.bind(this);
+        this.handleSeeked = this.handleSeeked.bind(this);
         this.handleError = this.handleError.bind(this);
         this.handleLoadStart = this.handleLoadStart.bind(this);
         this.handleStalled = this.handleStalled.bind(this);
@@ -123,6 +125,7 @@ class VideoManager {
         const events = [
             ['loadeddata', this.handleLoadedData, { once: true }],
             ['canplay', this.handleCanPlay],
+            ['seeked', this.handleSeeked],
             ['error', this.handleError],
             ['loadstart', this.handleLoadStart],
             ['stalled', this.handleStalled],
@@ -190,31 +193,105 @@ class VideoManager {
         }
         
         try {
-            // Seek to first frame to ensure visibility
-            this.video.currentTime = 0.1;
-            
-            // Ensure paused state
+            // Ensure paused state first
             if (!this.video.paused) {
                 this.video.pause();
             }
             
-            // Set video visible
-            this.video.style.opacity = '1';
-            
-            this.setState(this.VIDEO_STATES.READY);
-            
-            // Call success handler if exists
-            if (this.loadSuccessHandler) {
-                this.loadSuccessHandler();
-                this.loadSuccessHandler = null;
-            }
-            
-            if (this.debug) {
-                console.log('[VideoManager] Video ready');
-            }
+            // Don't seek immediately - wait for canplay or use safer approach
+            this.prepareFirstFrame();
             
         } catch (error) {
             this.handleLoadError(error);
+        }
+    }
+    
+    /**
+     * Prepare first frame with safe seeking strategy
+     * @private
+     */
+    prepareFirstFrame() {
+        if (!this.video) return;
+        
+        // Strategy 1: If video duration is available, we can seek safely
+        if (this.video.duration && this.video.duration > 0) {
+            this.performSafeSeek();
+        } else {
+            // Strategy 2: Wait for more video data
+            this.waitForVideoReadiness();
+        }
+    }
+    
+    /**
+     * Perform safe seek to first frame
+     * @private
+     */
+    performSafeSeek() {
+        if (!this.video) return;
+        
+        try {
+            // Use very small offset to ensure we're not at exactly 0
+            const seekTime = Math.min(0.1, this.video.duration * 0.01);
+            this.video.currentTime = seekTime;
+            
+            // Wait for seeked event before marking as ready
+            this.pendingSeek = true;
+            
+            if (this.debug) {
+                console.log(`[VideoManager] Seeking to ${seekTime}s`);
+            }
+            
+        } catch (error) {
+            // If seek fails, try without seeking
+            this.finalizeVideoReady();
+        }
+    }
+    
+    /**
+     * Wait for video to be fully ready
+     * @private
+     */
+    waitForVideoReadiness() {
+        if (!this.video) return;
+        
+        // Set up a one-time listener for when we can play
+        const readyHandler = () => {
+            this.video.removeEventListener('canplaythrough', readyHandler);
+            this.performSafeSeek();
+        };
+        
+        this.video.addEventListener('canplaythrough', readyHandler, { once: true });
+        
+        // Fallback timeout - don't wait forever
+        setTimeout(() => {
+            this.video.removeEventListener('canplaythrough', readyHandler);
+            this.finalizeVideoReady();
+        }, 2000);
+    }
+    
+    /**
+     * Finalize video ready state
+     * @private
+     */
+    finalizeVideoReady() {
+        if (!this.video || this.currentState !== this.VIDEO_STATES.LOADING) {
+            return;
+        }
+        
+        // Make video visible
+        this.video.style.opacity = '1';
+        
+        // Set ready state
+        this.setState(this.VIDEO_STATES.READY);
+        
+        // Call success handler if exists
+        if (this.loadSuccessHandler) {
+            this.loadSuccessHandler();
+            this.loadSuccessHandler = null;
+        }
+        
+        if (this.debug) {
+            console.log('[VideoManager] Video ready');
         }
     }
     
@@ -226,6 +303,25 @@ class VideoManager {
         if (this.debug) {
             console.log('[VideoManager] Video can play');
         }
+    }
+    
+    /**
+     * Handle seeked event
+     * @private
+     */
+    handleSeeked() {
+        if (!this.video || !this.pendingSeek) {
+            return;
+        }
+        
+        this.pendingSeek = false;
+        
+        if (this.debug) {
+            console.log(`[VideoManager] Seek completed to ${this.video.currentTime}s`);
+        }
+        
+        // Now that seek is complete, finalize ready state
+        this.finalizeVideoReady();
     }
     
     /**
@@ -361,8 +457,10 @@ class VideoManager {
         if (!this.video) return false;
         
         try {
-            // Reset to beginning
-            this.video.currentTime = 0;
+            // Reset to beginning - but do it safely
+            if (this.video.duration && this.video.duration > 0) {
+                this.video.currentTime = 0;
+            }
             
             // Ensure visibility
             this.video.style.opacity = '1';
@@ -494,6 +592,7 @@ class VideoManager {
         
         // Clear any pending handlers
         this.loadSuccessHandler = null;
+        this.pendingSeek = false;
     }
     
     /**
