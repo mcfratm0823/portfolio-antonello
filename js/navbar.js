@@ -986,7 +986,7 @@ class Navbar {
         const description = document.createElement('div');
         description.id = 'description';
         const descP = document.createElement('p');
-        descP.textContent = footerDescription; // Usa textContent per sicurezza
+        descP.innerHTML = footerDescription; // Usa innerHTML per renderizzare <br> tags
         description.appendChild(descP);
         bottomTextContainer.appendChild(description);
         
