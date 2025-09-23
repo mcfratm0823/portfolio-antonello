@@ -91,45 +91,88 @@ class NuovaHomeInitializer {
     }
     
     /**
-     * Initialize hero video and prevent autoplay
+     * Initialize hero video using VideoManager
      */
-    initHeroVideo() {
-        const heroVideo = document.getElementById('hero-video');
-        if (!heroVideo) return;
-        
-        // Keep video visible but paused - show first frame as poster
-        heroVideo.pause();
-        heroVideo.muted = true; // Ensure muted for autoplay
-        
-        // Load video and seek to first frame
-        heroVideo.load();
-        
-        // When we have enough data, show first frame
-        heroVideo.addEventListener('loadeddata', () => {
-            heroVideo.currentTime = 0.1; // Slightly offset to ensure frame is loaded
-            heroVideo.pause();
-            // Force a paint to ensure first frame is visible
-            heroVideo.style.opacity = '1';
-        }, { once: true });
-        
-        // Store reference for later
-        this.heroVideo = heroVideo;
+    async initHeroVideo() {
+        // Use centralized VideoManager for robust video handling
+        if (window.initializeVideoManager) {
+            try {
+                this.videoManager = await window.initializeVideoManager();
+                
+                if (this.debug) {
+                    console.log('[NuovaHome] VideoManager initialized');
+                }
+            } catch (error) {
+                console.error('[NuovaHome] VideoManager initialization failed:', error);
+                
+                // Fallback to basic video setup
+                this.initBasicVideo();
+            }
+        } else {
+            // VideoManager not available, use basic setup
+            this.initBasicVideo();
+        }
     }
     
     /**
-     * Start hero video playback
+     * Fallback basic video initialization
+     * @private
      */
-    startHeroVideo() {
+    initBasicVideo() {
+        const heroVideo = document.getElementById('hero-video');
+        if (!heroVideo) return;
+        
+        heroVideo.pause();
+        heroVideo.muted = true;
+        heroVideo.currentTime = 0;
+        heroVideo.style.opacity = '1';
+        
+        this.heroVideo = heroVideo;
+        
+        if (this.debug) {
+            console.log('[NuovaHome] Basic video setup complete');
+        }
+    }
+    
+    /**
+     * Start hero video playback using VideoManager
+     */
+    async startHeroVideo() {
+        if (this.videoManager) {
+            // Use VideoManager for robust playback
+            try {
+                const success = await this.videoManager.startPlayback(100);
+                
+                if (this.debug) {
+                    console.log(`[NuovaHome] Video playback ${success ? 'started' : 'failed'}`);
+                }
+                
+                return success;
+                
+            } catch (error) {
+                console.error('[NuovaHome] VideoManager playback failed:', error);
+                
+                // Fallback to basic play
+                this.startBasicVideo();
+            }
+        } else {
+            // Fallback to basic video play
+            this.startBasicVideo();
+        }
+    }
+    
+    /**
+     * Fallback basic video playback
+     * @private
+     */
+    startBasicVideo() {
         if (!this.heroVideo) return;
         
-        // Reset to beginning and ensure visibility
         this.heroVideo.currentTime = 0;
         this.heroVideo.style.opacity = '1';
         
-        // Small delay to ensure smooth transition after preloader
         setTimeout(() => {
             this.heroVideo.play().catch(err => {
-                // Usa ErrorHandler professionale se disponibile
                 if (window.errorHandler) {
                     window.errorHandler.handle(err, {
                         component: 'NuovaHome',
@@ -138,7 +181,7 @@ class NuovaHomeInitializer {
                         fallback: 'show_first_frame'
                     });
                 } else if (this.debug) {
-                    console.warn('Video autoplay blocked:', err);
+                    console.warn('[NuovaHome] Basic video autoplay blocked:', err);
                 }
             });
         }, 100);

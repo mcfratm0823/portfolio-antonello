@@ -771,7 +771,7 @@ class HomepageModule {
     handleHomepageData(data) {
         if (!data || !data.hero) return;
         
-        // Update hero media
+        // Update hero media (delegated to VideoManager)
         const centerPhoto = document.getElementById('center-photo');
         const centerVideo = document.getElementById('center-video');
         
@@ -780,11 +780,17 @@ class HomepageModule {
             if (centerPhoto) centerPhoto.style.display = 'none';
             
             const video = centerVideo.querySelector('video source');
-            const videoElement = centerVideo.querySelector('video');
-            if (video && videoElement && data.hero.center_media) {
+            if (video && data.hero.center_media) {
                 video.src = data.hero.center_media;
-                videoElement.load();
-                videoElement.play().catch(e => {}); // Autoplay blocked
+                
+                // Let VideoManager handle the video loading and playback
+                if (window.getVideoManager) {
+                    const videoManager = window.getVideoManager();
+                    if (videoManager.initialized) {
+                        videoManager.reset();
+                        videoManager.initialize();
+                    }
+                }
             }
         } else if (data.hero.center_media_type === 'image' && centerPhoto) {
             centerPhoto.style.display = 'block';
