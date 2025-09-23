@@ -36,8 +36,8 @@ class Navbar {
             menu_overlay: {
                 close_text: "CHIUDI",
                 footer_description: "CREO ESPERIENZE DIGITALI CHIARE E UTILI, UNENDO DESIGN CURATO,\nSVILUPPO CON AI E GESTIONE ATTENTA DEI PROGETTI PER\nTRASFORMARE OGNI IDEA IN RISULTATI CONCRETI.",
-                footer_website: "ANTONELLOGUARNIERI.NET",
-                footer_email: "ANTONELLOGUARNIERI6@GMAIL.COM",
+                footer_website: "ZERO823.COM",
+                footer_email: "INFO@ZERO823.COM",
                 main_menu: [
                     { name: "INDEX.HTML", link: "index.html", order: 1 },
                     { name: "LAVORI", link: "portfolio.html", order: 2 }
